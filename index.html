@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohamed Qurtam — Network &amp; Security Engineer</title>
+  <meta name="description" content="Mohamed Qurtam — Network &amp; Security Engineer. Securing networks. Engineering resilient infrastructure. Enterprise firewalls, network segmentation, SIEM monitoring, and incident response.">
+  <meta name="author" content="Mohamed Ahmed Qurtam">
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="Mohamed Qurtam — Network &amp; Security Engineer">
+  <meta property="og:description" content="Securing networks. Engineering resilient infrastructure.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="MyPhoto.jpeg">
+
+  <!-- Favicon (shield SVG) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🛡</text></svg>">
+
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Top Anchor for Back to Top links -->
+  <a id="top"></a>
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="#top" class="nav__wordmark" aria-label="Mohamed Qurtam — Home"><span>M</span>Qurtam</a>
+
+      <div class="nav__overlay" id="navOverlay" aria-hidden="true"></div>
+
+      <ul class="nav__links" id="navLinks" role="list">
+        <li><a href="#summary" class="nav__link" id="nav-summary">Summary</a></li>
+        <li><a href="#experience" class="nav__link" id="nav-experience">Experience</a></li>
+        <li><a href="#skills" class="nav__link" id="nav-skills">Skills</a></li>
+        <li><a href="#education" class="nav__link" id="nav-education">Education</a></li>
+        <li><a href="#projects" class="nav__link" id="nav-projects">Projects</a></li>
+        <li><a href="#certifications" class="nav__link" id="nav-certifications">Certifications</a></li>
+        <li><a href="#contact" class="nav__link" id="nav-contact">Contact</a></li>
+        <li><a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="nav__cv-btn" id="nav-cv" target="_blank" rel="noopener noreferrer" aria-label="Download CV (PDF)">Download CV</a></li>
+      </ul>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ========== HERO SECTION ========== -->
+    <section class="hero container reveal" id="hero" aria-label="Introduction">
+      <div class="hero__content">
+        <div class="hero__status">
+          <span class="hero__status-dot" aria-hidden="true"></span>
+          Network &amp; Security Engineer @ Co-brand Solution
+        </div>
+
+        <h1 class="hero__name">Mohamed Qurtam</h1>
+
+        <p class="hero__title">
+          Network &amp; Security Engineer<br>
+          <strong>Securing networks. Engineering resilient infrastructure.</strong>
+        </p>
+
+        <!-- Profile Quick Links (Matching Edit.md Part 1) -->
+        <div class="hero__quick-nav" aria-label="Quick jump links">
+          <a href="#summary" class="hero__quick-link">Summary</a>
+          <span class="hero__quick-separator" aria-hidden="true">·</span>
+          <a href="#experience" class="hero__quick-link">Experience</a>
+          <span class="hero__quick-separator" aria-hidden="true">·</span>
+          <a href="#skills" class="hero__quick-link">Skills</a>
+          <span class="hero__quick-separator" aria-hidden="true">·</span>
+          <a href="#education" class="hero__quick-link">Education</a>
+          <span class="hero__quick-separator" aria-hidden="true">·</span>
+          <a href="#projects" class="hero__quick-link">Projects</a>
+          <span class="hero__quick-separator" aria-hidden="true">·</span>
+          <a href="#certifications" class="hero__quick-link">Certifications</a>
+          <span class="hero__quick-separator" aria-hidden="true">·</span>
+          <a href="#contact" class="hero__quick-link">Contact</a>
+        </div>
+
+        <p class="hero__description">
+          Working at the intersection of network infrastructure and defensive security. Designing, deploying, and securing enterprise infrastructure across the MENA region.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#projects" class="btn-primary" id="hero-cta-projects">
+            View Projects
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
+          </a>
+          <a href="#contact" class="btn-secondary" id="hero-cta-contact">Get in Touch</a>
+        </div>
+
+        <div class="hero__socials">
+          <a href="mailto:moqurtam@gmail.com" class="hero__social-link" id="hero-email" aria-label="Email Mohamed Qurtam">
+            <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            moqurtam@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/mohamed-qurtam" class="hero__social-link" id="hero-linkedin" target="_blank" rel="noopener noreferrer" aria-label="Mohamed Qurtam on LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            LinkedIn
+          </a>
+          <a href="https://github.com/Mohamed-Qurtam" class="hero__social-link" id="hero-github" target="_blank" rel="noopener noreferrer" aria-label="Mohamed Qurtam on GitHub">
+            <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+            GitHub
+          </a>
+          <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="hero__social-link" id="hero-cv" target="_blank" rel="noopener noreferrer" aria-label="Download CV (PDF)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Download CV
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Visual: Network Topology Illustration (Labeled Illustrative per Edit.md Note 2) -->
+      <div class="hero__visual" aria-hidden="true">
+        <div class="topology-diagram">
+          <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Network diagram: external network passes through a Palo Alto firewall into three segmented security zones">
+            <defs>
+              <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(42,48,56,0.4)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+            <rect width="480" height="480" fill="url(#grid)" rx="8"/>
+
+            <!-- Internet cloud -->
+            <g transform="translate(240, 50)">
+              <ellipse cx="0" cy="0" rx="50" ry="20" fill="none" stroke="#4dbb8a" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
+              <text x="0" y="5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#929da9">INTERNET / WAN</text>
+            </g>
+
+            <!-- Line: Internet to Firewall -->
+            <line x1="240" y1="70" x2="240" y2="130" stroke="#2a3038" stroke-width="1.5"/>
+            <circle cx="240" cy="100" r="2.5" fill="#4dbb8a" opacity="0.8">
+              <animate attributeName="cy" values="75;125" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.9;0.1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+
+            <!-- Palo Alto NGFW -->
+            <g transform="translate(240, 155)">
+              <rect x="-65" y="-25" width="130" height="50" rx="4" fill="#1c2126" stroke="#4dbb8a" stroke-width="1.5"/>
+              <text x="0" y="-6" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#4dbb8a" font-weight="600">PALO ALTO NGFW</text>
+              <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7.5" fill="#929da9">FIREWALL &amp; NAT</text>
+            </g>
+
+            <!-- Zone connection lines -->
+            <line x1="200" y1="180" x2="120" y2="240" stroke="#2a3038" stroke-width="1.2"/>
+            <line x1="240" y1="180" x2="240" y2="240" stroke="#2a3038" stroke-width="1.2"/>
+            <line x1="280" y1="180" x2="360" y2="240" stroke="#2a3038" stroke-width="1.2"/>
+
+            <!-- Zones -->
+            <g transform="translate(120, 260)">
+              <rect x="-50" y="-20" width="100" height="40" rx="3" fill="#161a1d" stroke="#4dbb8a" stroke-width="1" opacity="0.8"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#4dbb8a" font-weight="600">ZONE: TRUST</text>
+              <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">Internal LAN</text>
+            </g>
+
+            <g transform="translate(240, 260)">
+              <rect x="-50" y="-20" width="100" height="40" rx="3" fill="#161a1d" stroke="#2a3038" stroke-width="1"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#f0ede8" font-weight="600">ZONE: DMZ</text>
+              <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">Public Services</text>
+            </g>
+
+            <g transform="translate(360, 260)">
+              <rect x="-50" y="-20" width="100" height="40" rx="3" fill="#161a1d" stroke="#2a3038" stroke-width="1"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#929da9" font-weight="600">ZONE: UNTRUST</text>
+              <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#929da9">External</text>
+            </g>
+
+            <!-- Policy enforcement banner -->
+            <g transform="translate(240, 330)">
+              <rect x="-115" y="-15" width="230" height="30" rx="3" fill="#161a1d" stroke="#2a3038" stroke-width="1" stroke-dasharray="4 3"/>
+              <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#4dbb8a">NAT • APP-BASED RULES • QoS • DoS</text>
+            </g>
+
+            <!-- Downstream nodes -->
+            <g transform="translate(80, 380)">
+              <rect x="-30" y="-12" width="60" height="24" rx="2" fill="#1c2126" stroke="#2a3038" stroke-width="1"/>
+              <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">SWITCH</text>
+            </g>
+            <line x1="120" y1="300" x2="80" y2="368" stroke="#2a3038" stroke-width="1"/>
+
+            <g transform="translate(200, 410)">
+              <rect x="-30" y="-12" width="60" height="24" rx="2" fill="#1c2126" stroke="#2a3038" stroke-width="1"/>
+              <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">SERVER</text>
+            </g>
+            <line x1="240" y1="300" x2="200" y2="398" stroke="#2a3038" stroke-width="1"/>
+
+            <g transform="translate(280, 410)">
+              <rect x="-30" y="-12" width="60" height="24" rx="2" fill="#1c2126" stroke="#2a3038" stroke-width="1"/>
+              <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#4dbb8a">SIEM</text>
+            </g>
+            <line x1="240" y1="300" x2="280" y2="398" stroke="#2a3038" stroke-width="1"/>
+
+            <g transform="translate(400, 380)">
+              <rect x="-30" y="-12" width="60" height="24" rx="2" fill="#1c2126" stroke="#2a3038" stroke-width="1"/>
+              <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">ROUTER</text>
+            </g>
+            <line x1="360" y1="300" x2="400" y2="368" stroke="#2a3038" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SUMMARY SECTION (#summary) ========== -->
+    <section class="summary container fade-in" id="summary" aria-label="Professional summary">
+      <span class="section-label">Summary</span>
+      <h2 class="section-heading">Summary</h2>
+
+      <div class="summary__grid">
+        <div class="summary__photo-wrapper">
+          <img
+            src="MyPhoto.jpeg"
+            alt="Mohamed Ahmed Qurtam — Graduation photo, B.Sc. Communication & Electronics Engineering, Class of 2024"
+            class="summary__photo"
+            loading="lazy"
+            width="100%"
+            height="auto"
+          >
+          <p class="summary__photo-caption">Benha University · Class of 2024</p>
+        </div>
+
+        <div class="summary__content">
+          <!-- Wording verbatim from Edit.md -->
+          <p class="summary__text">
+            Network &amp; Security Engineer working at the intersection of network infrastructure and defensive security. Communication &amp; Electronics Engineering graduate (Excellent with Honors) with hands-on experience in switches, routers, firewall configuration, SIEM monitoring and incident response. At Co-brand Solution, I design, deploy and secure enterprise infrastructure for clients across the MENA region. Beyond engineering, my work in cybersecurity content, technical session coordination and programming education shapes how I communicate complex ideas.
+          </p>
+
+          <div class="summary__strengths-card">
+            <span class="summary__strengths-label">Strengths</span>
+            <span class="summary__strengths-list">Analytical thinking · Clear documentation · Knowledge sharing</span>
+          </div>
+
+          <div class="summary__languages">
+            <div class="lang-item">
+              <span class="lang-item__name">Arabic</span>
+              <span class="lang-item__level">Native</span>
+            </div>
+            <div class="lang-item">
+              <span class="lang-item__name">English</span>
+              <span class="lang-item__level">Very Good</span>
+            </div>
+          </div>
+
+          <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== EXPERIENCE SECTION (#experience) ========== -->
+    <section class="experience container fade-in" id="experience" aria-label="Professional experience">
+      <span class="section-label">Career</span>
+      <h2 class="section-heading">Experience</h2>
+
+      <div class="timeline">
+        <!-- Role 1: Co-brand Solution -->
+        <div class="timeline-item">
+          <div class="timeline-item__date">Sep 2026 – Present</div>
+          <div class="timeline-item__content">
+            <h3 class="timeline-item__role">Network &amp; Security Engineer: Co-brand Solution</h3>
+            <span class="timeline-item__company">Co-brand Solution</span>
+            <p class="timeline-item__description">
+              Design, deploy and secure enterprise network and security infrastructure for clients across the MENA region, including firewalls, switching, Wi-Fi and SD-WAN. Monitor and troubleshoot to meet SLAs, run security hardening and vulnerability assessments, and document solutions for client handover.
+            </p>
+          </div>
+        </div>
+
+        <!-- Role 2: iSchool -->
+        <div class="timeline-item">
+          <div class="timeline-item__date">2026</div>
+          <div class="timeline-item__content">
+            <h3 class="timeline-item__role">Programming Tutor (DEMI): iSchool</h3>
+            <span class="timeline-item__company">iSchool</span>
+            <p class="timeline-item__description">
+              Delivered programming lessons, guided students through coding projects and problem-solving activities, and helped them build logical thinking and fundamental programming skills.
+            </p>
+          </div>
+        </div>
+
+        <!-- Role 3: Egyptian Military Academy -->
+        <div class="timeline-item">
+          <div class="timeline-item__date">2025 – 2026</div>
+          <div class="timeline-item__content">
+            <h3 class="timeline-item__role">IT Specialist: Information Systems Department, Egyptian Military Academy</h3>
+            <span class="timeline-item__company">Information Systems Department, Egyptian Military Academy</span>
+            <p class="timeline-item__description">
+              Performed maintenance and repairs for computers, monitors and printers. Managed account administration and installed firmware, updates and system images for PCs.
+            </p>
+          </div>
+        </div>
+
+        <!-- Role 4: Armstrong -->
+        <div class="timeline-item">
+          <div class="timeline-item__date">2024</div>
+          <div class="timeline-item__content">
+            <h3 class="timeline-item__role">Content Creator, Cybersecurity Track: Armstrong</h3>
+            <span class="timeline-item__company">Armstrong</span>
+            <p class="timeline-item__description">
+              Created 20+ educational modules simplifying cybersecurity concepts and boosted learner engagement through structured content.
+            </p>
+          </div>
+        </div>
+
+        <!-- Role 5: Almentor -->
+        <div class="timeline-item">
+          <div class="timeline-item__date">2023 – 2025</div>
+          <div class="timeline-item__content">
+            <h3 class="timeline-item__role">Session Coordinator: Almentor</h3>
+            <span class="timeline-item__company">Almentor</span>
+            <p class="timeline-item__description">
+              Managed 100+ technical sessions with high participant satisfaction and reduced session issues through refined coordination workflows.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
+    </section>
+
+    <!-- ========== SKILLS SECTION (#skills) ========== -->
+    <section class="skills container fade-in" id="skills" aria-label="Skills & Capabilities">
+      <span class="section-label">Capabilities</span>
+      <h2 class="section-heading">Skills</h2>
+      <p class="section-subheading">Core competencies spanning enterprise firewalls, defensive SOC operations, cloud security, and scripting.</p>
+
+      <!-- 2-column mobile-friendly format matching Edit.md -->
+      <div class="skills-table-container">
+        <table class="skills-table" role="table">
+          <thead>
+            <tr>
+              <th scope="col">Area</th>
+              <th scope="col">Tools &amp; topics</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="skills-table__area"><strong>Network &amp; firewall engineering</strong></td>
+              <td class="skills-table__topics">
+                <div class="skills-badge-list">
+                  <span class="skill-pill">Palo Alto</span>
+                  <span class="skill-pill">FortiGate</span>
+                  <span class="skill-pill">IDS/IPS</span>
+                  <span class="skill-pill">Firewall policies</span>
+                  <span class="skill-pill">Network segmentation</span>
+                  <span class="skill-pill">Traffic analysis</span>
+                  <span class="skill-pill">CCNA routing &amp; switching</span>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="skills-table__area"><strong>Blue Team &amp; SOC</strong></td>
+              <td class="skills-table__topics">
+                <div class="skills-badge-list">
+                  <span class="skill-pill">Incident response</span>
+                  <span class="skill-pill">Threat detection</span>
+                  <span class="skill-pill">Log analysis</span>
+                  <span class="skill-pill">Security monitoring</span>
+                  <span class="skill-pill">SOC metrics</span>
+                  <span class="skill-pill">Playbooks</span>
+                  <span class="skill-pill">Malware analysis</span>
+                  <span class="skill-pill">Digital forensics</span>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="skills-table__area"><strong>Network &amp; Security tools</strong></td>
+              <td class="skills-table__topics">
+                <div class="skills-badge-list">
+                  <span class="skill-pill">Splunk (SIEM)</span>
+                  <span class="skill-pill">Wireshark</span>
+                  <span class="skill-pill">Nmap</span>
+                  <span class="skill-pill">Metasploit</span>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="skills-table__area"><strong>Systems &amp; cloud</strong></td>
+              <td class="skills-table__topics">
+                <div class="skills-badge-list">
+                  <span class="skill-pill">Linux</span>
+                  <span class="skill-pill">Windows</span>
+                  <span class="skill-pill">AWS architecture</span>
+                  <span class="skill-pill">AWS core services</span>
+                  <span class="skill-pill">Cloud security basics</span>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="skills-table__area"><strong>Programming</strong></td>
+              <td class="skills-table__topics">
+                <div class="skills-badge-list">
+                  <span class="skill-pill">Python</span>
+                  <span class="skill-pill">Bash</span>
+                  <span class="skill-pill">C/C++</span>
+                  <span class="skill-pill">HTML</span>
+                  <span class="skill-pill">CSS</span>
+                  <span class="skill-pill">JavaScript</span>
+                  <span class="skill-pill">Backend concepts</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
+    </section>
+
+    <!-- ========== EDUCATION SECTION (#education) ========== -->
+    <section class="education container fade-in" id="education" aria-label="Academic Education">
+      <span class="section-label">Academic Background</span>
+      <h2 class="section-heading">Education</h2>
+
+      <div class="education-card">
+        <h3 class="education-card__degree">B.Sc. Communication &amp; Electronics Engineering</h3>
+        <p class="education-card__university">Benha University · Faculty of Engineering at Shoubra · June 2024</p>
+        <div class="education-card__honors">Excellent with Honors</div>
+        <p class="education-card__description">
+          An engineering foundation in communication, electronics and technical problem-solving.
+        </p>
+      </div>
+
+      <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
+    </section>
+
+    <!-- ========== PROJECTS SECTION (#projects) ========== -->
+    <section class="projects container fade-in" id="projects" aria-label="Projects">
+      <span class="section-label">Engineering Portfolio</span>
+      <h2 class="section-heading">Projects</h2>
+
+      <!-- Featured Project: Network Security Architecture -->
+      <article class="featured-project-card" id="featured-project">
+        <div class="featured-project__grid">
+          <div class="featured-project__diagram">
+            <svg viewBox="0 0 520 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Network diagram: external network passes through a Palo Alto firewall into three segmented security zones">
+              <defs>
+                <pattern id="grid2" width="30" height="30" patternUnits="userSpaceOnUse">
+                  <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(42,48,56,0.3)" stroke-width="0.5"/>
+                </pattern>
+              </defs>
+              <rect width="520" height="380" fill="url(#grid2)"/>
+
+              <!-- Internet / WAN -->
+              <g transform="translate(260, 30)">
+                <ellipse cx="0" cy="0" rx="45" ry="16" fill="none" stroke="#4dbb8a" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/>
+                <text x="0" y="5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#929da9">WAN / INTERNET</text>
+              </g>
+
+              <line x1="260" y1="46" x2="260" y2="75" stroke="#2a3038" stroke-width="1.5"/>
+
+              <!-- Palo Alto NGFW -->
+              <g transform="translate(260, 100)">
+                <rect x="-80" y="-25" width="160" height="50" rx="4" fill="#1c2126" stroke="#4dbb8a" stroke-width="1.5"/>
+                <text x="0" y="-6" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#4dbb8a" font-weight="600">PALO ALTO NGFW</text>
+                <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7.5" fill="#929da9">Virtual Routers • Policies</text>
+              </g>
+
+              <!-- Branch lines -->
+              <line x1="180" y1="125" x2="90" y2="175" stroke="#2a3038" stroke-width="1.2"/>
+              <line x1="260" y1="125" x2="260" y2="175" stroke="#2a3038" stroke-width="1.2"/>
+              <line x1="340" y1="125" x2="430" y2="175" stroke="#2a3038" stroke-width="1.2"/>
+
+              <!-- Security Zones -->
+              <g transform="translate(90, 200)">
+                <rect x="-65" y="-22" width="130" height="44" rx="3" fill="#161a1d" stroke="#4dbb8a" stroke-width="1" opacity="0.8"/>
+                <text x="0" y="-5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#4dbb8a" font-weight="600">TRUST ZONE</text>
+                <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">Internal LAN</text>
+              </g>
+
+              <g transform="translate(260, 200)">
+                <rect x="-65" y="-22" width="130" height="44" rx="3" fill="#161a1d" stroke="#f0ede8" stroke-width="1" opacity="0.8"/>
+                <text x="0" y="-5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#f0ede8" font-weight="600">DMZ ZONE</text>
+                <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">Public-Facing</text>
+              </g>
+
+              <g transform="translate(430, 200)">
+                <rect x="-65" y="-22" width="130" height="44" rx="3" fill="#161a1d" stroke="#929da9" stroke-width="1" opacity="0.8"/>
+                <text x="0" y="-5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#929da9" font-weight="600">UNTRUST ZONE</text>
+                <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#929da9">External Traffic</text>
+              </g>
+
+              <!-- Policies Layer -->
+              <g transform="translate(260, 270)">
+                <line x1="-200" y1="0" x2="200" y2="0" stroke="#2a3038" stroke-width="0.8" stroke-dasharray="6 3"/>
+                <rect x="-110" y="-10" width="220" height="20" rx="2" fill="#0e1012"/>
+                <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7.5" fill="#4dbb8a">SECURITY POLICIES LAYER</text>
+              </g>
+
+              <!-- Policy Items -->
+              <g transform="translate(80, 310)">
+                <rect x="-55" y="-14" width="110" height="28" rx="2" fill="#161a1d" stroke="#2a3038" stroke-width="0.8"/>
+                <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">NAT Policies</text>
+              </g>
+              <g transform="translate(210, 310)">
+                <rect x="-55" y="-14" width="110" height="28" rx="2" fill="#161a1d" stroke="#2a3038" stroke-width="0.8"/>
+                <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">App-ID Rules</text>
+              </g>
+              <g transform="translate(340, 310)">
+                <rect x="-45" y="-14" width="90" height="28" rx="2" fill="#161a1d" stroke="#2a3038" stroke-width="0.8"/>
+                <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">QoS Policies</text>
+              </g>
+              <g transform="translate(450, 310)">
+                <rect x="-50" y="-14" width="100" height="28" rx="2" fill="#161a1d" stroke="#2a3038" stroke-width="0.8"/>
+                <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">DoS Protection</text>
+              </g>
+
+              <text x="260" y="365" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#929da9" opacity="0.7">Illustrative diagram based on graduation project scope</text>
+            </svg>
+          </div>
+
+          <div class="featured-project__details">
+            <h3 class="featured-project__title">Network Security Architecture (Graduation Project)</h3>
+            <p class="featured-project__lead">
+              A secure network built with Palo Alto firewalls, designed for scalability, performance and layered protection.
+            </p>
+
+            <ul class="project-bullets" role="list">
+              <li class="project-bullet">
+                <span class="project-bullet__marker" aria-hidden="true"></span>
+                <span class="project-bullet__text"><strong>Zone-based segmentation:</strong> virtual routers and multiple security zones establish the network architecture.</span>
+              </li>
+              <li class="project-bullet">
+                <span class="project-bullet__marker" aria-hidden="true"></span>
+                <span class="project-bullet__text"><strong>Application-aware policies:</strong> NAT policies and application-based security rules control network traffic.</span>
+              </li>
+              <li class="project-bullet">
+                <span class="project-bullet__marker" aria-hidden="true"></span>
+                <span class="project-bullet__text"><strong>Performance &amp; protection:</strong> QoS policies and DoS protection support a secure, scalable network.</span>
+              </li>
+            </ul>
+
+            <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="project-book-btn" target="_blank" rel="noopener noreferrer" aria-label="Read the project book documentation (PDF)">
+              Read the project book
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Beyond the Firewall Section -->
+      <div class="beyond-section">
+        <h3 class="beyond-section__title">Beyond the Firewall</h3>
+
+        <div class="beyond__grid">
+          <article class="beyond-card">
+            <div class="beyond-card__header">
+              <div class="beyond-card__icon" aria-hidden="true">DEV</div>
+              <h4 class="beyond-card__title">Python &amp; Web Development</h4>
+            </div>
+            <p class="beyond-card__desc">
+              Signal analysis, game development, and web applications using HTML, CSS, JavaScript and backend concepts.
+            </p>
+            <div class="beyond-card__tags">
+              <span class="beyond-card__tag">Python</span>
+              <span class="beyond-card__tag">HTML/CSS</span>
+              <span class="beyond-card__tag">JavaScript</span>
+              <span class="beyond-card__tag">Backend Concepts</span>
+            </div>
+          </article>
+
+          <article class="beyond-card">
+            <div class="beyond-card__header">
+              <div class="beyond-card__icon" aria-hidden="true">SYS</div>
+              <h4 class="beyond-card__title">Networks &amp; Embedded Systems</h4>
+            </div>
+            <p class="beyond-card__desc">
+              Technical projects involving networking, embedded systems and automation.
+            </p>
+            <div class="beyond-card__tags">
+              <span class="beyond-card__tag">Networking</span>
+              <span class="beyond-card__tag">Embedded Systems</span>
+              <span class="beyond-card__tag">Automation</span>
+              <span class="beyond-card__tag">C/C++</span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
+    </section>
+
+    <!-- ========== CERTIFICATIONS SECTION (#certifications) ========== -->
+    <section class="certifications container fade-in" id="certifications" aria-label="Certifications">
+      <span class="section-label">Credentials</span>
+      <h2 class="section-heading">Certifications</h2>
+      <p class="section-subheading">Professional certificates and specialized training across network engineering, security operations, cloud, and systems.</p>
+
+      <!-- All 11 certifications verbatim from Edit.md -->
+      <div class="certs-list-clean">
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">Deploying Security Strategies for the Modern Network</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">RCNA Routing &amp; Switching</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">Sales Specialist: Kaspersky Next Optimum (S47.2)</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">Blue Team Scholarship, CyberTalents</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">SOC Analyst Foundation, SIEM XPERT</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">AWS Academy Cloud Foundations, NTI</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">Red Hat System Administration I (9.0), NTI</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">Python and Django learning guide, Udemy</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">eLearnSecurity Certified Incident Responder (eCIR), Netriders Academy</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">Cisco CyberOps, National Telecommunication Institute (NTI)</span>
+        </div>
+
+        <div class="cert-card-clean">
+          <svg class="cert-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span class="cert-card-clean__title">Introduction to Cybersecurity Bootcamp (Cohort 5), CyberTalents</span>
+        </div>
+      </div>
+
+      <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
+    </section>
+
+    <!-- ========== CONTACT SECTION (#contact) ========== -->
+    <section class="contact container fade-in" id="contact" aria-label="Contact">
+      <span class="section-label">Communication</span>
+      <h2 class="section-heading">Contact</h2>
+
+      <div class="contact__inner">
+        <!-- Lead verbatim from Edit.md -->
+        <p class="contact__intro">
+          For professional opportunities and conversations about network and security engineering:
+        </p>
+
+        <div class="contact__cards">
+          <!-- Email -->
+          <a href="mailto:moqurtam@gmail.com" class="contact-card-item" id="contact-email" aria-label="Email Mohamed Qurtam">
+            <span class="contact-card-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </span>
+            <span class="contact-card-item__meta">
+              <span class="contact-card-item__label">Email</span>
+              <span class="contact-card-item__value">moqurtam@gmail.com</span>
+            </span>
+          </a>
+
+          <!-- Primary Phone (from Edit.md) -->
+          <a href="tel:+201024227004" class="contact-card-item" id="contact-phone1" aria-label="Call Mohamed Qurtam on primary phone">
+            <span class="contact-card-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </span>
+            <span class="contact-card-item__meta">
+              <span class="contact-card-item__label">Phone (Primary)</span>
+              <span class="contact-card-item__value">+20 1024227004</span>
+            </span>
+          </a>
+
+          <!-- Secondary Phone (from Edit.md) -->
+          <a href="tel:+201015220163" class="contact-card-item" id="contact-phone2" aria-label="Call Mohamed Qurtam on secondary phone">
+            <span class="contact-card-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </span>
+            <span class="contact-card-item__meta">
+              <span class="contact-card-item__label">Phone (Alternate)</span>
+              <span class="contact-card-item__value">+20 1015220163</span>
+            </span>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/mohamed-qurtam" class="contact-card-item" id="contact-linkedin" target="_blank" rel="noopener noreferrer" aria-label="Connect with Mohamed Qurtam on LinkedIn">
+            <span class="contact-card-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+            </span>
+            <span class="contact-card-item__meta">
+              <span class="contact-card-item__label">LinkedIn</span>
+              <span class="contact-card-item__value">mohamed-qurtam</span>
+              <span class="contact-card-item__sub">linkedin.com/in/mohamed-qurtam</span>
+            </span>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/Mohamed-Qurtam" class="contact-card-item" id="contact-github" target="_blank" rel="noopener noreferrer" aria-label="View Mohamed Qurtam's GitHub profile">
+            <span class="contact-card-item__icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+            </span>
+            <span class="contact-card-item__meta">
+              <span class="contact-card-item__label">GitHub</span>
+              <span class="contact-card-item__value">Mohamed-Qurtam</span>
+              <span class="contact-card-item__sub">github.com/Mohamed-Qurtam</span>
+            </span>
+          </a>
+
+          <!-- CV Download -->
+          <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="contact-card-item" id="contact-cv-download" target="_blank" rel="noopener noreferrer" aria-label="Download Mohamed Qurtam's CV (PDF)">
+            <span class="contact-card-item__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </span>
+            <span class="contact-card-item__meta">
+              <span class="contact-card-item__label">Resume</span>
+              <span class="contact-card-item__value">Download CV (PDF)</span>
+              <span class="contact-card-item__sub">Mohamed_Qurtam-Security_Engineer-CV.pdf</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__copy">&copy; 2026 Mohamed Qurtam · Network &amp; Security Engineer</p>
+        <a href="#top" class="footer__back-top" aria-label="Back to top">↑ Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== JAVASCRIPT (Motion & Nav Highlights) ========== -->
+  <script>
+    // Mobile Navigation Drawer Toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function toggleNav() {
+      const isOpen = navLinks.classList.toggle('open');
+      navOverlay.classList.toggle('open', isOpen);
+      navToggle.classList.toggle('active', isOpen);
+      navToggle.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+
+    if (navToggle) navToggle.addEventListener('click', toggleNav);
+    if (navOverlay) navOverlay.addEventListener('click', toggleNav);
+
+    // Close nav on link click
+    if (navLinks) {
+      navLinks.querySelectorAll('.nav__link, .nav__cv-btn').forEach(link => {
+        link.addEventListener('click', () => {
+          if (navLinks.classList.contains('open')) {
+            toggleNav();
+          }
+        });
+      });
+    }
+
+    // Close nav on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks && navLinks.classList.contains('open')) {
+        toggleNav();
+      }
+    });
+
+    // IntersectionObserver for reveal / fade-in animations (Edit.md Part 2 Note 4)
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible', 'reveal');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+
+      document.querySelectorAll('.fade-in, .hero').forEach(el => observer.observe(el));
+    } else {
+      document.querySelectorAll('.fade-in, .hero').forEach(el => {
+        el.classList.add('visible', 'reveal');
+      });
+    }
+
+    // Active nav link highlight on scroll
+    const sectionIds = ['summary', 'experience', 'skills', 'education', 'projects', 'certifications', 'contact'];
+    const navLinksMap = {};
+    sectionIds.forEach(id => {
+      navLinksMap[id] = document.getElementById('nav-' + id);
+    });
+
+    function updateActiveNav() {
+      const scrollPos = window.scrollY + 140;
+      let currentSectionId = '';
+
+      sectionIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            currentSectionId = id;
+          }
+        }
+      });
+
+      sectionIds.forEach(id => {
+        const link = navLinksMap[id];
+        if (link) {
+          if (id === currentSectionId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        }
+      });
+    }
+
+    let scrollRaf;
+    window.addEventListener('scroll', () => {
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = requestAnimationFrame(updateActiveNav);
+    }, { passive: true });
+
+    // Initial check
+    updateActiveNav();
+  </script>
+</body>
+</html>
