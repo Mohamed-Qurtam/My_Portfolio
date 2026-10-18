@@ -17,6 +17,9 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🛡</text></svg>">
 
   <link rel="stylesheet" href="index.css">
+
+  <!-- Edit.js (Loads deferred, reveals role after load, manages loops & interactive features) -->
+  <script src="edit.js" defer></script>
 </head>
 <body>
 
@@ -55,16 +58,16 @@
       <div class="hero__grid">
         <div class="hero__content">
           <div class="hero__status-badge">
-            <span class="hero__status-dot" aria-hidden="true"></span>
+            <span class="hero__status-dot" data-pulse-dot aria-hidden="true"></span>
             OPEN TO NEW OPPORTUNITIES
           </div>
 
           <h1 class="hero__name">Mohamed Qurtam</h1>
 
-          <div class="hero__role-line" aria-label="Role: Network and Security Engineer">
-            <span>NETWORK &amp; SECURITY ENGINEER</span>
-            <span class="hero__role-cursor" aria-hidden="true">|</span>
-          </div>
+          <!-- Role line with data-role-title for edit.js post-load typed reveal -->
+          <h2 class="hero__role-line" data-role-title aria-label="Role: Network and Security Engineer">
+            Network &amp; Security Engineer
+          </h2>
 
           <p class="hero__tagline">
             Securing networks. Engineering resilient infrastructure.
@@ -98,39 +101,40 @@
           </div>
         </div>
 
-        <!-- Arch-shaped Photo (Right cell per Edit.md table) -->
+        <!-- Arch-shaped Photo (with data-hero-photo for edit.js float & breathing glow) -->
         <div class="hero__photo-col">
-          <picture>
-            <source srcset="images/photo-arch.png" type="image/png">
-            <img
-              src="MyPhoto.jpeg"
-              alt="Portrait of Mohamed Qurtam in a graduation gown holding an appreciation award, Benha University, class of 2024"
-              class="hero__photo-arch"
-              width="300"
-              height="400"
-            >
-          </picture>
-          <span class="hero__photo-caption">Benha University · Class of 2024</span>
+          <figure class="hero__photo-wrapper">
+            <picture>
+              <source srcset="images/photo-arch.png" type="image/png">
+              <img
+                data-hero-photo
+                src="MyPhoto.jpeg"
+                alt="Portrait of Mohamed Qurtam in a graduation gown holding an appreciation award, Benha University, class of 2024"
+                class="hero__photo-arch"
+                width="300"
+                height="400"
+              >
+            </picture>
+            <figcaption class="hero__photo-caption">Benha University · Class of 2024</figcaption>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- ========== TECH TICKER (Under Hero per Edit.md / mmaklad.online) ========== -->
+    <!-- ========== TECH TICKER (with data-tools-strip for edit.js 40s marquee & Kaspersky EDR insertion) ========== -->
     <section class="tech-ticker" aria-label="Core Technologies">
-      <div class="container">
-        <ul class="tech-ticker__list" role="list">
-          <li class="tech-ticker__item">Palo Alto</li>
-          <li class="tech-ticker__item">FortiGate</li>
-          <li class="tech-ticker__item">Splunk</li>
-          <li class="tech-ticker__item">Wireshark</li>
-          <li class="tech-ticker__item">Nmap</li>
-          <li class="tech-ticker__item">IDS/IPS</li>
-          <li class="tech-ticker__item">CCNA</li>
-          <li class="tech-ticker__item">Linux</li>
-          <li class="tech-ticker__item">AWS</li>
-          <li class="tech-ticker__item">Python</li>
-          <li class="tech-ticker__item">Bash</li>
-        </ul>
+      <div class="tech-ticker__strip" data-tools-strip>
+        <span class="tech-ticker__item">Palo Alto</span>
+        <span class="tech-ticker__item">FortiGate</span>
+        <span class="tech-ticker__item">Splunk</span>
+        <span class="tech-ticker__item">Wireshark</span>
+        <span class="tech-ticker__item">Nmap</span>
+        <span class="tech-ticker__item">IDS/IPS</span>
+        <span class="tech-ticker__item">CCNA</span>
+        <span class="tech-ticker__item">Linux</span>
+        <span class="tech-ticker__item">AWS</span>
+        <span class="tech-ticker__item">Python</span>
+        <span class="tech-ticker__item">Bash</span>
       </div>
     </section>
 
@@ -175,24 +179,24 @@
         </div>
       </div>
 
-      <!-- AT A GLANCE (Stat counters per Edit.md) -->
+      <!-- AT A GLANCE (Stat counters with dynamic counter hooks) -->
       <div class="at-a-glance">
         <h4 class="at-a-glance__title">AT A GLANCE</h4>
         <div class="stats-grid">
           <div class="stat-card">
-            <span class="stat-card__number">11</span>
+            <span class="stat-card__number" data-count="11">11</span>
             <span class="stat-card__label">Certificates</span>
           </div>
           <div class="stat-card">
-            <span class="stat-card__number">20+</span>
+            <span class="stat-card__number" data-count="20" data-suffix="+">20+</span>
             <span class="stat-card__label">Cybersecurity modules created</span>
           </div>
           <div class="stat-card">
-            <span class="stat-card__number">100+</span>
+            <span class="stat-card__number" data-count="100" data-suffix="+">100+</span>
             <span class="stat-card__label">Technical sessions managed</span>
           </div>
           <div class="stat-card">
-            <span class="stat-card__number">2024</span>
+            <span class="stat-card__number" data-count="2024">2024</span>
             <span class="stat-card__label">B.Sc. graduate, Honors</span>
           </div>
         </div>
@@ -703,7 +707,7 @@
     </div>
   </footer>
 
-  <!-- ========== JAVASCRIPT ========== -->
+  <!-- ========== PAGE CORE JAVASCRIPT (Navigation & Active Highlights) ========== -->
   <script>
     // Mobile Navigation Drawer Toggle
     const navToggle = document.getElementById('navToggle');

@@ -1,297 +1,169 @@
-<!-- ============================================================
-  Edit.md — Mohamed Qurtam | Network & Security Engineer
-  Layout modelled on mmaklad.online:
-  hero (photo + intro) → About → Experience → Skills → Education
-  → Projects → Certifications → Contact
+# Edit.md: Portfolio tweaks (role reveal · Kaspersky EDR · looping animations)
 
-  PART 1 = copy-ready profile      PART 2 = notes (delete before publishing)
-  Keep the folder structure:  Edit.md  +  images/photo-arch.png
-============================================================ -->
+Files in this folder:
 
-<a id="top"></a>
-
-<div align="center">
-
-**[About](#about)** · **[Experience](#experience)** · **[Skills](#skills)** · **[Education](#education)** · **[Projects](#projects)** · **[Certifications](#certifications)** · **[Contact](#contact)**
-
-</div>
-
----
-
-<!-- ============ HERO (photo in the first section) ============ -->
-
-<table>
-<tr>
-<td valign="middle" width="60%">
-
-`● OPEN TO NEW OPPORTUNITIES`
-
-# Mohamed Qurtam
-
-**NETWORK & SECURITY ENGINEER** `|`
-
-*Securing networks. Engineering resilient infrastructure.*
-
-Working at the intersection of network infrastructure and defensive security. Designing, deploying and securing enterprise infrastructure across the MENA region at **Co-brand Solution**.
-
-**[⬇ Download CV](Mohamed_Qurtam-Security_Engineer-CV.pdf)** · **[View Projects](#projects)**
-
-[Email](mailto:moqurtam@gmail.com) · [LinkedIn](https://linkedin.com/in/mohamed-qurtam) · [GitHub](https://github.com/Mohamed-Qurtam)
-
-</td>
-<td valign="middle" align="center" width="40%">
-
-<img src="images/photo-arch.png" alt="Portrait of Mohamed Qurtam in a graduation gown holding an appreciation award, Benha University, class of 2024" width="300">
-
-<sub>Benha University · Class of 2024</sub>
-
-</td>
-</tr>
-</table>
-
-<div align="center">
-
-`Palo Alto` · `FortiGate` · `Splunk` · `Wireshark` · `Nmap` · `IDS/IPS` · `CCNA` · `Linux` · `AWS` · `Python` · `Bash`
-
-</div>
-
----
-
-## About
-
-`// 01 · WHO I AM`
-
-### Networks. Security. Clear communication.
-
-I'm a **Network & Security Engineer** and Communication & Electronics Engineering graduate (Excellent with Honors) with hands-on experience in switches, routers, firewall configuration, SIEM monitoring and incident response. Beyond engineering, my work in cybersecurity content, technical session coordination and programming education shapes how I communicate complex ideas.
-
-**WHAT I DO**
-
-| | |
+| File | Purpose |
 |---|---|
-| **01 · Network Engineering** | Design and deploy campus switching, routing, Wi-Fi and SD-WAN with predictable performance and controlled growth. |
-| **02 · Firewall & Defensive Security** | Configure Palo Alto and FortiGate policies, segmentation and IDS/IPS to protect enterprise networks in layers. |
-| **03 · Monitoring & Response** | Use SIEM monitoring, log analysis and incident-response playbooks to detect, investigate and contain threats. |
+| `edit.js` | The only file you need. Vanilla JS, no dependencies; it injects its own CSS. |
+| `Edit.md` | This document: what changed, why, and how to integrate it. |
 
-**AT A GLANCE**
-
-| 11 | 20+ | 100+ | 2024 |
-|:---:|:---:|:---:|:---:|
-| Certificates | Cybersecurity modules created | Technical sessions managed | B.Sc. graduate, Honors |
-
-**Strengths:** Analytical thinking · Clear documentation · Knowledge sharing
-**Languages:** Arabic (Native) · English (Very Good)
-
-[↑ Back to top](#top)
+> This folder is separate from the profile README `Edit.md` I made earlier. Don't overwrite one with the other.
 
 ---
 
-## Experience
+## 1. What changed
 
-`// 02 · CAREER`
-
-### 🟢 Network & Security Engineer: Co-brand Solution
-`Sep 2026 – Present`
-
-Design, deploy and secure enterprise network and security infrastructure for clients across the MENA region, including firewalls, switching, Wi-Fi and SD-WAN. Monitor and troubleshoot to meet SLAs, run security hardening and vulnerability assessments, and document solutions for client handover.
-
-`Firewalls` `Switching` `Wi-Fi` `SD-WAN` `Hardening` `Vulnerability Assessment`
-
-### Programming Tutor (DEMI): iSchool
-`2026`
-
-Delivered programming lessons, guided students through coding projects and problem-solving activities, and helped them build logical thinking and fundamental programming skills.
-
-`Python` `Problem Solving` `Teaching`
-
-### IT Specialist: Information Systems Department, Egyptian Military Academy
-`2025 – 2026`
-
-Performed maintenance and repairs for computers, monitors and printers. Managed account administration and installed firmware, updates and system images for PCs.
-
-`Account Administration` `Imaging` `Hardware Support`
-
-### Content Creator, Cybersecurity Track: Armstrong
-`2024`
-
-Created 20+ educational modules simplifying cybersecurity concepts and boosted learner engagement through structured content.
-
-`Cybersecurity` `Technical Writing`
-
-### Session Coordinator: Almentor
-`2023 – 2025`
-
-Managed 100+ technical sessions with high participant satisfaction and reduced session issues through refined coordination workflows.
-
-`Coordination` `Workflow Improvement`
-
-[↑ Back to top](#top)
+| # | Request | Implementation |
+|---|---|---|
+| 1 | Show "Network & Security Engineer" only after the page has finished loading | The role line is emptied before first paint, then typed in after `window.load` **and** `document.fonts.ready` (+120 ms) |
+| 2 | Add "Kaspersky EDR" to the tools list | A tag is cloned from the "Splunk" tag (so it keeps your styling) and inserted right after it, in the hero strip and in the Skills row. Safe to run repeatedly (no duplicates) |
+| 3 | Smooth, continuous looping animations | Blinking cursor, pulsing status dot, floating photo with breathing glow, and a scrolling tools strip (details in section 4) |
+| 4 | Accessibility | Screen readers hear the role text once through a polite status region; the typing animation and cursor are `aria-hidden`; loops stop under `prefers-reduced-motion`; marquee copies are `aria-hidden` + `inert`; the marquee pauses on hover and keyboard focus |
 
 ---
 
-## Skills
+## 2. Where to insert the script
 
-`// 03 · CAPABILITIES`
+Because your page looks like a React/Vite build (the hero text is drawn by JavaScript after the HTML arrives), the safest spot is **one `<script defer>` tag in `index.html`**:
 
-Core competencies spanning enterprise firewalls, defensive SOC operations, cloud security and scripting.
-
-| Area | Tools & topics |
-|---|---|
-| **Network & firewall engineering** | `Palo Alto` `FortiGate` `IDS/IPS` `Firewall policies` `Network segmentation` `Traffic analysis` `CCNA routing & switching` |
-| **Blue Team & SOC** | `Incident response` `Threat detection` `Log analysis` `Security monitoring` `SOC metrics` `Playbooks` `Malware analysis` `Digital forensics` |
-| **Network & security tools** | `Splunk (SIEM)` `Wireshark` `Nmap` `Metasploit` |
-| **Systems & cloud** | `Linux` `Windows` `AWS architecture` `AWS core services` `Cloud security basics` |
-| **Programming** | `Python` `Bash` `C/C++` `HTML` `CSS` `JavaScript` `Backend concepts` |
-
-[↑ Back to top](#top)
-
----
-
-## Education
-
-`// 04 · ACADEMIC BACKGROUND`
-
-### B.Sc. Communication & Electronics Engineering
-**Benha University · Faculty of Engineering at Shoubra · June 2024**
-`Excellent with Honors`
-
-An engineering foundation in communication, electronics and technical problem-solving.
-
-[↑ Back to top](#top)
-
----
-
-## Projects
-
-`// 05 · ENGINEERING PORTFOLIO`
-
-### Network Security Architecture (Graduation Project)
-
-A secure network built with Palo Alto firewalls, designed for scalability, performance and layered protection.
-
-```text
-              WAN / INTERNET
-                    │
-          ┌─────────────────────┐
-          │   PALO ALTO NGFW    │   Virtual routers · Policies
-          └─────────────────────┘
-        ┌───────────┼───────────┐
-   TRUST ZONE    DMZ ZONE    UNTRUST ZONE
-   Internal LAN  Public-facing  External traffic
-
-   Security policies layer:  NAT · App-ID rules · QoS · DoS protection
+```html
+<!-- index.html: just before </body> (or in <head>, with defer) -->
+<script src="/edit.js" defer></script>
 ```
-<sub>Illustrative diagram based on graduation project scope.</sub>
 
-- **Zone-based segmentation:** virtual routers and multiple security zones establish the network architecture.
-- **Application-aware policies:** NAT policies and application-based security rules control network traffic.
-- **Performance & protection:** QoS policies and DoS protection support a secure, scalable network.
+- Put `edit.js` in the `public/` folder (Vite/Lovable) or next to `index.html` (static site), so it is served at `/edit.js`.
+- `defer` runs the script after parsing and before `DOMContentLoaded`. The script then **waits for `window.load`** before revealing the title, so you do not need to wrap anything yourself.
+- A `MutationObserver` catches elements the framework renders late. It clears the role text in the same task as the render, so the text never flashes on screen. It stops watching 10 s after load.
+- Not a React app? Same tag, nothing else to change.
 
-**[Read the project book ↗](YOUR-PROJECT-BOOK-LINK)**
+Optional hooks (use them if auto-detection misses an element):
 
-### Beyond the Firewall
+```html
+<h2 data-role-title>NETWORK & SECURITY ENGINEER</h2>
+<span data-pulse-dot></span>
+<img data-hero-photo src="..." alt="...">
+<div data-tools-strip> ...tags... </div>
+```
 
-| **DEV · Python & Web Development** | **SYS · Networks & Embedded Systems** |
+---
+
+## 3. Minimal self-contained snippets
+
+### 3a. Title reveal after load
+
+```html
+<h2 id="role" aria-live="polite"></h2>
+
+<script>
+  window.addEventListener('load', function () {
+    var el = document.getElementById('role');
+    var text = 'Network & Security Engineer';
+    var i = 0;
+    // Respect reduced-motion: show everything at once
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = text;
+      return;
+    }
+    (function type() {
+      el.textContent = text.slice(0, ++i);
+      if (i < text.length) setTimeout(type, 55);
+    })();
+  });
+</script>
+```
+
+(The full `edit.js` version avoids announcing every letter to screen readers by putting the animated copy in an `aria-hidden` span and announcing the full text once.)
+
+### 3b. Append "Kaspersky EDR" to a tools list
+
+```html
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-tools]').forEach(function (list) {
+      var exists = Array.prototype.some.call(list.children, function (c) {
+        return /kaspersky edr/i.test(c.textContent);
+      });
+      if (exists || !list.firstElementChild) return;
+      var tag = list.firstElementChild.cloneNode(true); // copies the tag styling
+      tag.textContent = 'Kaspersky EDR';
+      list.appendChild(tag);
+    });
+  });
+</script>
+```
+
+`edit.js` does the same without needing `data-tools`: it finds the "Splunk" tag, climbs to the tag wrapper, clones it, and inserts the new tag right after it.
+
+---
+
+## 4. Blueprint for the looping animations
+
+| Element | Animation | Timing | Values | Why it looks smooth |
+|---|---|---|---|---|
+| Role cursor `\|` | Blink | `1.1s steps(1,end) infinite` | opacity 1 → 0 at 50% | Hard on/off like a real terminal cursor |
+| "Open to new opportunities" dot | Pulse ring | `2s ease-in-out infinite` | scale 1 → 1.15, ring grows 0 → 7px and fades | Slow ease; the ring fades as it expands |
+| Hero photo (wrapper) | Float | `6s ease-in-out infinite` | `translateY(0 → -10px → 0)` | Only `transform` is animated, so it runs on the GPU |
+| Hero photo (image) | Glow breathing | `5s ease-in-out infinite` | `drop-shadow` 10px/10% → 22px/30% | 6s vs 5s lengths drift apart, so the loop never looks mechanical |
+| Tools strip | Marquee | `40s linear infinite` | `translateX(0 → -50%)` across two identical groups | Linear easing and a duplicated group give a seamless wrap; pauses on hover/focus |
+
+CSS core (already injected by `edit.js`):
+
+```css
+.qt-cursor { animation: qt-blink 1.1s steps(1, end) infinite; }
+@keyframes qt-blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+
+.qt-float  { animation: qt-float 6s ease-in-out infinite; }
+@keyframes qt-float { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+
+.qt-marquee__track { display: flex; width: max-content;
+  animation: qt-marquee 40s linear infinite; }
+@keyframes qt-marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+@media (prefers-reduced-motion: reduce) {
+  .qt-cursor, .qt-pulse, .qt-float, .qt-glow, .qt-marquee__track { animation: none !important; }
+}
+```
+
+Tuning: change `marqueeDurationS` (bigger = slower), or edit the `6s` / `5s` / `2s` values in the `CSS` string at the top of `edit.js`.
+
+---
+
+## 5. Usage and integration steps
+
+1. Copy `edit.js` into `public/` (or beside `index.html`).
+2. Add `<script src="/edit.js" defer></script>` before `</body>`.
+3. Open the page with the cache disabled and check:
+   - The role line is empty at first, then types in after the page loads.
+   - "Kaspersky EDR" appears right after "Splunk" in the hero strip and in the Skills row.
+   - The cursor blinks, the dot pulses, the photo floats, and the strip scrolls.
+4. In DevTools, turn on **Rendering → Emulate prefers-reduced-motion: reduce** and reload. Everything should appear instantly with no loops.
+5. Optional: set `setDocumentTitle: true` in `CONFIG` if you also want the browser-tab title set after load. It is off by default because search engines and link previews read the title from the raw HTML.
+
+### Troubleshooting
+
+| Symptom | Fix |
 |---|---|
-| Signal analysis, game development and web applications using HTML, CSS, JavaScript and backend concepts.<br>`Python` `HTML/CSS` `JavaScript` `Backend` | Technical projects involving networking, embedded systems and automation.<br>`Networking` `Embedded` `Automation` `C/C++` |
-
-[↑ Back to top](#top)
-
----
-
-## Certifications
-
-`// 06 · CREDENTIALS`
-
-Professional certificates and specialized training across network engineering, security operations, cloud and systems.
-
-- ✅ Deploying Security Strategies for the Modern Network
-- ✅ RCNA Routing & Switching
-- ✅ Sales Specialist: Kaspersky Next Optimum (S47.2)
-- ✅ Blue Team Scholarship, CyberTalents
-- ✅ SOC Analyst Foundation, SIEM XPERT
-- ✅ AWS Academy Cloud Foundations, NTI
-- ✅ Red Hat System Administration I (9.0), NTI
-- ✅ Python and Django learning guide, Udemy
-- ✅ eLearnSecurity Certified Incident Responder (eCIR), Netriders Academy
-- ✅ Cisco CyberOps, National Telecommunication Institute (NTI)
-- ✅ Introduction to Cybersecurity Bootcamp (Cohort 5), CyberTalents
-
-[↑ Back to top](#top)
+| Two cursors | Set `addCursor: false` in `CONFIG` (the site already draws one) |
+| Role line not found | Add `data-role-title` to that element |
+| Strip scrolls but looks cramped or too fast | Raise `marqueeDurationS`, or set `marquee: false` |
+| Strip breaks after a React re-render | Set `marquee: false`; the strip is static in your hero so this is unlikely |
+| Photo does not float | Add `data-hero-photo` to the `<img>` |
+| After a client-side route change | Call `window.qtEdit.run()` |
 
 ---
 
-## Contact
+## 6. Changelog
 
-`// 07 · LET'S CONNECT`
-
-### Let's talk.
-
-For professional opportunities and conversations about network and security engineering.
-
-| | |
-|---|---|
-| ✉️ **Email** | [moqurtam@gmail.com](mailto:moqurtam@gmail.com) |
-| 📞 **Phone (primary)** | +20 1024227004 |
-| 📞 **Phone (alternate)** | +20 1015220163 |
-| 💼 **LinkedIn** | [linkedin.com/in/mohamed-qurtam](https://linkedin.com/in/mohamed-qurtam) |
-| 🐙 **GitHub** | [github.com/Mohamed-Qurtam](https://github.com/Mohamed-Qurtam) |
-| 📄 **Resume** | [Download CV (PDF)](Mohamed_Qurtam-Security_Engineer-CV.pdf) |
-
-<div align="center">
-
-<sub>© 2026 Mohamed Qurtam · Network & Security Engineer</sub>
-
-[↑ Top](#top)
-
-</div>
+- **Added** `edit.js` (single file, no dependencies, injects its own CSS).
+- **Changed** the hero role line to render only after full page load and web fonts are ready, with a typing reveal and a screen-reader-friendly announcement.
+- **Added** "Kaspersky EDR" to the tools list after "Splunk" (hero strip and Skills row), idempotent.
+- **Added** looping animations: cursor blink 1.1s, status-dot pulse 2s, photo float 6s + glow 5s, tools marquee 40s.
+- **Added** reduced-motion handling: no loops, instant reveal.
 
 ---
----
 
-# PART 2 — Notes (delete this part before publishing)
+## 7. Compatibility notes
 
-## 1. What was borrowed from mmaklad.online
-
-| Their site | This file |
-|---|---|
-| Hero: "Open to New Opportunities" badge, name, uppercase role with cursor `\|`, one-line tagline, Download CV + View Projects, social row, photo on the right | Same order, using a two-column table with the photo in the right cell |
-| Scrolling skills ticker | A single centered line of tool tags under the hero |
-| Numbered section labels ("Who I Am 01") | `// 01 · WHO I AM` style labels above each heading |
-| "What I Build" 01/02/03 and stat cards | "What I do" table and an "At a glance" stat row |
-| Experience with tech tags per role | Same, using inline code tags |
-| Hover-based skill cards, project carousel, contact form | Not possible in Markdown, so these are covered in the upgrade path (section 5) |
-
-## 2. The photo shape
-
-I couldn't see how mmaklad.online styles the photo (my view of the page was text only), so I used an **arch shape** (rounded top, softly rounded bottom), cropped from your screenshot into `images/photo-arch.png`. Two things to do:
-
-1. **Replace it with your original high-resolution photo** (the cropped version is low-resolution because it came from a screenshot). Keep the same file name.
-2. **If their shape is different** (circle, blob, hexagon, tilted frame), tell me which and I'll re-cut it. GitHub strips CSS, so the shape must be baked into a transparent PNG, which is exactly what the file is.
-
-## 3. Responsive guidance
-
-- The hero is a 2-column table: GitHub shows it side by side on desktop and squeezes it on phones. For a safer mobile layout, swap the table for `<img align="right" width="260" ...>` placed before the intro text, which wraps naturally.
-- Keep tables to 2 columns (the stat row is 4 narrow cells, so keep those labels short).
-- Use percentage or small fixed widths on images, and keep a clean heading order (`#` → `##` → `###`).
-- Dark/light logo or banner: use `<picture>` with `prefers-color-scheme` sources.
-
-## 4. Motion ideas (what works in Markdown)
-
-- **Typing tagline:** a hosted typing-SVG service can mimic their typewriter role line. It depends on a third party, so keep the plain-text line as fallback.
-- **Animated banner/diagram:** a short looping animated SVG or GIF of the firewall zone diagram, under about 1 MB, with a static first frame.
-- **Cursor `|`:** already in the hero as a static nod to their blinking cursor.
-- Everything else (scroll reveals, hover cards, carousel) needs a real webpage.
-
-## 5. Accessibility
-
-- Alt text describes the content (done for the photo). Decorative emoji in the contact table are paired with text labels.
-- Aim for 4.5:1 contrast on any custom banners; your site's grey body text is on the dim side, so lighten it.
-- Use descriptive link text and avoid flashing animation; keep GIFs optional.
-
-## 6. Upgrade path to a webpage
-
-1. Anchors `#about`, `#experience`, `#skills`, `#education`, `#projects`, `#certifications`, `#contact` already match the nav, so add the same `id`s to your site sections.
-2. Minimal CSS: `body { max-width: 72ch; margin: auto; } img { max-width: 100%; height: auto; } section { scroll-margin-top: 4rem; }` plus a `clip-path`/`border-radius: 999px 999px 24px 24px` on the hero photo to match the arch.
-3. Minimal JS: one `IntersectionObserver` for fade-up reveals, a blinking-cursor CSS animation (`@keyframes blink`), and a tab/hover filter for projects, all wrapped in `@media (prefers-reduced-motion: no-preference)`.
-4. Before launch: Lighthouse accessibility check, meta description, Open Graph image (your photo), phone-width test.
+- Modern browsers (Chrome/Edge/Firefox/Safari from about 2020). Uses `MutationObserver`, `Promise`, CSS variables and `inert`; no IE support.
+- No backend changes and no third-party code.
+- I checked the file's syntax and ran it in a simulated DOM (role empty before load, then typed; Kaspersky EDR added once per list with no duplicates on re-run). I haven't tested it on your live page, so check the visual items in step 3, since selectors depend on your real markup.
