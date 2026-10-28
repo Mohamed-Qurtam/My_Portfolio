@@ -59,6 +59,9 @@
   <main>
     <!-- ========== HERO SECTION (Photo in Hero per Edit.md / mmaklad.online) ========== -->
     <section class="hero container reveal" id="hero" aria-label="Hero Introduction">
+      <!-- Ambient Cyber Network Mesh Canvas -->
+      <canvas id="hero-cyber-canvas" class="hero__cyber-canvas" aria-hidden="true"></canvas>
+
       <div class="hero__grid">
         <div class="hero__content">
           <div class="hero__status-badge" aria-label="System status: Defensive Security & Infrastructure Hardening">
@@ -79,6 +82,27 @@
           <p class="hero__intro">
             Working at the intersection of network infrastructure and defensive security. Designing, deploying and securing enterprise infrastructure across the MENA region at <strong>Co-brand Solution</strong>.
           </p>
+
+          <!-- Live SOC Security Posture Strip -->
+          <div class="hero__telemetry-bar" aria-label="Live Security & Infrastructure Posture">
+            <div class="hero__telemetry-chip">
+              <span class="telemetry-chip__dot" aria-hidden="true"></span>
+              <span class="telemetry-chip__label">FIREWALL</span>
+              <span class="telemetry-chip__val">ACTIVE · 0 DROPPED</span>
+            </div>
+            <div class="hero__telemetry-chip">
+              <span class="telemetry-chip__label">ENCRYPTION</span>
+              <span class="telemetry-chip__val">IPsec AES-256</span>
+            </div>
+            <div class="hero__telemetry-chip">
+              <span class="telemetry-chip__label">LATENCY</span>
+              <span class="telemetry-chip__val" id="heroTelemetryLatency">14ms</span>
+            </div>
+            <div class="hero__telemetry-chip">
+              <span class="telemetry-chip__label">SOC STATUS</span>
+              <span class="telemetry-chip__val telemetry-chip__val--green">HARDENED</span>
+            </div>
+          </div>
 
           <div class="hero__actions">
             <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="btn-primary" id="hero-cv-btn" target="_blank" rel="noopener noreferrer" aria-label="Download Mohamed Qurtam's CV (PDF)">

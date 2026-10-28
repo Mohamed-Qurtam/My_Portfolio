@@ -289,6 +289,18 @@ button:focus-visible {
   padding-top: calc(var(--nav-height) + var(--space-2xl));
   padding-bottom: var(--space-3xl);
   position: relative;
+  overflow: hidden;
+}
+
+.hero__cyber-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.65;
 }
 
 .hero__grid {
@@ -297,6 +309,8 @@ button:focus-visible {
   align-items: center;
   gap: var(--space-3xl);
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .hero__content {
@@ -384,6 +398,67 @@ button:focus-visible {
 
 .hero__intro strong {
   color: var(--text-primary);
+}
+
+/* Live SOC Telemetry Bar in Hero */
+.hero__telemetry-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px var(--space-md);
+  padding: 8px 14px;
+  background: rgba(22, 26, 29, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(77, 187, 138, 0.22);
+  border-radius: var(--radius-sm);
+  width: fit-content;
+  max-width: 100%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  transition: border-color var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.hero__telemetry-bar:hover {
+  border-color: rgba(77, 187, 138, 0.45);
+  box-shadow: 0 4px 20px rgba(77, 187, 138, 0.12);
+}
+
+.hero__telemetry-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.hero__telemetry-chip + .hero__telemetry-chip::before {
+  content: '·';
+  color: var(--border-primary);
+  margin-right: 2px;
+}
+
+.telemetry-chip__dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse-dot 1.8s infinite;
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.telemetry-chip__label {
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.telemetry-chip__val {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.telemetry-chip__val--green {
+  color: var(--accent);
 }
 
 .hero__actions {
@@ -1667,56 +1742,53 @@ button:focus-visible {
   margin-bottom: var(--space-2xl);
 }
 
-.contact__table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-md);
+/* ===================================================
+   CARD SPOTLIGHT & CYBER MOTIONS
+   =================================================== */
+.card-spotlight {
+  position: relative;
   overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.contact__table tr {
-  border-bottom: 1px solid var(--border-subtle);
-  transition: background var(--duration-fast) var(--ease-out);
+.card-spotlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(360px circle at var(--mouse-x, -999px) var(--mouse-y, -999px), rgba(77, 187, 138, 0.12), transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 1;
 }
 
-.contact__table tr:last-child {
-  border-bottom: none;
+.card-spotlight:hover::before {
+  opacity: 1;
 }
 
-.contact__table tr:hover {
-  background: var(--bg-tertiary);
+.card-spotlight:hover {
+  transform: translateY(-3px);
+  border-color: rgba(77, 187, 138, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(77, 187, 138, 0.1);
 }
 
-.contact__table td {
-  padding: var(--space-md) var(--space-lg);
-  vertical-align: middle;
+/* Certificate card stagger enter */
+@keyframes certCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
-.contact__table-label {
-  width: 35%;
-  font-family: var(--font-heading);
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.contact__table-value {
-  font-family: var(--font-mono);
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-}
-
-.contact__table-value a {
-  color: var(--accent);
-}
-
-.contact__table-value a:hover {
-  color: var(--text-primary);
+.cert-card-clean.stagger-in {
+  animation: certCardEnter 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Back to Top links */
@@ -1954,9 +2026,6 @@ button:focus-visible {
     color: var(--accent);
   }
 
-  .contact__table-label {
-    width: 45%;
-  }
 
   /* Cert modal: narrower on tablets */
   .cert-modal__dialog {
@@ -2019,13 +2088,4 @@ button:focus-visible {
     font-size: 1rem;
   }
 
-  .contact__table-label,
-  .contact__table-value {
-    display: block;
-    width: 100%;
-  }
-
-  .contact__table td {
-    padding: var(--space-sm) var(--space-md);
-  }
 }

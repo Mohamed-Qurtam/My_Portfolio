@@ -584,11 +584,19 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     if (S.loaded) revealRole();
   }
 
+  const ROLES_CYCLE = [
+    'Network & Security Engineer',
+    'Next-Gen Firewall Architect (Fortinet · Palo Alto)',
+    'Enterprise Switching & Routing Specialist (Cisco · Ruijie)',
+    'Defensive Security & Incident Response (Splunk · EDR)'
+  ];
+  let roleCycleIdx = 0;
+  let roleTimer = null;
+
   function revealRole() {
     if (S.revealed || !S.role) return;
     S.revealed = true;
     const { el, addCursor } = S.role;
-    const text = CONFIG.roleText;
     const visual = document.createElement('span');
     visual.setAttribute('aria-hidden', 'true');
     const sr = document.createElement('span');
@@ -604,22 +612,57 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
       c.textContent = '|';
       el.appendChild(c);
     }
-    const finish = () => {
+    const finish = (text) => {
       visual.textContent = text;
       sr.textContent = text;
       el.setAttribute('data-qt-role', 'done');
       el.style.minHeight = '';
     };
-    if (reduceMotion || !CONFIG.typeSpeedMs) { finish(); return; }
-    // start typing when this line's slot in the hero entrance sequence arrives
+    if (reduceMotion || !CONFIG.typeSpeedMs) { finish(ROLES_CYCLE[0]); return; }
+
+    let isDeleting = false;
+    let charIdx = 0;
+
+    function typeLoop() {
+      const currentRole = ROLES_CYCLE[roleCycleIdx];
+      sr.textContent = currentRole;
+
+      if (!isDeleting) {
+        charIdx++;
+        visual.textContent = currentRole.slice(0, charIdx);
+        if (charIdx === currentRole.length) {
+          el.setAttribute('data-qt-role', 'done');
+          roleTimer = setTimeout(() => {
+            isDeleting = true;
+            typeLoop();
+          }, 3200);
+          return;
+        }
+        roleTimer = setTimeout(typeLoop, CONFIG.typeSpeedMs);
+      } else {
+        charIdx--;
+        visual.textContent = currentRole.slice(0, charIdx);
+        if (charIdx === 0) {
+          isDeleting = false;
+          roleCycleIdx = (roleCycleIdx + 1) % ROLES_CYCLE.length;
+          roleTimer = setTimeout(typeLoop, 450);
+          return;
+        }
+        roleTimer = setTimeout(typeLoop, 25);
+      }
+    }
+
+    el.onclick = () => {
+      clearTimeout(roleTimer);
+      isDeleting = false;
+      charIdx = 0;
+      roleCycleIdx = (roleCycleIdx + 1) % ROLES_CYCLE.length;
+      typeLoop();
+    };
+
     const item = el.closest('.qt-hero-item');
     const idx = item ? Number(item.style.getPropertyValue('--qt-i')) || 0 : 0;
-    let i = 0;
-    setTimeout(function tick() {
-      i += 1;
-      visual.textContent = text.slice(0, i);
-      if (i < text.length) setTimeout(tick, CONFIG.typeSpeedMs); else finish();
-    }, idx * 110 + 250);
+    setTimeout(typeLoop, idx * 110 + 250);
   }
 
   /* ------------------------------------------------------------------ *
@@ -1738,27 +1781,207 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
         btn.setAttribute('aria-selected', 'true');
 
         const filter = btn.dataset.filter || 'all';
+        let matchIdx = 0;
         cards.forEach((card) => {
           const category = card.dataset.category;
           const match = filter === 'all' || category === filter;
-          card.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+          card.classList.remove('stagger-in');
           if (match) {
             card.style.display = '';
-            requestAnimationFrame(() => {
-              card.style.opacity = '1';
-              card.style.transform = 'none';
-            });
+            card.style.animationDelay = `${matchIdx * 35}ms`;
+            void card.offsetWidth;
+            card.classList.add('stagger-in');
+            matchIdx++;
           } else {
-            card.style.opacity = '0';
-            card.style.transform = 'scale(0.96)';
-            setTimeout(() => {
-              if (btn.dataset.filter !== 'all' && card.dataset.category !== btn.dataset.filter) {
-                card.style.display = 'none';
-              }
-            }, 220);
+            card.style.display = 'none';
           }
         });
       });
+    });
+  }
+
+  let cyberMeshInit = false;
+  function setupCyberMeshCanvas() {
+    if (cyberMeshInit) return;
+    const canvas = document.getElementById('hero-cyber-canvas');
+    if (!canvas) return;
+    const hero = canvas.closest('.hero');
+    if (!hero) return;
+    cyberMeshInit = true;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0;
+    let height = 0;
+    let dpr = window.devicePixelRatio || 1;
+    let nodes = [];
+    const NODE_COUNT = 38;
+    const MAX_DIST = 110;
+    let animId = null;
+    let isVisible = true;
+    let mouse = { x: -9999, y: -9999, active: false };
+
+    function resize() {
+      const rect = hero.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    }
+
+    function createNodes() {
+      nodes = [];
+      for (let i = 0; i < NODE_COUNT; i++) {
+        nodes.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.45,
+          vy: (Math.random() - 0.5) * 0.45,
+          r: Math.random() * 1.6 + 1
+        });
+      }
+    }
+
+    resize();
+    createNodes();
+    window.addEventListener('resize', () => {
+      resize();
+      if (!nodes.length) createNodes();
+    }, { passive: true });
+
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+      mouse.active = true;
+    }, { passive: true });
+
+    hero.addEventListener('mouseleave', () => {
+      mouse.active = false;
+      mouse.x = -9999;
+      mouse.y = -9999;
+    }, { passive: true });
+
+    function draw() {
+      if (!isVisible) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        n.x += n.vx;
+        n.y += n.vy;
+
+        if (n.x < 0 || n.x > width) n.vx *= -1;
+        if (n.y < 0 || n.y > height) n.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(77, 187, 138, 0.45)';
+        ctx.fill();
+      }
+
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < MAX_DIST) {
+            const alpha = (1 - dist / MAX_DIST) * 0.22;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(77, 187, 138, ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+
+        if (mouse.active) {
+          const mdx = nodes[i].x - mouse.x;
+          const mdy = nodes[i].y - mouse.y;
+          const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+          if (mdist < 140) {
+            const alpha = (1 - mdist / 140) * 0.35;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(77, 187, 138, ${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    if (reduceMotion) {
+      draw();
+      return;
+    }
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          isVisible = e.isIntersecting;
+          if (isVisible) {
+            if (!animId) animId = requestAnimationFrame(draw);
+          } else {
+            if (animId) { cancelAnimationFrame(animId); animId = null; }
+          }
+        });
+      }, { threshold: 0.05 });
+      io.observe(hero);
+    } else {
+      animId = requestAnimationFrame(draw);
+    }
+  }
+
+  let telemetryTickerInit = false;
+  function setupHeroTelemetryTicker() {
+    if (telemetryTickerInit) return;
+    const latencyEl = document.getElementById('heroTelemetryLatency');
+    if (!latencyEl) return;
+    telemetryTickerInit = true;
+
+    setInterval(() => {
+      const pings = [12, 13, 14, 15, 11, 16, 13, 14];
+      const nextPing = pings[Math.floor(Math.random() * pings.length)];
+      latencyEl.textContent = `${nextPing}ms`;
+      latencyEl.style.color = '#4dbb8a';
+      setTimeout(() => { latencyEl.style.color = ''; }, 400);
+    }, 2800);
+  }
+
+  let spotlightInit = false;
+  function setupCardSpotlightGlow() {
+    if (spotlightInit) return;
+    const cards = document.querySelectorAll(
+      '.cert-card-clean, .contact-card, .what-card, .beyond-card, .featured-project-card, .stat-card'
+    );
+    if (!cards.length) return;
+    spotlightInit = true;
+
+    cards.forEach((card) => {
+      card.classList.add('card-spotlight');
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      }, { passive: true });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.removeProperty('--mouse-x');
+        card.style.removeProperty('--mouse-y');
+      }, { passive: true });
     });
   }
 
@@ -1831,6 +2054,9 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     safe(setupCertModal);
     safe(setupFloatingProgressTop);
     safe(setupClipboardToast);
+    safe(setupCyberMeshCanvas);
+    safe(setupHeroTelemetryTicker);
+    safe(setupCardSpotlightGlow);
     safe(updateVars);
     safe(updateSpy);
   }
