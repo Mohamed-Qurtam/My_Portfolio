@@ -16,10 +16,14 @@
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🛡</text></svg>">
 
+  <!-- Preconnect for Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link rel="stylesheet" href="index.css">
 
-  <!-- Edit.js (Loads deferred, reveals role after load, manages loops & interactive features) -->
-  <script src="edit.js" defer></script>
+  <!-- Core script: loaded without defer so saved theme applies before first paint -->
+  <script src="index.js"></script>
 </head>
 <body>
 
@@ -57,11 +61,10 @@
     <section class="hero container reveal" id="hero" aria-label="Hero Introduction">
       <div class="hero__grid">
         <div class="hero__content">
-          <div class="hero__status-badge">
-            <span class="hero__status-dot" data-pulse-dot aria-hidden="true"></span>
-            OPEN TO NEW OPPORTUNITIES
+          <div class="hero__status-badge" aria-label="System status: Defensive Security & Infrastructure Hardening">
+            <span class="hero__status-dot" aria-hidden="true"></span>
+            <span class="hero__status-text">DEFENSIVE SECURITY · RESILIENT INFRASTRUCTURE</span>
           </div>
-
           <h1 class="hero__name">Mohamed Qurtam</h1>
 
           <!-- Role line with data-role-title for edit.js post-load typed reveal -->
@@ -90,7 +93,7 @@
               <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
               Email
             </a>
-            <a href="https://linkedin.com/in/mohamed-qurtam" class="hero__social-link" id="hero-linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+            <a href="https://www.linkedin.com/in/mohamed-qurtam-128296215/" class="hero__social-link" id="hero-linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
               <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
               LinkedIn
             </a>
@@ -127,6 +130,7 @@
         <span class="tech-ticker__item">Palo Alto</span>
         <span class="tech-ticker__item">FortiGate</span>
         <span class="tech-ticker__item">Splunk</span>
+        <span class="tech-ticker__item">Kaspersky EDR</span>
         <span class="tech-ticker__item">Wireshark</span>
         <span class="tech-ticker__item">Nmap</span>
         <span class="tech-ticker__item">IDS/IPS</span>
@@ -142,11 +146,11 @@
     <section class="about container fade-in" id="about" aria-label="About Mohamed Qurtam">
       <span class="section-code-label">// 01 · WHO I AM</span>
       <h2 class="section-heading">About</h2>
-      <h3 class="about__headline">Networks. Security. Clear communication.</h3>
+      <h3 class="about__headline">Networks. Security.</h3>
 
       <!-- Body verbatim from Edit.md -->
       <p class="about__lead-text">
-        I'm a <strong>Network &amp; Security Engineer</strong> and Communication &amp; Electronics Engineering graduate (Excellent with Honors) with hands-on experience in switches, routers, firewall configuration, SIEM monitoring and incident response. Beyond engineering, my work in cybersecurity content, technical session coordination and programming education shapes how I communicate complex ideas.
+        I'm a <strong>Network &amp; Security Engineer</strong>, Communication &amp; Electronics Engineering graduate (Excellent with Honors) with hands-on experience in switches, routers, firewall configuration, SIEM monitoring and incident response. Beyond engineering, my work in cybersecurity content, technical session coordination and programming education shapes how I communicate complex ideas.
       </p>
 
       <!-- WHAT I DO Grid (3 Cards per Edit.md) -->
@@ -183,19 +187,19 @@
       <div class="at-a-glance">
         <h4 class="at-a-glance__title">AT A GLANCE</h4>
         <div class="stats-grid">
-          <div class="stat-card">
-            <span class="stat-card__number" data-count="11">11</span>
-            <span class="stat-card__label">Certificates</span>
+          <div class="stat-card" tabindex="0" role="region" aria-label="18 Certifications & Training Entries">
+            <span class="stat-card__number" data-count="18">18</span>
+            <span class="stat-card__label">Certifications &amp; Training</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" tabindex="0" role="region" aria-label="20 plus Cybersecurity modules created">
             <span class="stat-card__number" data-count="20" data-suffix="+">20+</span>
             <span class="stat-card__label">Cybersecurity modules created</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" tabindex="0" role="region" aria-label="100 plus Technical sessions managed">
             <span class="stat-card__number" data-count="100" data-suffix="+">100+</span>
             <span class="stat-card__label">Technical sessions managed</span>
           </div>
-          <div class="stat-card">
+          <div class="stat-card" tabindex="0" role="region" aria-label="2024 B.Sc. graduate, Honors">
             <span class="stat-card__number" data-count="2024">2024</span>
             <span class="stat-card__label">B.Sc. graduate, Honors</span>
           </div>
@@ -221,7 +225,7 @@
         <div class="timeline-item">
           <div class="timeline-item__date">Sep 2026 – Present</div>
           <div class="timeline-item__content">
-            <h3 class="timeline-item__role">🟢 Network &amp; Security Engineer: Co-brand Solution</h3>
+            <h3 class="timeline-item__role">🟢 Network &amp; Security Engineer</h3>
             <span class="timeline-item__company">Co-brand Solution</span>
             <p class="timeline-item__description">
               Design, deploy and secure enterprise network and security infrastructure for clients across the MENA region, including firewalls, switching, Wi-Fi and SD-WAN. Monitor and troubleshoot to meet SLAs, run security hardening and vulnerability assessments, and document solutions for client handover.
@@ -241,7 +245,7 @@
         <div class="timeline-item">
           <div class="timeline-item__date">2026</div>
           <div class="timeline-item__content">
-            <h3 class="timeline-item__role">Programming Tutor (DEMI): iSchool</h3>
+            <h3 class="timeline-item__role">Programming Tutor (DEMI)</h3>
             <span class="timeline-item__company">iSchool</span>
             <p class="timeline-item__description">
               Delivered programming lessons, guided students through coding projects and problem-solving activities, and helped them build logical thinking and fundamental programming skills.
@@ -258,7 +262,7 @@
         <div class="timeline-item">
           <div class="timeline-item__date">2025 – 2026</div>
           <div class="timeline-item__content">
-            <h3 class="timeline-item__role">IT Specialist: Information Systems Department, Egyptian Military Academy</h3>
+            <h3 class="timeline-item__role">IT Specialist</h3>
             <span class="timeline-item__company">Information Systems Department, Egyptian Military Academy</span>
             <p class="timeline-item__description">
               Performed maintenance and repairs for computers, monitors and printers. Managed account administration and installed firmware, updates and system images for PCs.
@@ -275,7 +279,7 @@
         <div class="timeline-item">
           <div class="timeline-item__date">2024</div>
           <div class="timeline-item__content">
-            <h3 class="timeline-item__role">Content Creator, Cybersecurity Track: Armstrong</h3>
+            <h3 class="timeline-item__role">Content Creator, Cybersecurity Track</h3>
             <span class="timeline-item__company">Armstrong</span>
             <p class="timeline-item__description">
               Created 20+ educational modules simplifying cybersecurity concepts and boosted learner engagement through structured content.
@@ -291,7 +295,7 @@
         <div class="timeline-item">
           <div class="timeline-item__date">2023 – 2025</div>
           <div class="timeline-item__content">
-            <h3 class="timeline-item__role">Session Coordinator: Almentor</h3>
+            <h3 class="timeline-item__role">Session Coordinator</h3>
             <span class="timeline-item__company">Almentor</span>
             <p class="timeline-item__description">
               Managed 100+ technical sessions with high participant satisfaction and reduced session issues through refined coordination workflows.
@@ -359,6 +363,7 @@
               <td>
                 <div class="skills-badge-list">
                   <span class="skill-pill">Splunk (SIEM)</span>
+                  <span class="skill-pill">Kaspersky EDR</span>
                   <span class="skill-pill">Wireshark</span>
                   <span class="skill-pill">Nmap</span>
                   <span class="skill-pill">Metasploit</span>
@@ -435,65 +440,65 @@
               <rect width="520" height="380" fill="url(#grid2)"/>
 
               <!-- Internet / WAN -->
-              <g transform="translate(260, 30)">
+              <g data-zone="wan" transform="translate(260, 30)" role="button" tabindex="0" aria-label="Inspect WAN / Internet Perimeter">
                 <ellipse cx="0" cy="0" rx="45" ry="16" fill="none" stroke="#4dbb8a" stroke-width="1" stroke-dasharray="3 2" opacity="0.7"/>
                 <text x="0" y="5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#929da9">WAN / INTERNET</text>
               </g>
 
-              <line x1="260" y1="46" x2="260" y2="75" stroke="#2a3038" stroke-width="1.5"/>
+              <line id="flow-wan-fw" class="topology-flow-line" x1="260" y1="46" x2="260" y2="75" stroke="#2a3038" stroke-width="1.5"/>
 
               <!-- Palo Alto NGFW -->
-              <g transform="translate(260, 100)">
+              <g data-zone="firewall" transform="translate(260, 100)" role="button" tabindex="0" aria-label="Inspect Palo Alto NGFW Core Engine">
                 <rect x="-80" y="-25" width="160" height="50" rx="4" fill="#1c2126" stroke="#4dbb8a" stroke-width="1.5"/>
                 <text x="0" y="-6" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#4dbb8a" font-weight="600">PALO ALTO NGFW</text>
                 <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7.5" fill="#929da9">Virtual Routers · Policies</text>
               </g>
 
               <!-- Branch lines -->
-              <line x1="180" y1="125" x2="90" y2="175" stroke="#2a3038" stroke-width="1.2"/>
-              <line x1="260" y1="125" x2="260" y2="175" stroke="#2a3038" stroke-width="1.2"/>
-              <line x1="340" y1="125" x2="430" y2="175" stroke="#2a3038" stroke-width="1.2"/>
+              <line id="flow-fw-trust" class="topology-flow-line" x1="180" y1="125" x2="90" y2="175" stroke="#2a3038" stroke-width="1.2"/>
+              <line id="flow-fw-dmz" class="topology-flow-line" x1="260" y1="125" x2="260" y2="175" stroke="#2a3038" stroke-width="1.2"/>
+              <line id="flow-fw-untrust" class="topology-flow-line" x1="340" y1="125" x2="430" y2="175" stroke="#2a3038" stroke-width="1.2"/>
 
               <!-- Security Zones -->
-              <g transform="translate(90, 200)">
+              <g data-zone="trust" transform="translate(90, 200)" role="button" tabindex="0" aria-label="Inspect Trust Zone: Internal Network">
                 <rect x="-65" y="-22" width="130" height="44" rx="3" fill="#161a1d" stroke="#4dbb8a" stroke-width="1" opacity="0.8"/>
                 <text x="0" y="-5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#4dbb8a" font-weight="600">TRUST ZONE</text>
                 <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">Internal LAN</text>
               </g>
 
-              <g transform="translate(260, 200)">
+              <g data-zone="dmz" transform="translate(260, 200)" role="button" tabindex="0" aria-label="Inspect DMZ Zone: Public Services">
                 <rect x="-65" y="-22" width="130" height="44" rx="3" fill="#161a1d" stroke="#f0ede8" stroke-width="1" opacity="0.8"/>
                 <text x="0" y="-5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#f0ede8" font-weight="600">DMZ ZONE</text>
                 <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">Public-Facing</text>
               </g>
 
-              <g transform="translate(430, 200)">
+              <g data-zone="untrust" transform="translate(430, 200)" role="button" tabindex="0" aria-label="Inspect Untrust Zone: External Network">
                 <rect x="-65" y="-22" width="130" height="44" rx="3" fill="#161a1d" stroke="#929da9" stroke-width="1" opacity="0.8"/>
                 <text x="0" y="-5" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="8.5" fill="#929da9" font-weight="600">UNTRUST ZONE</text>
                 <text x="0" y="10" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#929da9">External Traffic</text>
               </g>
 
               <!-- Policies Layer -->
-              <g transform="translate(260, 270)">
+              <g data-zone="policies" transform="translate(260, 270)" role="button" tabindex="0" aria-label="Inspect Security Policies Layer">
                 <line x1="-200" y1="0" x2="200" y2="0" stroke="#2a3038" stroke-width="0.8" stroke-dasharray="6 3"/>
                 <rect x="-110" y="-10" width="220" height="20" rx="2" fill="#0e1012"/>
                 <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7.5" fill="#4dbb8a">SECURITY POLICIES LAYER</text>
               </g>
 
               <!-- Policy Items -->
-              <g transform="translate(80, 310)">
+              <g data-zone="nat" transform="translate(80, 310)" role="button" tabindex="0" aria-label="Inspect Network Address Translation (NAT) Rules">
                 <rect x="-55" y="-14" width="110" height="28" rx="2" fill="#161a1d" stroke="#2a3038" stroke-width="0.8"/>
                 <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">NAT</text>
               </g>
-              <g transform="translate(210, 310)">
+              <g data-zone="appid" transform="translate(210, 310)" role="button" tabindex="0" aria-label="Inspect App-ID Rules">
                 <rect x="-55" y="-14" width="110" height="28" rx="2" fill="#161a1d" stroke="#2a3038" stroke-width="0.8"/>
                 <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">App-ID Rules</text>
               </g>
-              <g transform="translate(340, 310)">
+              <g data-zone="qos" transform="translate(340, 310)" role="button" tabindex="0" aria-label="Inspect Quality of Service (QoS) Policies">
                 <rect x="-45" y="-14" width="90" height="28" rx="2" fill="#161a1d" stroke="#2a3038" stroke-width="0.8"/>
                 <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">QoS</text>
               </g>
-              <g transform="translate(450, 310)">
+              <g data-zone="dos" transform="translate(450, 310)" role="button" tabindex="0" aria-label="Inspect DoS Protection Profiles">
                 <rect x="-50" y="-14" width="100" height="28" rx="2" fill="#161a1d" stroke="#2a3038" stroke-width="0.8"/>
                 <text x="0" y="4" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="7" fill="#b6bfc9">DoS Protection</text>
               </g>
@@ -523,7 +528,7 @@
               </li>
             </ul>
 
-            <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="project-book-btn" target="_blank" rel="noopener noreferrer" aria-label="Read the project book (PDF)">
+            <a href="https://drive.google.com/file/d/16xB6Mx-rEupEh8hRWhIrd3jw6Q8Gj5_u/view?usp=drive_link" class="project-book-btn" target="_blank" rel="noopener noreferrer" aria-label="Read the project book (PDF)">
               Read the project book ↗
             </a>
           </div>
@@ -572,67 +577,215 @@
       <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
     </section>
 
-    <!-- ========== CERTIFICATIONS SECTION (#certifications) ========== -->
-    <section class="certifications container fade-in" id="certifications" aria-label="Certifications">
+    <!-- ========== CERTIFICATIONS & TRAINING SECTION (#certifications) ========== -->
+    <section class="certifications container fade-in" id="certifications" aria-label="Certifications and Training">
       <span class="section-code-label">// 06 · CREDENTIALS</span>
-      <h2 class="section-heading">Certifications</h2>
-      <p class="section-subheading">Professional certificates and specialized training across network engineering, security operations, cloud and systems.</p>
+      <h2 class="section-heading">Certifications &amp; Training</h2>
+      <p class="section-subheading">18 verified credentials, specialized vendor tracks, cybersecurity scholarships and structured engineering learning paths.</p>
 
-      <!-- All 11 checkmarked certifications from Edit.md -->
-      <div class="certs-list-clean">
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">Deploying Security Strategies for the Modern Network</span>
+      <!-- Category Filter Tabs -->
+      <div class="certs-filter-tabs" role="tablist" aria-label="Filter credentials by category">
+        <button type="button" class="certs-filter-btn active" data-filter="all" role="tab" aria-selected="true">All Credentials (18)</button>
+        <button type="button" class="certs-filter-btn" data-filter="certs" role="tab" aria-selected="false">Certificates &amp; Programs (5)</button>
+        <button type="button" class="certs-filter-btn" data-filter="training" role="tab" aria-selected="false">Specialized Training (8)</button>
+        <button type="button" class="certs-filter-btn" data-filter="self" role="tab" aria-selected="false">Self-Study Paths (5)</button>
+      </div>
+
+      <!-- Drive Folder Access Button per Edit.md -->
+      <div class="certs-drive-bar">
+        <a href="https://drive.google.com/drive/folders/1GX8z-OzSTBz4-1ZntqY3ULHgM-6usP_d?usp=sharing" target="_blank" rel="noopener noreferrer" class="certs-drive-btn" aria-label="View all certificates on Google Drive (opens in new tab)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+          <span>View all certificates (Google Drive) ↗</span>
+        </a>
+      </div>
+
+      <!-- All 18 CV Entries with Explicit Categories -->
+      <div class="certs-list-clean" id="certsList">
+        <!-- Certificates & Programs (5) -->
+        <div class="cert-card-clean" data-category="certs" tabindex="0" role="button" aria-label="Inspect eLearnSecurity Certified Incident Responder (eCIR)">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--cert">PROGRAM</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">eLearnSecurity Certified Incident Responder (eCIR)</h4>
+          <span class="cert-card-clean__provider">Netriders Academy</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">RCNA Routing &amp; Switching</span>
+        <div class="cert-card-clean" data-category="certs" tabindex="0" role="button" aria-label="Inspect Certified SOC Analyst Foundation">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--cert">FOUNDATION</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Certified SOC Analyst Foundation</h4>
+          <span class="cert-card-clean__provider">SIEM XPERT</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">Sales Specialist: Kaspersky Next Optimum (S47.2)</span>
+        <div class="cert-card-clean" data-category="certs" tabindex="0" role="button" aria-label="Inspect Cisco CyberOps">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--cert">EXAM TRACK</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Cisco CyberOps</h4>
+          <span class="cert-card-clean__provider">National Telecommunication Institute (NTI)</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">Blue Team Scholarship, CyberTalents</span>
+        <div class="cert-card-clean" data-category="certs" tabindex="0" role="button" aria-label="Inspect Blue Team Scholarship">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--cert">SCHOLARSHIP</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Blue Team Scholarship</h4>
+          <span class="cert-card-clean__provider">CyberTalents</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">SOC Analyst Foundation, SIEM XPERT</span>
+        <div class="cert-card-clean" data-category="certs" tabindex="0" role="button" aria-label="Inspect RCNA Routing and Switching">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--cert">PROGRAM</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">RCNA Routing &amp; Switching</h4>
+          <span class="cert-card-clean__provider">Ruijie</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">AWS Academy Cloud Foundations, NTI</span>
+        <!-- Specialized Training & Courses (8) -->
+        <div class="cert-card-clean" data-category="training" tabindex="0" role="button" aria-label="Inspect CCNP Security Core">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">CCNP Security Core</h4>
+          <span class="cert-card-clean__provider">Netriders Academy</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">Red Hat System Administration I (9.0), NTI</span>
+        <div class="cert-card-clean" data-category="training" tabindex="0" role="button" aria-label="Inspect CCNA Routing and Switching">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">CCNA Routing &amp; Switching</h4>
+          <span class="cert-card-clean__provider">National Telecommunication Institute (NTI)</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">Python and Django learning guide, Udemy</span>
+        <div class="cert-card-clean" data-category="training" tabindex="0" role="button" aria-label="Inspect Red Hat System Administration I 9.0">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Red Hat System Administration I 9.0</h4>
+          <span class="cert-card-clean__provider">National Telecommunication Institute (NTI)</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">eLearnSecurity Certified Incident Responder (eCIR), Netriders Academy</span>
+        <div class="cert-card-clean" data-category="training" tabindex="0" role="button" aria-label="Inspect AWS Academy Cloud Foundations">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">AWS Academy Cloud Foundations</h4>
+          <span class="cert-card-clean__provider">National Telecommunication Institute (NTI)</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">Cisco CyberOps, National Telecommunication Institute (NTI)</span>
+        <div class="cert-card-clean" data-category="training" tabindex="0" role="button" aria-label="Inspect MCSA Core">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">MCSA Core</h4>
+          <span class="cert-card-clean__provider">Netriders Academy</span>
         </div>
 
-        <div class="cert-card-clean">
-          <span class="cert-badge-check" aria-hidden="true">✅</span>
-          <span class="cert-card-clean__title">Introduction to Cybersecurity Bootcamp (Cohort 5), CyberTalents</span>
+        <div class="cert-card-clean" data-category="training" tabindex="0" role="button" aria-label="Inspect Introduction to Cybersecurity Bootcamp, Cohort 5">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--training">BOOTCAMP</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Introduction to Cybersecurity Bootcamp, Cohort 5</h4>
+          <span class="cert-card-clean__provider">CyberTalents</span>
+        </div>
+
+        <div class="cert-card-clean" data-category="training" tabindex="0" role="button" aria-label="Inspect Telecommunications and Network Infrastructure Training">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Telecommunications and Network Infrastructure Training</h4>
+          <span class="cert-card-clean__provider">Systel Telecom</span>
+        </div>
+
+        <div class="cert-card-clean" data-category="training" tabindex="0" role="button" aria-label="Inspect Python and Django Learning Guide">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--training">COURSE</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Python and Django Learning Guide</h4>
+          <span class="cert-card-clean__provider">Udemy</span>
+        </div>
+
+        <!-- Self-Study & Professional Learning Paths (5) -->
+        <div class="cert-card-clean" data-category="self" tabindex="0" role="button" aria-label="Inspect Palo Alto Firewall (Self-Study)">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Palo Alto Firewall</h4>
+          <span class="cert-card-clean__provider">Self-study</span>
+        </div>
+
+        <div class="cert-card-clean" data-category="self" tabindex="0" role="button" aria-label="Inspect Fortinet NSE 4 (Self-Study)">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Fortinet NSE 4</h4>
+          <span class="cert-card-clean__provider">Self-study</span>
+        </div>
+
+        <div class="cert-card-clean" data-category="self" tabindex="0" role="button" aria-label="Inspect SANS SEC450: Blue Team Fundamentals (Self-Study)">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">SANS SEC450: Blue Team Fundamentals</h4>
+          <span class="cert-card-clean__provider">Self-study</span>
+        </div>
+
+        <div class="cert-card-clean" data-category="self" tabindex="0" role="button" aria-label="Inspect Windows Endpoint Investigation (Self-Study)">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">Windows Endpoint Investigation</h4>
+          <span class="cert-card-clean__provider">Self-study</span>
+        </div>
+
+        <div class="cert-card-clean" data-category="self" tabindex="0" role="button" aria-label="Inspect CompTIA Security+ (Self-Study)">
+          <div class="cert-card-clean__header">
+            <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
+            <span class="cert-card-ext" title="View credential" aria-hidden="true">↗</span>
+          </div>
+          <h4 class="cert-card-clean__title">CompTIA Security+</h4>
+          <span class="cert-card-clean__provider">Self-study</span>
+        </div>
+      </div>
+
+      <!-- Certificate Viewer Modal Dialog -->
+      <div class="cert-modal" id="certModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="certModalTitle">
+        <div class="cert-modal__backdrop" id="certModalBackdrop"></div>
+        <div class="cert-modal__dialog">
+          <div class="cert-modal__header">
+            <div class="cert-modal__title-group">
+              <span class="cert-modal__tag" id="certModalTag">CREDENTIAL ARCHIVE</span>
+              <h3 class="cert-modal__title" id="certModalTitle">Certificate Title</h3>
+              <span class="cert-modal__issuer" id="certModalIssuer">Issuer</span>
+            </div>
+            <button type="button" class="cert-modal__close" id="certModalClose" aria-label="Close credential viewer">✕</button>
+          </div>
+          <div class="cert-modal__body" id="certModalBody">
+            <!-- Loaded dynamically in index.js -->
+          </div>
+          <div class="cert-modal__footer">
+            <span class="cert-modal__hint">Verified via Mohamed Qurtam Engineering Credentials Archive</span>
+            <a href="https://drive.google.com/drive/folders/1GX8z-OzSTBz4-1ZntqY3ULHgM-6usP_d?usp=sharing" target="_blank" rel="noopener noreferrer" class="cert-modal__ext-link" id="certModalExtLink">Open Full Drive Archive ↗</a>
+          </div>
         </div>
       </div>
 
@@ -647,50 +800,89 @@
 
       <div class="contact__inner">
         <p class="contact__intro">
-          For professional opportunities and conversations about network and security engineering.
+          For professional engineering opportunities, network infrastructure design, and defensive security collaboration.
         </p>
 
-        <!-- Contact table matching Edit.md structure -->
-        <table class="contact__table" role="table">
-          <tbody>
-            <tr>
-              <td class="contact__table-label">✉️ Email</td>
-              <td class="contact__table-value">
-                <a href="mailto:moqurtam@gmail.com">moqurtam@gmail.com</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="contact__table-label">📞 Phone (primary)</td>
-              <td class="contact__table-value">
-                <a href="tel:+201024227004">+20 1024227004</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="contact__table-label">📞 Phone (alternate)</td>
-              <td class="contact__table-value">
-                <a href="tel:+201015220163">+20 1015220163</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="contact__table-label">💼 LinkedIn</td>
-              <td class="contact__table-value">
-                <a href="https://linkedin.com/in/mohamed-qurtam" target="_blank" rel="noopener noreferrer">linkedin.com/in/mohamed-qurtam</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="contact__table-label">🐙 GitHub</td>
-              <td class="contact__table-value">
-                <a href="https://github.com/Mohamed-Qurtam" target="_blank" rel="noopener noreferrer">github.com/Mohamed-Qurtam</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="contact__table-label">📄 Resume</td>
-              <td class="contact__table-value">
-                <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" target="_blank" rel="noopener noreferrer">Download CV (PDF)</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- Modern Lucide-style Icon Contact Cards per Edit.md -->
+        <div class="contact-list" role="list">
+          <!-- Email -->
+          <div class="contact-card" role="listitem">
+            <span class="contact-card__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <a href="mailto:moqurtam@gmail.com" class="contact-card__main">
+              <span class="contact-card__label">Email</span>
+              <span class="contact-card__value">moqurtam@gmail.com</span>
+            </a>
+            <button type="button" class="contact-card__copy" data-copy="moqurtam@gmail.com" aria-label="Copy Email address to clipboard" title="Copy Email">
+              <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Phone Primary -->
+          <div class="contact-card" role="listitem">
+            <span class="contact-card__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <a href="tel:+201024227004" class="contact-card__main">
+              <span class="contact-card__label">Phone (primary)</span>
+              <span class="contact-card__value">+20 1024227004</span>
+            </a>
+            <button type="button" class="contact-card__copy" data-copy="+201024227004" aria-label="Copy Primary Phone number to clipboard" title="Copy Phone">
+              <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+
+          <!-- Phone Alternate -->
+          <div class="contact-card" role="listitem">
+            <span class="contact-card__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </span>
+            <a href="tel:+201015220163" class="contact-card__main">
+              <span class="contact-card__label">Phone (alternate)</span>
+              <span class="contact-card__value">+20 1015220163</span>
+            </a>
+            <button type="button" class="contact-card__copy" data-copy="+201015220163" aria-label="Copy Alternate Phone number to clipboard" title="Copy Phone">
+              <svg class="copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+          </div>
+
+          <!-- LinkedIn -->
+          <div class="contact-card" role="listitem">
+            <span class="contact-card__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </span>
+            <a href="https://www.linkedin.com/in/mohamed-qurtam-128296215/" target="_blank" rel="noopener noreferrer" class="contact-card__main">
+              <span class="contact-card__label">LinkedIn</span>
+              <span class="contact-card__value">linkedin.com/in/mohamed-qurtam-128296215</span>
+            </a>
+          </div>
+
+          <!-- GitHub -->
+          <div class="contact-card" role="listitem">
+            <span class="contact-card__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </span>
+            <a href="https://github.com/Mohamed-Qurtam" target="_blank" rel="noopener noreferrer" class="contact-card__main">
+              <span class="contact-card__label">GitHub</span>
+              <span class="contact-card__value">github.com/Mohamed-Qurtam</span>
+            </a>
+          </div>
+
+          <!-- Resume -->
+          <div class="contact-card" role="listitem">
+            <span class="contact-card__icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </span>
+            <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" target="_blank" rel="noopener noreferrer" download class="contact-card__main">
+              <span class="contact-card__label">Resume</span>
+              <span class="contact-card__value">Download CV (PDF)</span>
+            </a>
+          </div>
+        </div>
       </div>
 
       <a href="#top" class="section-back-top" aria-label="Back to top">↑ Back to top</a>
@@ -706,105 +898,5 @@
       </div>
     </div>
   </footer>
-
-  <!-- ========== PAGE CORE JAVASCRIPT (Navigation & Active Highlights) ========== -->
-  <script>
-    // Mobile Navigation Drawer Toggle
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    const navOverlay = document.getElementById('navOverlay');
-
-    function toggleNav() {
-      const isOpen = navLinks.classList.toggle('open');
-      navOverlay.classList.toggle('open', isOpen);
-      navToggle.classList.toggle('active', isOpen);
-      navToggle.setAttribute('aria-expanded', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    }
-
-    if (navToggle) navToggle.addEventListener('click', toggleNav);
-    if (navOverlay) navOverlay.addEventListener('click', toggleNav);
-
-    // Close nav on link click
-    if (navLinks) {
-      navLinks.querySelectorAll('.nav__link, .nav__cv-btn').forEach(link => {
-        link.addEventListener('click', () => {
-          if (navLinks.classList.contains('open')) {
-            toggleNav();
-          }
-        });
-      });
-    }
-
-    // Close nav on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && navLinks && navLinks.classList.contains('open')) {
-        toggleNav();
-      }
-    });
-
-    // IntersectionObserver for reveal / fade-in animations
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible', 'reveal');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
-      );
-
-      document.querySelectorAll('.fade-in, .hero').forEach(el => observer.observe(el));
-    } else {
-      document.querySelectorAll('.fade-in, .hero').forEach(el => {
-        el.classList.add('visible', 'reveal');
-      });
-    }
-
-    // Active nav link highlight on scroll
-    const sectionIds = ['about', 'experience', 'skills', 'education', 'projects', 'certifications', 'contact'];
-    const navLinksMap = {};
-    sectionIds.forEach(id => {
-      navLinksMap[id] = document.getElementById('nav-' + id);
-    });
-
-    function updateActiveNav() {
-      const scrollPos = window.scrollY + 130;
-      let currentSectionId = '';
-
-      sectionIds.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            currentSectionId = id;
-          }
-        }
-      });
-
-      sectionIds.forEach(id => {
-        const link = navLinksMap[id];
-        if (link) {
-          if (id === currentSectionId) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        }
-      });
-    }
-
-    let scrollRaf;
-    window.addEventListener('scroll', () => {
-      if (scrollRaf) cancelAnimationFrame(scrollRaf);
-      scrollRaf = requestAnimationFrame(updateActiveNav);
-    }, { passive: true });
-
-    updateActiveNav();
-  </script>
 </body>
 </html>
