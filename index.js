@@ -1654,86 +1654,119 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
   }
 
   /* ------------------------------------------------------------------ *
-   * Certificate Viewer Modal (Edit.md §3)
+   * Certifications: Direct Link Opening & Multi-Link Chooser (Edit.md §4)
    * ------------------------------------------------------------------ */
-  const DRIVE_FOLDER_URL = 'https://drive.google.com/drive/folders/1GX8z-OzSTBz4-1ZntqY3ULHgM-6usP_d?usp=sharing';
-
   function setupCertModal() {
-    const modal   = document.getElementById('certModal');
-    const close   = document.getElementById('certModalClose');
-    const backdrop = document.getElementById('certModalBackdrop');
-    const body    = document.getElementById('certModalBody');
-    const title   = document.getElementById('certModalTitle');
-    const issuer  = document.getElementById('certModalIssuer');
-    const tag     = document.getElementById('certModalTag');
-    if (!modal || modal.dataset.qtInit) return;
-    modal.dataset.qtInit = '1';
+    document.querySelectorAll('.cert-card-clean').forEach((card) => {
+      if (card.dataset.qtCertBound) return;
+      card.dataset.qtCertBound = '1';
 
-    function openModal(card) {
-      const certTitle  = (card.querySelector('.cert-card-clean__title') || {}).textContent || '';
-      const certIssuer = (card.querySelector('.cert-card-clean__provider') || {}).textContent || '';
-      const badgeEl    = card.querySelector('.cert-type-badge');
-      const certBadge  = badgeEl ? badgeEl.textContent.trim() : 'CREDENTIAL';
-      const category   = card.dataset.category || '';
-
-      if (title)  title.textContent = certTitle.trim();
-      if (issuer) issuer.textContent = certIssuer.trim();
-      if (tag)    tag.textContent = certBadge;
-
-      // Build body content: for now, link to Drive folder (file IDs to be filled per Edit.md §3a)
-      if (body) {
-        if (category === 'self') {
-          // Self-study items: no PDF, show fallback with archive link
-          body.innerHTML = `
-            <div class="cert-modal__fallback">
-              <p>Self-study credential — no certificate PDF on file.</p>
-              <a href="${DRIVE_FOLDER_URL}" target="_blank" rel="noopener noreferrer">
-                Browse Full Archive ↗
-              </a>
-            </div>`;
-        } else {
-          // For now: show a link to open the Drive folder. When fileIds are filled in,
-          // this will become an iframe preview.
-          body.innerHTML = `
-            <div class="cert-modal__fallback">
-              <p>Certificate available in the credentials archive.</p>
-              <a href="${DRIVE_FOLDER_URL}" target="_blank" rel="noopener noreferrer">
-                Open Credentials Archive ↗
-              </a>
-            </div>`;
-        }
+      const linksAttr = card.dataset.links;
+      if (!linksAttr) {
+        card.style.cursor = 'default';
+        return;
       }
 
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
+      let links;
+      try {
+        links = JSON.parse(linksAttr);
+      } catch (e) {
+        return;
+      }
 
-    function closeModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      // Clean up iframe to stop loading
-      if (body) body.innerHTML = '';
-    }
+      if (!links || !links.length) {
+        card.style.cursor = 'default';
+        return;
+      }
 
-    // Bind cert cards
-    document.querySelectorAll('.cert-card-clean').forEach((card) => {
-      if (card.dataset.qtModalBound) return;
-      card.dataset.qtModalBound = '1';
       card.style.cursor = 'pointer';
-      card.addEventListener('click', () => openModal(card));
+
+      const openCredential = () => {
+        if (links.length === 1) {
+          window.open(links[0].url, '_blank', 'noopener,noreferrer');
+        } else {
+          showCertChooser(card, links);
+        }
+      };
+
+      card.addEventListener('click', openCredential);
       card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); }
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openCredential();
+        }
       });
     });
+  }
 
-    // Close handlers
-    if (close) close.addEventListener('click', closeModal);
-    if (backdrop) backdrop.addEventListener('click', closeModal);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  function showCertChooser(card, links) {
+    const existing = document.getElementById('cert-chooser-overlay');
+    if (existing) existing.remove();
+
+    const title = (card.querySelector('.cert-card-clean__title') || {}).textContent || 'Choose Certificate';
+
+    const overlay = document.createElement('div');
+    overlay.id = 'cert-chooser-overlay';
+    overlay.className = 'cert-chooser-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', title.trim());
+
+    const dialog = document.createElement('div');
+    dialog.className = 'cert-chooser-dialog';
+
+    const header = document.createElement('div');
+    header.className = 'cert-chooser-dialog__header';
+
+    const titleEl = document.createElement('h3');
+    titleEl.className = 'cert-chooser-dialog__title';
+    titleEl.textContent = title.trim();
+
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'cert-chooser-dialog__close';
+    closeBtn.setAttribute('aria-label', 'Close credential chooser');
+    closeBtn.innerHTML = '&times;';
+
+    header.appendChild(titleEl);
+    header.appendChild(closeBtn);
+    dialog.appendChild(header);
+
+    const linksContainer = document.createElement('div');
+    linksContainer.className = 'cert-chooser-dialog__links';
+
+    links.forEach((link) => {
+      const a = document.createElement('a');
+      a.href = link.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'cert-chooser-link';
+      a.innerHTML = `<span>${link.label}</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+      a.addEventListener('click', () => close());
+      linksContainer.appendChild(a);
     });
+
+    dialog.appendChild(linksContainer);
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+
+    requestAnimationFrame(() => overlay.classList.add('open'));
+
+    function close() {
+      overlay.classList.remove('open');
+      setTimeout(() => overlay.remove(), 260);
+      document.removeEventListener('keydown', onKeyDown);
+    }
+
+    closeBtn.addEventListener('click', close);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) close();
+    });
+
+    function onKeyDown(e) {
+      if (e.key === 'Escape') close();
+    }
+    document.addEventListener('keydown', onKeyDown);
   }
 
   function showToast(message) {
@@ -1943,27 +1976,15 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     }
   }
 
-  let telemetryTickerInit = false;
   function setupHeroTelemetryTicker() {
-    if (telemetryTickerInit) return;
-    const latencyEl = document.getElementById('heroTelemetryLatency');
-    if (!latencyEl) return;
-    telemetryTickerInit = true;
-
-    setInterval(() => {
-      const pings = [12, 13, 14, 15, 11, 16, 13, 14];
-      const nextPing = pings[Math.floor(Math.random() * pings.length)];
-      latencyEl.textContent = `${nextPing}ms`;
-      latencyEl.style.color = '#4dbb8a';
-      setTimeout(() => { latencyEl.style.color = ''; }, 400);
-    }, 2800);
+    // Telemetry ticker removed per Edit.md
   }
 
   let spotlightInit = false;
   function setupCardSpotlightGlow() {
     if (spotlightInit) return;
     const cards = document.querySelectorAll(
-      '.cert-card-clean, .contact-card, .what-card, .beyond-card, .featured-project-card, .stat-card'
+      '.cert-card-clean, .contact-icon-btn, .education-card, .what-card, .beyond-card, .featured-project-card, .stat-card'
     );
     if (!cards.length) return;
     spotlightInit = true;
