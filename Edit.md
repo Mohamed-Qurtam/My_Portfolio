@@ -488,6 +488,12 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
 - **Marquee Section Border Alignment (Pic 2 Fix)**: Contained `.tech-ticker` inside `.container.tech-ticker-container` with matching border radius and border styling (`border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);`) aligned with section borders rather than edge-to-edge bleed.
 - **About Bold Titles & Strengths Problem Solving (Pic 3 Fix)**: Formatted `<strong>Network Security Engineer</strong>` and `<strong>Tier 1 SOC Analyst</strong>` in bold, and appended ` · Problem solving` to the Strengths metadata row.
 - **Light Mode Section Backdrop Opacity 0% (Pic 3 Fix)**: Set opacity of `.hero__cyber-canvas`, `.qt-net`, `.qt-aurora`, and `.qt-spot` to 0% (`display: none !important`), and ensured all section backgrounds are transparent in light mode without white haze.
+- **Responsiveness Review & CSS Architecture Hardening**:
+  - Validated all media queries and fixed a dangling `body` selector and an extra brace at line 1304 in `index.css`.
+  - Enforced `env(safe-area-inset-*)` on fixed navigation header, slide-over mobile drawer (`.nav__links`), floating back-to-top button, and footer.
+  - Set Hero narrow-screen column order to `order: 1` with centered alignment so text comes first and the hanging frame card sits centered below.
+  - Added `max-width: 100%` and `flex-wrap: wrap` on `.hero__status-badge` and `.project-book-btn` to prevent overflow on small viewports (320px–375px).
+  - Confirmed 44x44px minimum touch targets on all interactive controls (buttons, tabs, knobs, toggles).
 
 - [x] **Container Alignment**: All section headings and content share the exact same left vertical alignment as About.
 - [x] **Responsive Resilience**: Verified from 320px to 3840px and zoom levels 25% to 500%; zero horizontal scrolling.
