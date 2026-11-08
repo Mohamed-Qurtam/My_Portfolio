@@ -46,6 +46,11 @@
       '(Excellent with Honors) with hands-on expertise in router/switch configuration, firewall administration, and real-time SIEM monitoring. ' +
       'Skilled in combining network topology insights with security operations to analyze log data, perform initial triage, and accelerate incident response. ' +
       'Proven track record in designing resilient architectures, minimizing attack surfaces, and executing proactive threat detection strategies to defend enterprise environments.',
+    aboutHTML:
+      'Adaptive <strong>Network Security Engineer</strong> and <strong>Tier 1 SOC Analyst</strong>, Communication & Electronics Engineering graduate ' +
+      '(Excellent with Honors) with hands-on expertise in router/switch configuration, firewall administration, and real-time SIEM monitoring. ' +
+      'Skilled in combining network topology insights with security operations to analyze log data, perform initial triage, and accelerate incident response. ' +
+      'Proven track record in designing resilient architectures, minimizing attack surfaces, and executing proactive threat detection strategies to defend enterprise environments.',
     hideBadge: /open to new opportunities/i,
     projectsCount: 2,
     allProjectsPattern: /^all\s+projects\s*\(\s*\d+\s*\)$/i,
@@ -431,7 +436,7 @@ html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-f
       (e) => /(hands-on experience|Adaptive Network Security)/i.test(e.textContent)
     );
     if (h && norm(h.textContent) !== CONFIG.aboutHeading) h.textContent = CONFIG.aboutHeading;
-    if (p && norm(p.textContent) !== norm(CONFIG.aboutText)) p.textContent = CONFIG.aboutText;
+    if (p && !p.querySelector('strong')) p.innerHTML = CONFIG.aboutHTML;
     if (h && p) S.about = true;
   }
 
@@ -1247,7 +1252,7 @@ html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-f
     document.querySelectorAll('[data-qt-stack]').forEach((el) => el.removeAttribute('data-qt-stack'));
     if (window.innerWidth > CONFIG.stackBreakpoint) return;
     document.querySelectorAll('main,main *,section,section *').forEach((el) => {
-      if (el.closest('header,.qt-menu,.qt-marquee,.qt-aurora') || el.children.length < 2 || el.children.length > 4) return;
+      if (el.closest('header,.qt-menu,.qt-marquee,.qt-aurora,.vendor-badges-marquee,.tech-ticker,.vendor-badges-track,.tech-ticker__track') || el.children.length < 2 || el.children.length > 4) return;
       const st = getComputedStyle(el);
       const isGrid = st.display === 'grid' && st.gridTemplateColumns.split(' ').length > 1;
       const isRow = st.display === 'flex' && st.flexDirection.indexOf('row') === 0 && st.flexWrap === 'nowrap';

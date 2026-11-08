@@ -775,21 +775,28 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
 }
 
 /* --- Centered Tool Ticker / Marquee (Infinite Logo Marquee matching Pic 3 & 4) --- */
+.tech-ticker-container {
+  padding-top: var(--space-md);
+  padding-bottom: var(--space-md);
+}
+
 .tech-ticker {
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
   background: var(--bg-secondary);
   padding: var(--space-md) 0;
   overflow: hidden;
   position: relative;
   width: 100%;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
 
 .tech-ticker__track {
-  display: flex;
-  width: max-content;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  width: max-content !important;
   will-change: transform;
   animation: tech-ticker-loop 34s linear infinite;
 }
@@ -800,12 +807,14 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
 }
 
 .tech-ticker__group {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   align-items: center;
   gap: 1.25rem;
   padding-right: 1.25rem;
   flex-shrink: 0;
-  min-width: 100vw;
+  min-width: 100%;
   justify-content: space-around;
 }
 
@@ -2551,8 +2560,10 @@ html[data-theme="light"] .chip {
 }
 
 .vendor-badges-track {
-  display: flex;
-  width: max-content;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  width: max-content !important;
   will-change: transform;
   animation: vendor-marquee-loop 28s linear infinite;
 }
@@ -2563,7 +2574,9 @@ html[data-theme="light"] .chip {
 }
 
 .vendor-badges-group {
-  display: flex;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   align-items: center;
   gap: 2.25rem;
   padding-right: 2.25rem;
@@ -2732,13 +2745,27 @@ html[data-theme="light"] .hero__social-link:hover {
   border-color: var(--accent) !important;
 }
 
+/* Pic 3: In light mode there is a white color behind every section make its opacity = 0% */
 html[data-theme="light"] .hero__cyber-canvas,
-html[data-theme="light"] .qt-net {
-  opacity: 0.18 !important;
+html[data-theme="light"] .qt-net,
+html[data-theme="light"] .qt-aurora,
+html[data-theme="light"] .qt-spot {
+  opacity: 0 !important;
+  display: none !important;
+  pointer-events: none !important;
 }
 
-html[data-theme="light"] .qt-aurora {
-  opacity: 0.1 !important;
+html[data-theme="light"] section,
+html[data-theme="light"] .hero,
+html[data-theme="light"] .about,
+html[data-theme="light"] .experience,
+html[data-theme="light"] .skills,
+html[data-theme="light"] .education,
+html[data-theme="light"] .projects,
+html[data-theme="light"] .certifications,
+html[data-theme="light"] .contact {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 html[data-theme="light"] .section-heading,
