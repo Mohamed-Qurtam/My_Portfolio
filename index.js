@@ -42,11 +42,10 @@
     // Content
     aboutHeading: 'Networks. Security.',
     aboutText:
-      "I'm a Network & Security Engineer, Communication & Electronics Engineering graduate " +
-      '(Excellent with Honors) with hands-on experience in switches, routers, firewall ' +
-      'configuration, SIEM monitoring and incident response. Beyond engineering, my work in ' +
-      'cybersecurity content, technical session coordination and programming education shapes ' +
-      'how I communicate complex ideas.',
+      'Adaptive Network Security Engineer and Tier 1 SOC Analyst , Communication & Electronics Engineering graduate ' +
+      '(Excellent with Honors) with hands-on expertise in router/switch configuration, firewall administration, and real-time SIEM monitoring. ' +
+      'Skilled in combining network topology insights with security operations to analyze log data, perform initial triage, and accelerate incident response. ' +
+      'Proven track record in designing resilient architectures, minimizing attack surfaces, and executing proactive threat detection strategies to defend enterprise environments.',
     hideBadge: /open to new opportunities/i,
     projectsCount: 2,
     allProjectsPattern: /^all\s+projects\s*\(\s*\d+\s*\)$/i,
@@ -69,9 +68,9 @@
     navLabels: ['about', 'experience', 'skills', 'education', 'projects', 'certifications', 'contact'],
     scrollGapPx: 24,
     spyRatio: 0.45,
-    takeOverNav: true,
-    mobileMenu: true,
-    mobileBreakpoint: 860,
+    takeOverNav: false,
+    mobileMenu: false,
+    mobileBreakpoint: 1024,
     stackBreakpoint: 760,
 
     // Theme
@@ -290,7 +289,6 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
 .project-filter-btn:hover,.project-filter-btn.active{background:rgba(63,184,131,.15);border-color:var(--qt-accent,#3fb883);color:#fff}
 .qt-toast{position:fixed;bottom:24px;right:24px;background:#1c2126;color:#f0ede8;border:1px solid var(--border-accent,rgba(77,187,138,.4));border-left:4px solid var(--qt-accent,#3fb883);padding:12px 20px;border-radius:6px;font-family:var(--font-mono,monospace);font-size:.82rem;box-shadow:0 12px 32px rgba(0,0,0,.6);z-index:9999;transform:translateY(40px);opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;gap:10px}
 .qt-toast.visible{transform:translateY(0);opacity:1}
-.nav__toggle{display:none!important}
 .fade-in{opacity:1!important;transform:none!important}
 .contact__table-value{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
 .contact__copy-btn{background:rgba(255,255,255,.04);border:1px solid var(--border-primary,#2a3038);color:var(--text-secondary,#b6bfc9);cursor:pointer;padding:2px 8px;border-radius:4px;font-size:.72rem;font-family:var(--font-mono,monospace);line-height:1.4;transition:all .2s ease;display:inline-flex;align-items:center;gap:4px}
@@ -429,7 +427,7 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     if (!sec) return;
     const h = Array.from(sec.querySelectorAll('h1,h2,h3')).find((e) => /^networks\./i.test(norm(e.textContent)));
     const p = Array.from(sec.querySelectorAll('p')).find(
-      (e) => /hands-on experience/i.test(e.textContent) && /(switches|firewall)/i.test(e.textContent)
+      (e) => /(hands-on experience|Adaptive Network Security)/i.test(e.textContent)
     );
     if (h && norm(h.textContent) !== CONFIG.aboutHeading) h.textContent = CONFIG.aboutHeading;
     if (p && norm(p.textContent) !== norm(CONFIG.aboutText)) p.textContent = CONFIG.aboutText;
@@ -743,18 +741,34 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     try { history.replaceState(null, '', '#' + id); } catch (e) { /* ignore */ }
   }
 
+  function initNavItems() {
+    if (S.nav && S.nav.items && S.nav.items.length) return;
+    const links = Array.from(document.querySelectorAll('.nav__link[href^="#"], .qt-navlink'));
+    if (!links.length) return;
+    S.nav = {
+      items: links.map((a) => ({
+        id: a.getAttribute('href').replace(/^#/, ''),
+        label: norm(a.textContent),
+        el: a
+      }))
+    };
+  }
+
   function setActive(id) {
     if (S.active === id) return;
     S.active = id;
-    document.querySelectorAll('.qt-navlink,.qt-menu a[data-qt-id]').forEach((a) => {
-      const on = a.dataset.qtId === id;
+    document.querySelectorAll('.nav__link, .qt-navlink, .qt-menu a[data-qt-id]').forEach((a) => {
+      const href = a.getAttribute('href') || '';
+      const on = href === '#' + id || a.dataset.qtId === id || a.id === 'nav-' + id;
+      a.classList.toggle('active', on);
       a.classList.toggle('qt-active', on);
       if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
     });
   }
 
   function updateSpy() {
-    if (!S.nav) return;
+    initNavItems();
+    if (!S.nav || !S.nav.items || !S.nav.items.length) return;
     if (S.lock) { setActive(S.lock); return; }
     const limit = headerH() + window.innerHeight * CONFIG.spyRatio;
     let current = null;
@@ -765,7 +779,7 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
       current = S.nav.items[S.nav.items.length - 1].id;
     }
-    setActive(current);
+    if (current) setActive(current);
   }
 
   function findHeader() {
@@ -2048,6 +2062,10 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
       container.classList.add('swinging');
     });
 
+    container.addEventListener('animationend', () => {
+      container.classList.remove('swinging');
+    });
+
     container.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -2055,24 +2073,120 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
       }
     });
 
-    // 3D perspective tilt on hover
+    // 3D perspective tilt on hover and mouse direction tracking across hero
     if (finePointer && !reduceMotion) {
-      container.addEventListener('mousemove', (e) => {
-        if (container.classList.contains('swinging')) return;
-        const rect = container.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const dx = (e.clientX - cx) / (rect.width / 2);
-        const dy = (e.clientY - cy) / (rect.height / 2);
-        const rotX = -dy * 8;
-        const rotY = dx * 8;
-        container.style.transform = `perspective(800px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-2px)`;
-      }, { passive: true });
+      const hero = document.getElementById('hero') || container.closest('section') || document.body;
+      let raf = null;
 
-      container.addEventListener('mouseleave', () => {
+      const onMove = (e) => {
+        if (container.classList.contains('swinging')) return;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          const rect = container.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const maxDistX = Math.max(window.innerWidth * 0.45, 260);
+          const maxDistY = Math.max(window.innerHeight * 0.45, 260);
+          const dx = Math.min(1, Math.max(-1, (e.clientX - cx) / maxDistX));
+          const dy = Math.min(1, Math.max(-1, (e.clientY - cy) / maxDistY));
+          const rotX = -dy * 8;
+          const rotY = dx * 8;
+          const transX = dx * 6;
+          const transY = dy * 4;
+          container.style.transform = `perspective(800px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translate3d(${transX.toFixed(1)}px, ${transY.toFixed(1)}px, 0)`;
+        });
+      };
+
+      hero.addEventListener('mousemove', onMove, { passive: true });
+      hero.addEventListener('mouseleave', () => {
+        if (raf) cancelAnimationFrame(raf);
         container.style.transform = '';
       });
     }
+  }
+
+  let mobileNavInit = false;
+  function setupMobileNav() {
+    if (mobileNavInit) return;
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    const overlay = document.getElementById('navOverlay');
+    if (!toggle || !links) return;
+    mobileNavInit = true;
+
+    function openNav() {
+      toggle.classList.add('active');
+      toggle.setAttribute('aria-expanded', 'true');
+      links.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      const firstFocusable = links.querySelector('a, button');
+      if (firstFocusable) firstFocusable.focus();
+    }
+
+    function closeNav() {
+      toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+      links.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      document.body.style.removeProperty('overflow');
+    }
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = links.classList.contains('open');
+      if (isOpen) {
+        closeNav();
+        toggle.focus();
+      } else {
+        openNav();
+      }
+    });
+
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        closeNav();
+        toggle.focus();
+      });
+    }
+
+    links.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => {
+        closeNav();
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!links.classList.contains('open')) return;
+      if (e.key === 'Escape') {
+        closeNav();
+        toggle.focus();
+        return;
+      }
+
+      if (e.key === 'Tab') {
+        const focusables = Array.from(links.querySelectorAll('a, button, [tabindex="0"]')).filter(
+          (el) => !el.hasAttribute('disabled')
+        );
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1024 && links.classList.contains('open')) {
+        closeNav();
+      }
+    }, { passive: true });
   }
 
   function setupFloatingProgressTop() {
@@ -2148,6 +2262,7 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     safe(setupHeroTelemetryTicker);
     safe(setupCardSpotlightGlow);
     safe(setupHangingFrameCard);
+    safe(setupMobileNav);
     safe(updateVars);
     safe(updateSpy);
   }

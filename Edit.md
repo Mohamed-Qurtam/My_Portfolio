@@ -472,7 +472,15 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
     4. Windows Endpoint Investigation
     5. CompTIA Security+
 
-### 6. QA Verification Checklist
+### 7. Phase 2 Enhancements & User Revisions Log
+- **About Lead Text Update**: Replaced lead paragraph with verbatim updated profile text highlighting Adaptive Network Security Engineer and Tier 1 SOC Analyst specialization, honours degree, routing/firewalling expertise, and proactive defensive strategy.
+- **Skills Chips Extension**: Added `Firepower` to Network & Firewall Engineering (`SECURE`) and `Veeam` to Systems & Cloud (`INFRASTRUCTURE`).
+- **Interactive Hanging Frame Card**: Integrated realistic wall mount, hanging cords, and card container with realistic pendulum swing on click and bounded 3D perspective tracking (`rotateX/Y` max ±8°, `translate3d` max ±6px/±4px) across the hero viewport.
+- **Accessible Nav Collapse (< 1024px)**: Transitioned navbar navigation links into a slide-over drawer below 1024px featuring accessible hamburger toggle (`#navToggle`), focus trap, Escape key dismiss, body scroll lock, and overlay backdrop.
+- **Theme Toggle Pill**: Matched navbar theme toggle button to Reference Image 3 with sun/moon SVGs and persistent theme state via `localStorage`.
+- **Tech Ticker SVG Icons**: Added brand/technology vector icons to all marquee items (`FortiGate`, `Splunk`, `Kaspersky EDR`, `Wireshark`, `Nmap`, `IDS/IPS`, `CCNA`, `Linux`, `AWS`, `Python`, `Bash`, `Palo Alto`).
+- **Badge & Certificate Drive Links**: Updated Google Drive links for all 5 credential badges and Fortinet NSE 1, 2, and 3 certificates.
+
 - [x] **Container Alignment**: All section headings and content share the exact same left vertical alignment as About.
 - [x] **Responsive Resilience**: Verified from 320px to 3840px and zoom levels 25% to 500%; zero horizontal scrolling.
 - [x] **Contact Knobs**: 4 tactile knobs render with realistic bezels, notch rotation on hover, and active press scale.
