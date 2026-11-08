@@ -1988,7 +1988,7 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
   function setupCardSpotlightGlow() {
     if (spotlightInit) return;
     const cards = document.querySelectorAll(
-      '.cert-card-clean, .contact-icon-btn, .education-card, .what-card, .beyond-card, .featured-project-card, .stat-card'
+      '.skill-card, .cert-card-clean, .education-card, .what-card, .beyond-card, .featured-project-card, .stat-card'
     );
     if (!cards.length) return;
     spotlightInit = true;
@@ -2001,11 +2001,15 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
         const y = e.clientY - rect.top;
         card.style.setProperty('--mouse-x', `${x}px`);
         card.style.setProperty('--mouse-y', `${y}px`);
+        card.style.setProperty('--mx', `${x}px`);
+        card.style.setProperty('--my', `${y}px`);
       }, { passive: true });
 
       card.addEventListener('mouseleave', () => {
         card.style.removeProperty('--mouse-x');
         card.style.removeProperty('--mouse-y');
+        card.style.removeProperty('--mx');
+        card.style.removeProperty('--my');
       }, { passive: true });
     });
   }

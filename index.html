@@ -318,89 +318,112 @@
       <h2 class="section-heading">Skills</h2>
       <p class="section-subheading">Core competencies spanning enterprise firewalls, defensive SOC operations, cloud security and scripting.</p>
 
-      <!-- 2-column mobile-friendly format matching Edit.md -->
-      <div class="skills-table-container">
-        <table class="skills-table" role="table">
-          <thead>
-            <tr>
-              <th scope="col">Area</th>
-              <th scope="col">Tools &amp; topics</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="skills-table__area"><strong>Network &amp; firewall engineering</strong></td>
-              <td>
-                <div class="skills-badge-list">
-                  <span class="skill-pill">Palo Alto</span>
-                  <span class="skill-pill">FortiGate</span>
-                  <span class="skill-pill">IDS/IPS</span>
-                  <span class="skill-pill">Firewall policies</span>
-                  <span class="skill-pill">Network segmentation</span>
-                  <span class="skill-pill">Traffic analysis</span>
-                  <span class="skill-pill">CCNA routing &amp; switching</span>
-                </div>
-              </td>
-            </tr>
+      <!-- Helper prompt line (matching Screenshot 1 & Edit.md T4) -->
+      <p class="skills-helper-text">Hover over any skill or domain to see how I use it</p>
 
-            <tr>
-              <td class="skills-table__area"><strong>Blue Team &amp; SOC</strong></td>
-              <td>
-                <div class="skills-badge-list">
-                  <span class="skill-pill">Incident response</span>
-                  <span class="skill-pill">Threat detection</span>
-                  <span class="skill-pill">Log analysis</span>
-                  <span class="skill-pill">Security monitoring</span>
-                  <span class="skill-pill">SOC metrics</span>
-                  <span class="skill-pill">Playbooks</span>
-                  <span class="skill-pill">Malware analysis</span>
-                  <span class="skill-pill">Digital forensics</span>
-                </div>
-              </td>
-            </tr>
+      <!-- 3-Column Responsive Skills Cards matching Screenshot 1 & Edit.md T4 -->
+      <div class="skills-grid" role="region" aria-label="Core Technical Domains">
+        <!-- 1. Network & Firewall Engineering -->
+        <div class="skill-card card-spotlight" tabindex="0">
+          <div class="skill-card__header">
+            <span class="skill-card__eyebrow">SECURE</span>
+            <div class="skill-card__icon-tile" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+          </div>
+          <h3 class="skill-card__title">Network &amp; Firewall Engineering</h3>
+          <p class="skill-card__desc">Designing segmented, policy-driven networks and enforcing them with next-generation firewalls.</p>
+          <div class="skill-card__chips">
+            <span class="chip">Palo Alto</span>
+            <span class="chip">FortiGate</span>
+            <span class="chip">IDS/IPS</span>
+            <span class="chip">Firewall Policies</span>
+            <span class="chip">Network Segmentation</span>
+            <span class="chip">Traffic Analysis</span>
+            <span class="chip">CCNA Routing &amp; Switching</span>
+          </div>
+        </div>
 
-            <tr>
-              <td class="skills-table__area"><strong>Network &amp; security tools</strong></td>
-              <td>
-                <div class="skills-badge-list">
-                  <span class="skill-pill">Splunk (SIEM)</span>
-                  <span class="skill-pill">Kaspersky EDR</span>
-                  <span class="skill-pill">Wireshark</span>
-                  <span class="skill-pill">Nmap</span>
-                  <span class="skill-pill">Metasploit</span>
-                </div>
-              </td>
-            </tr>
+        <!-- 2. Blue Team & SOC -->
+        <div class="skill-card card-spotlight" tabindex="0">
+          <div class="skill-card__header">
+            <span class="skill-card__eyebrow">DEFEND</span>
+            <div class="skill-card__icon-tile" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19.07 4.93A10 10 0 0 0 6.99 3.34"/><path d="M4 6h.01"/><path d="M2.29 9.62A10 10 0 1 0 21.31 8.35"/><path d="M16.24 7.76A6 6 0 1 0 8.23 16.67"/><path d="M12 18h.01"/><path d="M17.99 11.66A6 6 0 0 1 15.77 16.24"/><circle cx="12" cy="12" r="2"/><path d="m13.41 10.59 5.66-5.66"/></svg>
+            </div>
+          </div>
+          <h3 class="skill-card__title">Blue Team &amp; SOC</h3>
+          <p class="skill-card__desc">Detecting, investigating and containing threats with repeatable playbooks and metrics.</p>
+          <div class="skill-card__chips">
+            <span class="chip">Incident Response</span>
+            <span class="chip">Threat Detection</span>
+            <span class="chip">Log Analysis</span>
+            <span class="chip">Security Monitoring</span>
+            <span class="chip">SOC Metrics</span>
+            <span class="chip">Playbooks</span>
+            <span class="chip">Malware Analysis</span>
+            <span class="chip">Digital Forensics</span>
+          </div>
+        </div>
 
-            <tr>
-              <td class="skills-table__area"><strong>Systems &amp; cloud</strong></td>
-              <td>
-                <div class="skills-badge-list">
-                  <span class="skill-pill">Linux</span>
-                  <span class="skill-pill">Windows</span>
-                  <span class="skill-pill">AWS architecture</span>
-                  <span class="skill-pill">AWS core services</span>
-                  <span class="skill-pill">Cloud security basics</span>
-                </div>
-              </td>
-            </tr>
+        <!-- 3. Network & Security Tools -->
+        <div class="skill-card card-spotlight" tabindex="0">
+          <div class="skill-card__header">
+            <span class="skill-card__eyebrow">INSPECT</span>
+            <div class="skill-card__icon-tile" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            </div>
+          </div>
+          <h3 class="skill-card__title">Network &amp; Security Tools</h3>
+          <p class="skill-card__desc">Hands-on tooling for monitoring, endpoint protection, packet inspection and testing.</p>
+          <div class="skill-card__chips">
+            <span class="chip">Splunk (SIEM)</span>
+            <span class="chip">Kaspersky EDR</span>
+            <span class="chip">Wireshark</span>
+            <span class="chip">Nmap</span>
+            <span class="chip">Metasploit</span>
+          </div>
+        </div>
 
-            <tr>
-              <td class="skills-table__area"><strong>Programming</strong></td>
-              <td>
-                <div class="skills-badge-list">
-                  <span class="skill-pill">Python</span>
-                  <span class="skill-pill">Bash</span>
-                  <span class="skill-pill">C/C++</span>
-                  <span class="skill-pill">HTML</span>
-                  <span class="skill-pill">CSS</span>
-                  <span class="skill-pill">JavaScript</span>
-                  <span class="skill-pill">Backend concepts</span>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <!-- 4. Systems & Cloud -->
+        <div class="skill-card card-spotlight" tabindex="0">
+          <div class="skill-card__header">
+            <span class="skill-card__eyebrow">INFRASTRUCTURE</span>
+            <div class="skill-card__icon-tile" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            </div>
+          </div>
+          <h3 class="skill-card__title">Systems &amp; Cloud</h3>
+          <p class="skill-card__desc">Operating Linux and Windows systems and securing workloads on AWS.</p>
+          <div class="skill-card__chips">
+            <span class="chip">Linux</span>
+            <span class="chip">Windows</span>
+            <span class="chip">AWS Architecture</span>
+            <span class="chip">AWS Core Services</span>
+            <span class="chip">Cloud Security Basics</span>
+          </div>
+        </div>
+
+        <!-- 5. Programming -->
+        <div class="skill-card card-spotlight" tabindex="0">
+          <div class="skill-card__header">
+            <span class="skill-card__eyebrow">BUILD</span>
+            <div class="skill-card__icon-tile" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+          </div>
+          <h3 class="skill-card__title">Programming</h3>
+          <p class="skill-card__desc">Scripting and building small tools, automations and web interfaces.</p>
+          <div class="skill-card__chips">
+            <span class="chip">Python</span>
+            <span class="chip">Bash</span>
+            <span class="chip">C/C++</span>
+            <span class="chip">HTML</span>
+            <span class="chip">CSS</span>
+            <span class="chip">JavaScript</span>
+            <span class="chip">Backend Concepts</span>
+          </div>
+        </div>
       </div>
     </section>
 
