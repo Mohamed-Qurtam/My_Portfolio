@@ -119,11 +119,10 @@ img,video{max-width:100%;height:auto}
 :focus-visible{outline:2px solid var(--qt-accent);outline-offset:3px}
 .qt-sr-only{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-/* ---------- light theme (colour inversion) + keep real colours for media ---------- */
-html[data-theme="light"]{filter:invert(1) hue-rotate(180deg)}
-html[data-theme="light"] :is(img,video,canvas,iframe,.qt-keep){filter:invert(1) hue-rotate(180deg)!important}
-html[data-theme="light"] .qt-keep :is(img,video,canvas,iframe){filter:none!important}
-html[data-theme="light"] .qt-aurora canvas{filter:none!important}
+/* ---------- light theme: clean transition ---------- */
+html, body, section, header, .card, .stat-card, .cert-card-clean, .project-card-interactive {
+  transition: background-color .35s ease, border-color .35s ease, color .35s ease;
+}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
 
 /* ---------- header ---------- */

@@ -105,9 +105,10 @@ img,video{max-width:100%;height:auto}
 :focus-visible{outline:2px solid var(--qt-accent);outline-offset:3px}
 .qt-sr-only{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-/* ---------- light theme: one switch, works on any dark-only site ---------- */
-html[data-theme="light"]{filter:invert(1) hue-rotate(180deg)}
-html[data-theme="light"] :is(img,video,canvas,picture,iframe){filter:invert(1) hue-rotate(180deg)}
+/* ---------- light theme: clean transition ---------- */
+html, body, section, header {
+  transition: background-color .35s ease, border-color .35s ease, color .35s ease;
+}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
 
 /* ---------- header ---------- */
