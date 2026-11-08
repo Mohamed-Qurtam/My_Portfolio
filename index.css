@@ -2322,3 +2322,126 @@ html[data-theme="light"] .chip {
   border-color: var(--border-primary);
   color: var(--text-secondary);
 }
+
+/* ===================================================
+   CREDENTIAL & VENDOR BADGES MARQUEE (Edit.md T7)
+   =================================================== */
+.vendor-badges-marquee-wrapper {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-xl);
+  border-top: 1px dashed var(--border-subtle);
+  width: 100%;
+}
+
+.vendor-badges__heading {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+}
+
+.vendor-badges-marquee {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 1.5rem 0;
+  border-radius: var(--radius-lg);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.vendor-badges-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: vendor-marquee-loop 28s linear infinite;
+}
+
+.vendor-badges-marquee:hover .vendor-badges-track,
+.vendor-badges-marquee:focus-within .vendor-badges-track {
+  animation-play-state: paused;
+}
+
+.vendor-badges-group {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+  padding-right: 2.25rem;
+  flex-shrink: 0;
+}
+
+.vendor-badge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.vendor-badge-item:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), 0 0 16px var(--accent-glow);
+}
+
+.vendor-badge-img {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  display: block;
+  filter: none !important; /* Keep natural colors in both themes */
+}
+
+.vendor-badge-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+@keyframes vendor-marquee-loop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+html[data-theme="light"] .vendor-badges-marquee {
+  background: var(--bg-secondary);
+  border-color: var(--border-primary);
+}
+
+html[data-theme="light"] .vendor-badge-item {
+  background: var(--bg-primary);
+  border-color: var(--border-primary);
+  box-shadow: 0 2px 8px rgba(32, 43, 58, 0.05);
+}
+
+html[data-theme="light"] .vendor-badge-img {
+  filter: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vendor-badges-track {
+    animation: none !important;
+  }
+  .vendor-badges-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}

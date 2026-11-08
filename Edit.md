@@ -393,7 +393,7 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
 | T4 Skills boxes | Done | Replaced table with 3-column responsive card grid (5 domains) with colored eyebrows, icon tiles, descriptions, chips, hover elevation, and cursor spotlight glow |
 | T5 Certificates | Done | Renamed to "Certifications & Badges", updated summary counter to 30, merged Fortinet NSE 3 with URL, added 6 new certs (Black Belt Stage 3, 4 Veeam Specialists, iSchool Cyber Security) for 30 total (16 certs, 9 training, 5 self-study) |
 | T6 Education certificate | Done | Replaced old graduation certificate Google Drive link with `https://drive.google.com/file/d/1-AZlTNMwmeJ9LeW6W23xMRvUwEHdLBbf/view?usp=drive_link` (opens in new tab with noopener noreferrer) |
-| T7 Badges marquee | | |
+| T7 Badges marquee | Done | Added infinite seamless right-to-left marquee loop displaying all 5 Badges/ (CyberHoc, Cybersecurity, Kubernetes, Public_Cloud, SaaS) with pause on hover/focus, edge fade masks, natural color preservation, and reduced-motion support |
 | T8 CV replacement | | |
 | T9 Light mode | | |
 | T10 Creative motion | | |
