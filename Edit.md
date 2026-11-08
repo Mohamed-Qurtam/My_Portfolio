@@ -1,566 +1,401 @@
-# Portfolio Edits (v3)
+# Edit.md: Portfolio upgrade v4 (for Antigravity)
 
-Stack assumed: Lovable export (Vite + React + TypeScript + Tailwind + shadcn/ui). Apply in Antigravity IDE. Search the repo for the quoted strings to find the right files.
-
-This version replaces v2. What changes:
-
-1. Contact: delete **Phone (primary)**
-2. Fix the layout so it is responsive on every device and zoom level (your screenshots show content stuck to the left edge with zero padding, and the hero spread too thin on wide screens)
-3. Marquee bar: add **Firepower** between Palo Alto and FortiGate
-4. Tighten the spacing between sections
-5. Certificates: add Fortinet NSE 1, NSE 2, NSE 3 with links
-6. Light mode: a softer, eye-friendly theme
-7. More motion
-
-Still applies from earlier rounds: status strip removed, `NSE 4/5` renamed to `NSE 4`, RCNA added, education card links to the degree certificate, per-card certificate links, icon-only contact.
+> **ملاحظة للمالك (Arabic note for the owner):** هذا الملف مكتوب بالإنجليزية ليفهمه الموديل بدقة. ضعه في جذر المشروع (أو داخل `docs/`)، وأرفق معه الصور المرجعية الثلاث (Skills / Contact knobs / Experience spacing) وملف الـ CV الجديد ومجلد الـ Badges، ثم الصق "Master prompt" الموجود في القسم 0 داخل Antigravity. في نهاية العمل سيعيد لك الموديل هذا الملف نفسه محدّثًا (حالة كل مهمة + قائمة الملفات المعدّلة).
 
 ---
 
-## 1. Contact: delete Phone (primary)
+## 0. Master prompt (paste this into Antigravity)
 
-In the `contacts` array, delete this entry (the number is +20 1024227004):
-
-```ts
-{ label: "Phone (primary)", href: "tel:+201024227004", icon: Phone },
+```text
+You are a senior front-end engineer and motion designer. This repository is my personal portfolio (React + Tailwind, originally built with Lovable).
+1. Read docs/Edit.md completely (it is the specification).
+2. Inspect the project (package.json, router/pages, layout, Header, Hero, About, Experience, Skills, Education, Projects, Certifications, Contact, Footer, styles/tokens, public/ and src/assets).
+3. Reply with a short implementation plan (files to touch, new files, any new dependency and why). Wait for my approval.
+4. Implement tasks T1 to T12 in order, in small commits. After each task, update the Status table at the bottom of docs/Edit.md.
+5. Do not invent data (URLs, accounts, certificates, badge names). If an input listed in section 1 is missing, skip only that part, mark it "BLOCKED: waiting for input" and continue.
+6. When finished, return the updated docs/Edit.md (status, changelog, files changed, screenshots list) and confirm that npm run build and lint pass.
 ```
-
-Keep the other number, and rename it since it is now the only phone:
-
-```ts
-{ label: "Phone", href: "tel:+201015220163", icon: Phone },
-```
-
-Search the whole project for `1024227004` and `01024227004` and remove every other occurrence (footer, JSON-LD / meta tags, CV text). Keep the icon-only format.
 
 ---
 
-## 2. Responsive on all devices and zoom levels
+## 1. Inputs the owner provides (check before starting)
 
-### What your screenshots show
+| Input | Where it should be | If missing |
+|---|---|---|
+| **New CV (PDF)** | `public/cv/` (any file name; the agent renames it, see T8) | Mark T8 BLOCKED; do not touch the CV links |
+| **Badges** (images, from the "Badges" folder) | `src/assets/badges/` (or `public/badges/`) | Build the marquee with a typed empty-state, mark T7 partially BLOCKED |
+| **Reference screenshots** (3): skills cards, contact knobs, experience page cut at left edge | Attached to the prompt | Use the descriptions in this file |
+| X (Twitter) and Instagram URLs | Not provided | **Do not add X or Instagram knobs.** Leave an `// OPTIONAL` slot in `src/data/links.ts` only |
 
-- **Screenshot 2:** "Experience", the tag, "Back to top" and the Strengths box touch the left edge with 0px padding. The text is clipped at the screen edge. This means a section wrapper lost its horizontal padding. Never allow 0.
-- **Screenshot 1:** at about 1900px wide the hero text sits at the far left and the photo at the far right, with a huge empty middle. The hero is also a full screen tall with a lot of dead space.
-- The second hero button, next to "Download CV", shows an empty box with no readable label.
+---
 
-### a) One fluid page wrapper (use it on every section)
+## 2. Global rules
 
-Create `src/components/Section.tsx`:
+- **Do not break what already works:** section anchors (`#about`, `#experience`, `#skills`, `#education`, `#projects`, `#certifications`, `#contact`), scroll-spy, dark default theme, the hero role title that appears after page load.
+- All URLs live in **one** file, `src/data/links.ts`. All certificates in `src/data/certifications.ts`. All skills in `src/data/skills.ts`. No hard-coded links in components.
+- Use design tokens (CSS variables) for every colour. No inline hex values in components.
+- No new heavy dependencies without asking. Prefer CSS and the Web Animations API. If the project already uses Framer Motion, use it. GSAP is allowed only for the scroll-storytelling pieces in T11 and only if I approve the plan.
+- Every external link: `target="_blank"` and `rel="noopener noreferrer"`.
+- Every animation respects `prefers-reduced-motion` (see T11).
 
-```tsx
-import { ReactNode } from "react";
+---
 
-export function Section({ id, children, className = "" }:
-  { id?: string; children: ReactNode; className?: string }) {
-  return (
-    <section
-      id={id}
-      className={`w-full scroll-mt-16 px-[clamp(1rem,4vw,4rem)] py-[clamp(2.5rem,6vw,5rem)] ${className}`}
-    >
-      <div className="mx-auto w-full max-w-[min(100%,110rem)]">{children}</div>
-    </section>
-  );
-}
-```
+## T1. Consistent horizontal spacing for ALL sections
 
-Replace every section's outer wrapper (About, Experience, Skills, Education, Projects, Certifications, Contact) with `<Section id="...">`. Remove any `px-0`, `-mx-*`, `ml-*`, `pl-0` or negative margins on those wrappers or on their children (cards, headings, the tag, "Back to top"). Check `index.css` and `App.css` for the same.
+**Problem (see the Experience screenshot):** the "// 02 · CAREER" label and the "Experience" heading touch the left edge of the browser, while About has a proper margin. Sections have no shared container.
 
-### b) Fluid root size (scales the whole site on big screens, and stays stable when zooming)
-
-In `src/index.css`:
+**Fix:** one `Container` used by the header, every section and the footer.
 
 ```css
-html {
-  font-size: clamp(14px, 0.35vw + 12.5px, 19px);   /* 14px on small phones, about 19px on 4K / ultrawide */
-  scrollbar-gutter: stable;
-  -webkit-text-size-adjust: 100%;
+/* tokens */
+:root{
+  --container-max: 1200px;
+  --gutter: clamp(1.25rem, 5vw, 4rem);   /* the "distance from the page edge" */
 }
-html, body, #root { width: 100%; min-height: 100%; margin: 0; padding: 0; }
-body { overflow-x: clip; }                          /* clip, not hidden: keeps sticky nav working */
-*, *::before, *::after { box-sizing: border-box; min-width: 0; }
-img, svg, video, canvas, iframe { max-width: 100%; height: auto; }
+.container{
+  width: min(100% - 2 * var(--gutter), var(--container-max));
+  margin-inline: auto;
+}
+.section{ padding-block: clamp(4rem, 9vw, 8rem); }
 ```
-
-Make sure the font sizes, paddings and widths across the components use `rem` or Tailwind classes, not hard-coded `px`. Search for `px` in inline styles and `w-[...px]` / `h-[...px]` and convert to `rem`, `clamp()`, `%` or `vw`.
-
-### c) Fluid type
-
-Use `clamp()` for the big text:
 
 ```tsx
-<h1 className="text-[clamp(2.25rem,5vw+0.5rem,5rem)] leading-[1.05]">Mohamed Qurtam</h1>
-<p  className="text-[clamp(0.8rem,0.9vw+0.5rem,1.15rem)] tracking-wide">ENTERPRISE SWITCHING &amp; ROUTING SPECIALIST (CISCO · RUIJIE)</p>
+// src/components/Container.tsx
+export function Container({ as: Tag = "div", className = "", ...p }: any) {
+  return <Tag className={`container ${className}`} {...p} />;
+}
 ```
 
-Section titles: `text-[clamp(1.75rem,3vw+0.5rem,3rem)]`.
+**Do:** wrap the *content* of every section in `<Container>` (keep full-bleed backgrounds, dividers and the aurora outside it). Remove any `padding-left: 0` / `ml-0` / negative margins that cause the flush-left look. Make the Experience timeline, the section labels, headings and the accent underline all start at the container's left edge, exactly aligned with the About heading.
 
-### d) Hero
-
-Find the hero (`Hero.tsx`, the component with "DEFENSIVE SECURITY · RESILIENT INFRASTRUCTURE").
-
-```tsx
-<section id="home"
-  className="relative w-full min-h-[min(100svh,60rem)] px-[clamp(1rem,4vw,4rem)] pt-24 pb-[clamp(3rem,8vw,6rem)]
-             grid items-center gap-[clamp(1.5rem,4vw,4rem)] grid-cols-1 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-  <div className="order-2 md:order-1 min-w-0">{/* text, buttons, social icons */}</div>
-  <div className="order-1 md:order-2 justify-self-center md:justify-self-end">
-    {/* photo: w-[clamp(11rem,22vw,22rem)] aspect-[3/4] */}
-  </div>
-</section>
-```
-
-- Remove any `h-screen`, `min-h-screen`, `h-[100vh]` from the hero. Use `100svh` (it fixes mobile browser bars).
-- Photo size: `w-[clamp(11rem,22vw,22rem)]`.
-- The text block should take the full column (`max-w-none`), with the paragraph at `max-w-[60ch]`.
-- **Empty second button:** open the hero buttons and check that it has a label (for example "View Projects"). If it does, the text color is the same as the background (typical shadcn `variant="outline"` problem). Fix with `className="text-foreground border-border hover:bg-primary/10"`.
-
-### e) Marquee bar sizing
-
-Make the bar a normal block, not absolutely positioned at `bottom-0` of a fixed-height hero. See section 3.
-
-### f) Grids that reflow
-
-```tsx
-className="grid w-full gap-[clamp(0.75rem,1.5vw,1.5rem)] grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
-```
-
-The certificates grid should be `grid-cols-1 md:grid-cols-2 2xl:grid-cols-3`. For long text (emails, URLs, certificate titles) add `break-words`.
-
-### g) Experience timeline on small screens
-
-The date column and the content should stack on phones:
-
-```tsx
-className="grid grid-cols-1 gap-2 md:grid-cols-[12rem_minmax(0,1fr)] md:gap-8"
-```
-
-### h) Test matrix
-
-Browser zoom 25%, 50%, 75%, 100%, 125%, 150%, 200%, 300%. DevTools device sizes: 320, 375, 768, 1024, 1440, 1920, 2560. Pass criteria: no horizontal scrollbar, no text touching the screen edge, nothing clipped, no big empty areas.
+**Acceptance:** at 1280, 1440 and 1920 px the left edge of every section heading is on the same vertical line as the About heading; at 360 px the gap to the screen edge is at least 20 px everywhere.
 
 ---
 
-## 3. Marquee bar: add Firepower
+## T2. Responsive for every device and every zoom level
 
-Find the bar with FortiGate, Splunk, Kaspersky EDR, Wireshark, Nmap, IDS/IPS, CCNA, Linux, AWS, Python, Bash, Palo Alto (search for `Kaspersky EDR` or `marquee`).
+**Requirements**
 
-Because the bar loops, "between Palo Alto and FortiGate" is the end of the list. Add Firepower **after Palo Alto**, so the loop reads: ... Bash, Palo Alto, **Firepower**, FortiGate, Splunk ...
+1. Works from **320 CSS px** to **3840 px** wide, in portrait and landscape.
+2. Works at browser zoom **25%, 50%, 75%, 100%, 125%, 150%, 200%, 300%, 400%, 500%**. At 400% (≈ 320 CSS px) the page must reflow to a single column with **no horizontal scroll** (WCAG 1.4.10).
+3. At low zoom (25 to 67%) or on big monitors, content stays **centred** in the container (max 1200 px) and does not float to the left. Allow `--container-max` to grow to 1400 px at `min-width: 1800px`.
+4. Use `rem`, `clamp()`, `min()`, grid `auto-fit`/`minmax()`, `aspect-ratio`. No fixed pixel widths on layout blocks. Use `dvh` instead of `100vh`. Respect `env(safe-area-inset-*)`.
+5. Hover-only effects are wrapped in `@media (hover:hover)`; touch targets are at least 44x44 px.
+6. Header: full nav above 1024 px; below that a hamburger menu (with Download CV and the theme toggle inside the panel or fixed at the top-right).
+
+```css
+html{ -webkit-text-size-adjust:100%; }
+body{ overflow-x:clip; }
+img,svg,video,canvas{ max-width:100%; height:auto; }
+h1{ font-size:clamp(2.25rem, 1.2rem + 4.5vw, 4.75rem); }
+h2{ font-size:clamp(1.75rem, 1.1rem + 2.6vw, 3rem); }
+.grid-auto{ display:grid; gap:clamp(1rem,2.5vw,1.75rem);
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr)); }
+@media (min-width:1800px){ :root{ --container-max:1400px; } }
+```
+
+**Test matrix (take a screenshot of each and list them in the changelog):**
+iPhone SE (375), iPhone 15 (393), Pixel 8 (412), Galaxy Fold (280, best effort), iPad portrait (820), iPad Pro landscape (1366), laptop (1440), desktop (1920), 4K (3840), plus zoom 50%, 200%, 400% at 1280 px wide.
+
+---
+
+## T3. Contact: tactile "knob" buttons (match the reference image)
+
+**Reference anatomy:** a row of round physical-looking dials. Each has an uppercase letter-spaced label **above** (X, GITHUB, LINKEDIN, INSTAGRAM in the reference), a raised bezel ring with a small indicator notch at the top, an inner raised cap with the icon centred, soft top highlight and drop shadow. One knob is the accent colour, one is off-white, one mid-grey, one near-black. The page background has a fine paper grain.
+
+**Our knobs (4, only real accounts):**
+
+| Order | Label | Icon | Target | Variant |
+|---|---|---|---|---|
+| 1 | EMAIL | envelope | `mailto:moqurtam@gmail.com` | `knob--green` (brand accent) |
+| 2 | GITHUB | GitHub mark | `https://github.com/Mohamed-Qurtam` | default (off-white; dark glass in dark theme) |
+| 3 | LINKEDIN | "in" mark | `https://www.linkedin.com/in/mohamed-qurtam-128296215/` | `knob--steel` |
+| 4 | PHONE | handset | `tel:+201024227004` | `knob--ink` |
+
+Keep the written email and both phone numbers (+20 1024227004, +20 1015220163) as plain text with a small "copy" button under the knobs, so they stay selectable and accessible. Remove the old stacked contact cards and the emoji icons.
+
+**Markup (one component, data driven from `links.ts`)**
 
 ```tsx
-const tools = [
-  "FortiGate", "Splunk", "Kaspersky EDR", "Wireshark", "Nmap", "IDS/IPS",
-  "CCNA", "Linux", "AWS", "Python", "Bash", "Palo Alto", "Firepower",
+<a className={`knob ${variant}`} href={href} target={external ? "_blank" : undefined}
+   rel={external ? "noopener noreferrer" : undefined} aria-label={ariaLabel}>
+  <span className="knob__dial">
+    <span className="knob__ring" aria-hidden="true" />
+    <span className="knob__cap">{/* inline SVG icon, aria-hidden */}</span>
+  </span>
+  <span>{label}</span>
+</a>
+```
+
+**CSS (prototyped and checked in a real browser in light and dark themes; use as-is, then adapt tokens)**
+
+```css
+.knob-row{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(1.25rem,4vw,2.75rem)}
+.knob{--size:clamp(76px,11vw,104px);display:grid;justify-items:center;gap:.95rem;text-decoration:none;color:var(--text-muted);
+  font:600 .72rem/1 var(--font-mono);letter-spacing:.2em;text-transform:uppercase;-webkit-tap-highlight-color:transparent}
+.knob__dial{position:relative;width:var(--size);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 24%,var(--k-bezel-hi),var(--k-bezel-lo) 78%);
+  box-shadow:0 1px 0 rgba(255,255,255,.65) inset,0 -3px 6px rgba(0,0,0,.14) inset,0 14px 22px -8px var(--k-shadow),0 2px 3px rgba(0,0,0,.22);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
+.knob__ring{position:absolute;inset:0;border-radius:50%;transition:transform .7s cubic-bezier(.3,1.5,.4,1)}
+.knob__ring::before{content:"";position:absolute;top:7%;left:50%;width:7%;height:10%;transform:translateX(-50%);border-radius:2px;
+  background:var(--k-notch);box-shadow:0 1px 0 rgba(255,255,255,.5)}
+.knob__cap{width:57%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 32% 26%,var(--k-cap-hi),var(--k-cap-lo) 80%);
+  box-shadow:0 1px 1px rgba(255,255,255,.7) inset,0 -2px 4px rgba(0,0,0,.12) inset,0 8px 12px -4px var(--k-shadow);transition:transform .25s ease}
+.knob__cap svg{width:46%;height:46%;color:var(--k-icon)}
+
+/* colour variants (tokens per theme) */
+[data-theme="light"]{--k-bezel-hi:#fbfaf8;--k-bezel-lo:#cfcbc3;--k-cap-hi:#fff;--k-cap-lo:#e9e6e0;--k-icon:#14181b;--k-notch:#bdb8ae;--k-shadow:rgba(20,24,27,.32)}
+[data-theme="dark"] {--k-bezel-hi:#2b3238;--k-bezel-lo:#14181c;--k-cap-hi:#363e45;--k-cap-lo:#1d2328;--k-icon:#e9eef2;--k-notch:#5c6670;--k-shadow:rgba(0,0,0,.6)}
+
+.knob--green{--k-bezel-hi:#6fe0b0;--k-bezel-lo:#1f9d6b;--k-cap-hi:#82ecbf;--k-cap-lo:#2bb27b;--k-icon:#05261a;--k-notch:#c9f7e2}
+.knob--steel{--k-bezel-hi:#b5b5b5;--k-bezel-lo:#7d7d7d;--k-cap-hi:#c4c4c4;--k-cap-lo:#929292;--k-icon:#fff;--k-notch:#e8e8e8}
+.knob--ink  {--k-bezel-hi:#4a4a4a;--k-bezel-lo:#1c1c1c;--k-cap-hi:#555;--k-cap-lo:#262626;--k-icon:#fff;--k-notch:#9a9a9a}
+
+@media (hover:hover){
+  .knob:hover .knob__dial{transform:translateY(-4px)}
+  .knob:hover .knob__ring{transform:rotate(42deg)}      /* the dial "turns" */
+  .knob:hover{color:var(--text)}
+}
+.knob:active .knob__dial{transform:translateY(1px) scale(.96)}
+.knob:active .knob__cap{transform:scale(.94)}
+.knob:focus-visible{outline:none}
+.knob:focus-visible .knob__dial{outline:3px solid var(--accent);outline-offset:4px}
+```
+
+**Extras (small, optional but encouraged):** on pointer-drag the ring follows the pointer angle for a "real dial" feel (pointer events, clamp to ±60°, spring back on release); on click a short ripple. No sound by default.
+
+**Light-theme paper grain** behind the Contact section only (4 to 7% opacity noise via an inline SVG `feTurbulence` data-URI as the page background).
+
+**Acceptance:** four knobs centred, labels above, hover turns the notch, keyboard focus is visible, tap works on touch, all four links open the right targets, no emoji left in Contact.
+
+---
+
+## T4. Skills as boxes (match the reference screenshot)
+
+**Reference anatomy:** a 3-column responsive grid of rounded cards. Each card has: a small uppercase **eyebrow** label in the accent colour, an **icon tile** (rounded square, subtle border), a bold **title**, a one-to-two line **description**, and a row of **chips** at the bottom. Cards lift on hover with a soft glow border; a spotlight highlight follows the cursor inside the card. The section has a pill label above it and a short helper line.
+
+**Layout:** `grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr))` so it becomes 3, 2 or 1 columns by itself. With 5 cards, the last row must be visually balanced (centre the last row or let the last card span the remaining columns).
+
+**Data (`src/data/skills.ts`).** Keep the existing skills; do not add skills that are not listed here.
+
+```ts
+export const skills = [
+  { eyebrow: "SECURE",   icon: "shield",   title: "Network & Firewall Engineering",
+    description: "Designing segmented, policy-driven networks and enforcing them with next-generation firewalls.",
+    chips: ["Palo Alto","FortiGate","IDS/IPS","Firewall Policies","Network Segmentation","Traffic Analysis","CCNA Routing & Switching"] },
+  { eyebrow: "DEFEND",   icon: "radar",    title: "Blue Team & SOC",
+    description: "Detecting, investigating and containing threats with repeatable playbooks and metrics.",
+    chips: ["Incident Response","Threat Detection","Log Analysis","Security Monitoring","SOC Metrics","Playbooks","Malware Analysis","Digital Forensics"] },
+  { eyebrow: "INSPECT",  icon: "terminal", title: "Network & Security Tools",
+    description: "Hands-on tooling for monitoring, endpoint protection, packet inspection and testing.",
+    chips: ["Splunk (SIEM)","Kaspersky EDR","Wireshark","Nmap","Metasploit"] },
+  { eyebrow: "INFRASTRUCTURE", icon: "cloud", title: "Systems & Cloud",
+    description: "Operating Linux and Windows systems and securing workloads on AWS.",
+    chips: ["Linux","Windows","AWS Architecture","AWS Core Services","Cloud Security Basics"] },
+  { eyebrow: "BUILD",    icon: "code",     title: "Programming",
+    description: "Scripting and building small tools, automations and web interfaces.",
+    chips: ["Python","Bash","C/C++","HTML","CSS","JavaScript","Backend Concepts"] },
 ];
 ```
 
-If your list has the first FortiGate as the loop start, no other change is needed. If the items are written as separate JSX chips, add one more chip after Palo Alto in each copy (the original and the duplicate for the seamless loop). Make sure the Palo Alto chip is no longer cut off at the right edge (see your screenshot).
+Use Lucide icons (`shield-check`, `radar`, `terminal`, `cloud`, `code-xml`), never emoji.
 
-Better marquee (seamless, pauses on hover, soft fade at the edges, glow on hover):
-
-```tsx
-export function ToolMarquee() {
-  const row = [...tools, ...tools];   // duplicated for a seamless loop
-  return (
-    <div className="group relative w-full overflow-hidden border-y border-border bg-card/60 py-3
-                    [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]">
-      <ul className="flex w-max gap-4 animate-marquee group-hover:[animation-play-state:paused]">
-        {row.map((t, i) => (
-          <li key={i}
-              className="shrink-0 rounded-md border border-border bg-background/60 px-4 py-1.5 font-mono text-xs
-                         transition hover:-translate-y-0.5 hover:border-primary hover:text-primary
-                         hover:shadow-[0_0_1.25rem_hsl(var(--primary)/0.35)]">
-            {t}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+```css
+.skill-card{position:relative;display:flex;flex-direction:column;gap:1rem;padding:clamp(1.25rem,2.5vw,1.75rem);
+  border-radius:1.25rem;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow-sm);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .35s;overflow:hidden}
+.skill-card::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(360px circle at var(--mx,50%) var(--my,50%),var(--glow),transparent 60%)}
+@media (hover:hover){
+  .skill-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow-lg)}
+  .skill-card:hover::before{opacity:1}
 }
+.skill-card__eyebrow{font:700 .72rem/1 var(--font-mono);letter-spacing:.18em;color:var(--accent)}
+.skill-card__chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:auto}
+.chip{padding:.4rem .75rem;border-radius:.6rem;border:1px solid var(--border);background:var(--bg-soft);font-size:.85rem;
+  transition:transform .25s,border-color .25s}
+@media (hover:hover){ .chip:hover{transform:translateY(-2px);border-color:var(--accent)} }
 ```
-
-In `tailwind.config.ts` under `theme.extend`:
 
 ```ts
-keyframes: { marquee: { from: { transform: "translateX(0)" }, to: { transform: "translateX(-50%)" } } },
-animation: { marquee: "marquee 35s linear infinite" },
+// spotlight follows the cursor inside each card
+card.addEventListener("pointermove", (e) => {
+  const r = card.getBoundingClientRect();
+  card.style.setProperty("--mx", `${e.clientX - r.left}px`);
+  card.style.setProperty("--my", `${e.clientY - r.top}px`);
+});
 ```
 
-(Because the list is duplicated, `-50%` gives a perfect loop.)
+Cards reveal with a stagger (see T10). The helper line under the title: "Hover over any skill or domain to see how I use it" (on touch devices: "Tap a card to explore").
 
 ---
 
-## 4. Tighter spacing between sections
+## T5. Certifications: add the new certificates (no duplicates)
 
-Your screenshot 2 shows about 300px of empty space between "Back to top" and the next section's tag.
+**Rename** the visible section title and any summary card from **"Certifications & Training"** to **"Certifications & Badges"** (search the whole codebase for the old string, including the About summary cards and any `aria-label`). Keep the section id `#certifications` and the nav label short ("Certifications").
 
-1. **Delete the inline "↑ Back to top" button** at the end of each section. The round floating arrow button (bottom right, with the progress ring) already does this job. This alone removes most of the dead space.
-2. Use the `Section` wrapper from section 2a: vertical padding is `clamp(2.5rem, 6vw, 5rem)` (40px to 80px) instead of the current large value.
-3. Search for and remove or reduce: `py-24`, `py-32`, `pt-32`, `pb-32`, `mb-24`, `mt-24`, `min-h-screen`, and any empty spacer `<div className="h-*" />` between sections.
-4. Do not stack padding: if one section has `pb-*` and the next has `pt-*` plus the wrapper padding, remove the extra `pb`/`pt`.
-5. Heading gap: the heading block should have `mb-[clamp(1.25rem,3vw,2.5rem)]`.
-6. Keep the thin divider line, but put it on the section top (`border-t border-border`) rather than on a tall empty block.
+**Existing certificates (already on the site, keep them):**
+Deploying Security Strategies for the Modern Network · RCNA Routing & Switching · Sales Specialist: Kaspersky Next Optimum (S47.2) · Blue Team Scholarship, CyberTalents · SOC Analyst Foundation, SIEM XPERT · AWS Academy Cloud Foundations, NTI · Red Hat System Administration I (9.0), NTI · Python and Django learning guide, Udemy · eLearnSecurity Certified Incident Responder (eCIR), Netriders Academy · Cisco CyberOps, NTI · Introduction to Cybersecurity Bootcamp (Cohort 5), CyberTalents
 
----
-
-## 5. Certificates: Fortinet NSE 1, NSE 2, NSE 3
-
-Add or update these entries in the `certs` array (same `Cert` type as in v2):
+**Add these 7 (titles verbatim, do not invent issuers or dates):**
 
 ```ts
-{ title: "Fortinet NSE 1", issuer: "Fortinet", badge: "PROGRAM", category: "Certificates & Programs",
-  links: [{ label: "Certificate", url: "https://drive.google.com/file/d/1Zu7S_-dQnHMSjr2NScvsbjc9_uuMpn7I/view?usp=sharing" }] },
-
-{ title: "Fortinet NSE 2", issuer: "Fortinet", badge: "PROGRAM", category: "Certificates & Programs",
-  links: [{ label: "Certificate", url: "https://drive.google.com/file/d/1jlEzjSlGVRJN2dyuMWsMVSeIUxpMmn_p/view?usp=drive_link" }] },
-
-{ title: "Fortinet NSE 3", issuer: "Fortinet", badge: "PROGRAM", category: "Certificates & Programs" },
-// NSE 3: no link was given yet. Add: links: [{ label: "Certificate", url: "..." }]
+// src/data/certifications.ts  (append; merge with the existing array)
+export const newCertifications = [
+  { title: "NSE 3",
+    url: "https://drive.google.com/file/d/1BdfKHC5XRU3n-Hxxw6hA5dSsYvqes6-v/view?usp=drive_link" },
+  { title: "Computer Science Course (Cyber Security), iSchool",
+    url: "https://drive.google.com/file/d/1TZ4W4_Nx0efofgcNQplQ8invS4AfU8qg/view?usp=drive_link" },
+  { title: "Black Belt ASA and Firewall Support Stage 3 (Jul 2025)",
+    url: "https://drive.google.com/file/d/1hK8w7OaEGWE2w_r4qS6oeOx0xg_wcem_/view?usp=drive_link" },
+  { title: "Veeam Technical Specialist: Kubernetes Data Protection 2026",
+    url: "https://drive.google.com/file/d/1ypiElK6-5Fkj4ZtmusBWqj3XXj4JQ_QH/view?usp=drive_link" },
+  { title: "Veeam Technical Specialist: Cybersecurity & DR 2026",
+    url: "https://drive.google.com/file/d/1OAZGGe-uJesL7Z3RYi7WC4JeylzZLdAX/view?usp=drive_link" },
+  { title: "Veeam Technical Specialist: Public Cloud 2026",
+    url: "https://drive.google.com/file/d/1srajW_L45EJjD8sZ_VobSauNIyC--gKJ/view?usp=drive_link" },
+  { title: "Veeam Technical Specialist: SaaS Protection 2026",
+    url: "https://drive.google.com/file/d/1PSoYScC-jxMj7t3yfQy7BXFjGBh-sRq7/view?usp=drive_link" },
+];
 ```
 
-If NSE 1 and NSE 2 are already in your array from v2, just replace their links with the ones above (NSE 1 now uses `usp=sharing`, NSE 2 uses `usp=drive_link`).
+**No-duplicates rule (implement as a function and run it at build/dev time):**
 
-NSE 3 stays visible but not clickable until you send me (or paste in) its link.
-
-Keep `Fortinet NSE 4` in the Self-Study group, and sort the Fortinet cards in order: NSE 1, NSE 2, NSE 3, NSE 4.
-
-Counts are computed with `certs.length` and `countOf(category)`, so the subtitle and the tabs update on their own. Do not hard-code the number.
-
----
-
-## 6. Light mode: easier on the eyes
-
-Why it hurts: pure white backgrounds, strong neon-emerald on white (low contrast, glows), and the dark-mode glow/grid effects staying at full strength.
-
-### a) Palette (replace the `:root` block in `src/index.css`)
-
-The values assume shadcn's HSL variables (`--background: H S% L%`). If yours use another format, convert the hex values noted in comments.
-
-```css
-:root {
-  /* warm paper, never pure white */
-  --background: 42 28% 95%;          /* #f5f2ea */
-  --foreground: 215 28% 17%;         /* #202b3a soft navy, not black */
-
-  --card: 40 30% 97.5%;              /* #faf8f3 */
-  --card-foreground: 215 28% 17%;
-  --popover: 40 30% 97.5%;
-  --popover-foreground: 215 28% 17%;
-
-  --muted: 40 18% 90%;               /* #ebe7dc */
-  --muted-foreground: 215 14% 38%;   /* readable grey, 5:1 on background */
-
-  --border: 38 16% 82%;              /* #dcd6c8 */
-  --input: 38 16% 82%;
-  --ring: 162 70% 28%;
-
-  /* deeper emerald: readable on light backgrounds (contrast 5:1+) */
-  --primary: 162 78% 26%;            /* #0f7a56 */
-  --primary-foreground: 42 40% 97%;
-
-  --secondary: 215 40% 90%;          /* soft blue-grey */
-  --secondary-foreground: 215 40% 20%;
-  --accent: 195 55% 88%;             /* soft teal wash */
-  --accent-foreground: 200 50% 18%;
-
-  --shadow-soft: 0 0.25rem 1.5rem -0.5rem hsl(215 30% 20% / 0.12);
-}
-
-html { transition: background-color .35s ease, color .35s ease; }
-body, .card, header, section { transition: background-color .35s ease, border-color .35s ease, color .35s ease; }
-```
-
-Leave the existing `.dark { ... }` block as it is.
-
-### b) Tone down the effects in light mode
-
-```css
-/* hero glows and grid */
-:root .hero-glow       { opacity: .35; mix-blend-mode: multiply; }   /* use your glow class names */
-:root .hero-grid       { opacity: .5;  filter: invert(1) opacity(.08); }
-:root .particles       { opacity: .5; }                              /* or set the canvas particle colour to hsl(162 60% 30% / .5) */
-
-/* soft depth instead of neon */
-:root .card, :root [class*="rounded-lg"] { box-shadow: var(--shadow-soft); }
-```
-
-Use the real class names from your components (search `glow`, `grid`, `particles`, `canvas`). If the particle background is a canvas, read the theme (`document.documentElement.classList.contains("dark")`) and draw with `hsl(162 55% 32% / .55)` in light mode.
-
-### c) Light-mode details
-
-- Replace any hard-coded `bg-white`, `text-black`, `text-emerald-400`, `border-white/10` and `bg-white/5` with theme tokens: `bg-card`, `text-foreground`, `text-primary`, `border-border`, `bg-muted/50`. These hard-coded dark-mode values are the main reason light mode looks wrong. Search for `white/`, `emerald-`, `zinc-`, `#` colours.
-- The mono labels (`// 02 · CAREER`): `text-primary bg-primary/10 border-primary/30`.
-- Optional soft page gradient for light mode only: `background-image: radial-gradient(60rem 30rem at 10% -10%, hsl(162 60% 85% / .6), transparent), radial-gradient(50rem 30rem at 100% 0%, hsl(215 70% 88% / .55), transparent);`
-- Theme toggle: also respect the system setting on first load (`window.matchMedia("(prefers-color-scheme: dark)")`) and save the choice in `localStorage`.
-
----
-
-## 7. More motion (creative pack)
-
-Install: `npm i framer-motion`
-
-All animations must respect reduced motion. Add once in `index.css`:
-
-```css
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
-}
-```
-
-### 7.1 Scroll progress bar (top of the page)
-
-```tsx
-import { motion, useScroll, useSpring } from "framer-motion";
-
-export function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 24, restDelta: 0.001 });
-  return <motion.div style={{ scaleX }} className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-primary" />;
-}
-```
-
-Render it once in `App.tsx`.
-
-### 7.2 Reveal on scroll with stagger (use for every section)
-
-```tsx
-import { motion, Variants } from "framer-motion";
-
-const container: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
-const item: Variants = { hidden: { opacity: 0, y: 24, filter: "blur(6px)" }, show: { opacity: 1, y: 0, filter: "blur(0)", transition: { duration: .6, ease: [.22,1,.36,1] } } };
-
-export const Reveal = ({ children, className = "" }: any) => (
-  <motion.div variants={container} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-10% 0px" }} className={className}>
-    {children}
-  </motion.div>
-);
-export const RevealItem = ({ children, className = "" }: any) => (
-  <motion.div variants={item} className={className}>{children}</motion.div>
-);
-```
-
-Wrap each section's grid in `<Reveal>` and each card in `<RevealItem>`.
-
-### 7.3 Hero: rotating typewriter role line
-
-```tsx
-import { useEffect, useState } from "react";
-
-const roles = ["Enterprise Switching & Routing", "Network Security", "SOC & Incident Response", "Firewall Engineering"];
-
-export function Typewriter() {
-  const [i, setI] = useState(0), [txt, setTxt] = useState(""), [del, setDel] = useState(false);
-  useEffect(() => {
-    const full = roles[i];
-    const t = setTimeout(() => {
-      if (!del) { setTxt(full.slice(0, txt.length + 1)); if (txt === full) setTimeout(() => setDel(true), 1200); }
-      else { setTxt(full.slice(0, txt.length - 1)); if (txt === "") { setDel(false); setI((i + 1) % roles.length); } }
-    }, del ? 30 : 60);
-    return () => clearTimeout(t);
-  }, [txt, del, i]);
-  return <span className="font-mono text-primary">{txt}<span className="ml-0.5 inline-block w-[0.5ch] animate-pulse">▍</span></span>;
-}
-```
-
-Use it under the name (keep the main title static for SEO).
-
-### 7.4 Hero: floating photo with a rotating gradient ring, plus mouse parallax glow
-
-```css
-@keyframes spin-slow { to { transform: rotate(360deg); } }
-@keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-0.6rem) } }
-
-.photo-wrap { position: relative; animation: float 6s ease-in-out infinite; }
-.photo-wrap::before {
-  content: ""; position: absolute; inset: -0.4rem; border-radius: inherit; z-index: -1;
-  background: conic-gradient(from 0deg, hsl(var(--primary)), hsl(210 80% 55%), transparent 60%, hsl(var(--primary)));
-  filter: blur(0.6rem); opacity: .7; animation: spin-slow 8s linear infinite;
-}
-```
-
-Mouse-follow glow behind the hero:
-
-```tsx
-const onMove = (e: React.MouseEvent<HTMLElement>) => {
-  const r = e.currentTarget.getBoundingClientRect();
-  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+```ts
+const key = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/\b(19|20)\d{2}\b/g, "").trim();
+const fileId = (u = "") => u.match(/\/d\/([^/]+)/)?.[1];
+// same certificate if the cleaned titles match, or one title is a whole-word part of the other
+// (so "NSE 3" and "Fortinet NSE 3" count as the same certificate; "NSE 3" and "NSE 30" do not)
+const same = (a: string, b: string) => {
+  const x = key(a), y = key(b);
+  return x === y || (Math.min(x.length, y.length) >= 5 && (` ${x} `.includes(` ${y} `) || ` ${y} `.includes(` ${x} `)));
 };
-// <section onMouseMove={onMove} className="hero-spot ...">
-```
-
-```css
-.hero-spot::after { content:""; position:absolute; inset:0; pointer-events:none;
-  background: radial-gradient(28rem circle at var(--mx,50%) var(--my,40%), hsl(var(--primary)/.14), transparent 60%); }
-```
-
-### 7.5 Spotlight and 3D tilt on cards (certificates, projects, skills)
-
-```tsx
-import { useRef } from "react";
-
-export function TiltCard({ children, className = "" }: any) {
-  const ref = useRef<HTMLDivElement>(null);
-  const move = (e: React.MouseEvent) => {
-    const el = ref.current!, r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-    el.style.transform = `perspective(60rem) rotateX(${(0.5 - y) * 6}deg) rotateY(${(x - 0.5) * 8}deg) translateY(-2px)`;
-    el.style.setProperty("--sx", `${x * 100}%`); el.style.setProperty("--sy", `${y * 100}%`);
-  };
-  const leave = () => { ref.current!.style.transform = ""; };
-  return (
-    <div ref={ref} onMouseMove={move} onMouseLeave={leave}
-         className={`relative transition-transform duration-200 will-change-transform
-                     before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:opacity-0
-                     before:transition-opacity before:duration-300 hover:before:opacity-100
-                     before:bg-[radial-gradient(14rem_circle_at_var(--sx)_var(--sy),hsl(var(--primary)/.18),transparent_70%)] ${className}`}>
-      {children}
-    </div>
-  );
+export function mergeCerts(existing: Cert[], incoming: Cert[]) {
+  const out = [...existing];
+  for (const c of incoming) {
+    const dup = out.find((e) => same(e.title, c.title) || (fileId(e.url) && fileId(e.url) === fileId(c.url)));
+    if (dup) dup.url ||= c.url;      // same certificate: just attach the link, never add a second row
+    else out.push(c);
+  }
+  return out;
 }
 ```
 
-Wrap the certificate buttons: `<TiltCard className="rounded-lg"><button ...>...</button></TiltCard>`. Disable on touch screens with `@media (hover: none) { ... }` or by skipping the handler when `matchMedia("(hover: none)").matches`.
-
-### 7.6 Experience timeline: the line draws as you scroll
-
-```tsx
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-
-export function Timeline({ children }: any) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 80%", "end 60%"] });
-  const h = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  return (
-    <div ref={ref} className="relative">
-      <div className="absolute left-0 top-0 h-full w-px bg-border" />
-      <motion.div style={{ height: h }} className="absolute left-0 top-0 w-px bg-primary shadow-[0_0_0.75rem_hsl(var(--primary))]" />
-      {children}
-    </div>
-  );
-}
-```
-
-Add a pulse to the current-job dot: `animate-ping` on a duplicate dot behind the "Network & Security Engineer" marker.
-
-### 7.7 Nav: sliding active pill + scroll-spy
-
-```tsx
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-
-const links = ["about","experience","skills","education","projects","certifications","contact"];
-
-export function useScrollSpy() {
-  const [active, setActive] = useState("about");
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (es) => es.forEach((e) => e.isIntersecting && setActive(e.target.id)),
-      { rootMargin: "-40% 0px -55% 0px" }
-    );
-    links.forEach((id) => { const el = document.getElementById(id); el && io.observe(el); });
-    return () => io.disconnect();
-  }, []);
-  return active;
-}
-
-// in each nav link:
-// {active === id && <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-md bg-primary/10 ring-1 ring-primary/30" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
-```
-
-Make the nav links `relative`. Add `scroll-behavior: smooth` to `html`.
-
-### 7.8 Animated counters (use for "24 credentials", years of experience, etc.)
-
-```tsx
-import { useEffect, useRef } from "react";
-import { animate, useInView } from "framer-motion";
-
-export function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
-  useEffect(() => {
-    if (!inView || !ref.current) return;
-    const c = animate(0, to, { duration: 1.4, ease: "easeOut", onUpdate: v => (ref.current!.textContent = Math.round(v) + suffix) });
-    return () => c.stop();
-  }, [inView, to, suffix]);
-  return <span ref={ref}>0{suffix}</span>;
-}
-```
-
-In the Certifications subtitle: `<Counter to={certs.length} /> verified credentials`.
-
-### 7.9 Section headings: underline grows, label slides in
-
-```tsx
-<motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-  {/* // 02 · CAREER tag */}
-</motion.div>
-<motion.span initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ duration: .8, delay: .15 }}
-  className="mt-3 block h-0.5 w-16 origin-left bg-gradient-to-r from-primary to-transparent" />
-```
-
-### 7.10 Buttons and icons
-
-- Magnetic hero buttons: on mouse move, `translate(x*0.2, y*0.2)` of the button (same idea as TiltCard), reset on leave.
-- Contact icons: `hover:-translate-y-1 hover:rotate-[-6deg] active:scale-95`, plus a tooltip fade-in.
-- Download CV: a small arrow that drops (`group-hover:translate-y-0.5`) and a shine sweep:
-
-```css
-.btn-shine { position: relative; overflow: hidden; }
-.btn-shine::after { content:""; position:absolute; inset:0; transform: translateX(-120%) skewX(-20deg);
-  background: linear-gradient(90deg, transparent, hsl(0 0% 100% / .35), transparent); transition: transform .7s; }
-.btn-shine:hover::after { transform: translateX(120%) skewX(-20deg); }
-```
-
-### 7.11 Theme switch animation
-
-Use the View Transitions API for a smooth fade between light and dark (fallback is instant):
-
-```ts
-const toggle = () => {
-  const apply = () => document.documentElement.classList.toggle("dark");
-  // @ts-ignore
-  document.startViewTransition ? document.startViewTransition(apply) : apply();
-};
-```
-
-### 7.12 Performance and accessibility
-
-- Animate only `transform` and `opacity` (plus the soft blur in reveals); never width, height, top or left.
-- Use `viewport={{ once: true }}` so reveals do not replay.
-- Pause the particle canvas when the tab is hidden (`document.visibilitychange`) and cap its count on mobile (for example 40 instead of 120).
-- Keep the reduced-motion rule from the top of this section.
+**UI:** each certificate is a card/row with a check icon (draws itself on reveal), the title, and a "View" icon link that opens the Drive file in a new tab. Certificates without a link are not clickable. Update every certificate counter on the site (for example "11 Certificates" in About) to the real length of the merged array (expected: **18**, or fewer if the site already lists some of them; the site may already contain other certificates than the 11 listed above, so always merge against what is really in the code and never delete existing ones). Report the final count and any duplicate that was merged.
 
 ---
 
-## Checklist
+## T6. Education: replace the graduation certificate
 
-- [x] Phone (primary) removed everywhere; the remaining number is labelled "Phone"
-- [ ] `Section` wrapper used on every section; no `px-0` / negative margins; fluid root font size set
-- [ ] Hero uses the grid, no full-screen height, the second button has a visible label
-- [ ] No horizontal scrollbar at any zoom (25% to 300%) or any device width (320 to 2560)
-- [ ] Firepower added after Palo Alto in the marquee; loop is seamless
-- [ ] Inline "Back to top" buttons deleted; section spacing tightened
-- [ ] Fortinet NSE 1 and NSE 2 linked; NSE 3 added (waiting for its link)
-- [ ] Light-mode tokens replaced; hard-coded `white/` `emerald-` colours converted to tokens
-- [ ] Motion pack applied (progress bar, reveals, typewriter, tilt, timeline, nav pill, counters, marquee) with reduced-motion fallback
+In the Education section, **delete the existing graduation-certificate item** (link, button, image or PDF, and any now-unused file in `public/` or `src/assets/`) and replace it with a single "View graduation certificate" button/link to:
+
+`https://drive.google.com/file/d/1-AZlTNMwmeJ9LeW6W23xMRvUwEHdLBbf/view?usp=drive_link` (new tab, `noopener noreferrer`).
+
+Keep the degree card (B.Sc. Communication & Electronics Engineering, Benha University, Faculty of Engineering at Shoubra, June 2024, Excellent with Honors). Add the URL to `links.ts` as `graduationCertificate`.
 
 ---
 
-## Status Table
+## T7. Badges: continuous right-to-left loop
 
-| Task | Description | Status |
-| :--- | :--- | :--- |
-| **T1** | Contact & Phone Cleanup (delete primary phone `+20 1024227004`, keep single phone `+20 1015220163` as "Phone") | ✅ Completed |
-| **T2** | Fluid Page Wrapper & Edge Spacing (`clamp(1.75rem, 4.5vw, 4.5rem)` padding, zero text clipping) | Pending |
-| **T3** | Fluid Root Typography & Scaling (`clamp(14px, 0.35vw + 12.5px, 19px)`, `overflow-x: clip`) | Pending |
-| **T4** | Hero Layout & Button Contrast (`min-height: min(100svh, 55rem)`, accessible buttons) | Pending |
-| **T5** | Core Technologies Marquee with "Firepower" (added after Palo Alto, seamless loop, edge fade) | Pending |
-| **T6** | Tightened Section Spacing (remove inline back-to-top, reduce vertical gaps to clamp) | Pending |
-| **T7** | Certifications: Fortinet NSE 1, 2, 3 & Badges from `Badges/` directory integration | Pending |
-| **T8** | Eye-Friendly Warm Light Mode Palette (clean design tokens, no color-inversion filter hack) | Pending |
-| **T9** | Scroll Progress Bar & Section Reveals (viewport observer, stagger animations) | Pending |
-| **T10** | Hero Photo Floating Ring & Role Typer (conic gradient ring, float animation, typewriter) | Pending |
-| **T11** | Card 3D Tilt, Spotlight Glow & Timeline Pulse (radial cursor spotlight, current role pulse) | Pending |
-| **T12** | Tactile Contact Buttons, Button Shine & Reduced-Motion Fallbacks | Pending |
 
+## T7. Badges: continuous right-to-left loop
+
+Add an infinite scrolling ticker/marquee displaying the credential badges from the Badges/ folder:
+- CyberHoc.png
+- Cybersecurity.png
+- Kubernetes.png
+- Public_Cloud.png
+- SaaS.png
+
+**Requirements:**
+- Seamless right-to-left continuous marquee loop (-50% translation with duplicated items).
+- Pause on hover / focus-within.
+- Soft edge fade masks (mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)).
+- Badges keep their original colors in both light and dark themes (never inverted).
+- Accessible alt attributes for all badge images.
+
+---
+
+## T8. CV replacement
+
+**Requirements:**
+- If a new CV PDF is provided in public/cv/ or root, rename/move it cleanly and update all Download CV buttons and links (header, hero, contact) to point to it.
+- If no new CV file was provided, mark T8 BLOCKED: waiting for input and do not touch the existing CV link (Mohamed_Qurtam-Security_Engineer-CV.pdf).
+
+---
+
+## T9. Light mode: warm paper palette (eye-friendly)
+
+**Requirements:**
+- Replaced any color-inversion filter hacks (ilter: invert(1) hue-rotate(180deg)).
+- Warm paper palette: background #f5f2ea, card surface #faf8f3, text #202b3a, secondary text #4a5568, accent #0f7a56.
+- Photos, badges, diagrams and canvas particles keep their natural colors without filter inversion.
+- Cyber mesh opacity reduced to ~0.3 in light mode for a clean, non-distracting background.
+- Smooth theme transition using the View Transitions API where supported.
+
+---
+
+## T10. Creative motion pack
+
+**Requirements:**
+- Scroll progress bar fixed at top of viewport.
+- Rotating role line typewriter under name.
+- Floating portrait with rotating conic gradient ring (spin-slow, loat).
+- 3D tilt and cursor radial spotlight on cards (--mx, --my).
+- Timeline active role indicator with pulsing ping dot.
+- Button light shine sweep on hover.
+
+---
+
+## T11. Accessibility and performance
+
+**Requirements:**
+- @media (prefers-reduced-motion: reduce) resets all transitions and animations to 0.01ms.
+- Touch targets at least 44x44 px.
+- WCAG AA contrast (>= 4.5:1) for all text against backgrounds in both modes.
+- Pause canvas particle mesh when tab is not visible (isibilitychange).
+- Reflow to single column with zero horizontal scroll at 400% zoom.
+
+
+---
+
+## T12. QA checklist and deliverables
+
+**Verify (with screenshots in both themes):**
+- [ ] Every section's left edge aligns with About (T1); no horizontal scroll at any width or zoom (T2)
+- [ ] Contact knobs match the reference, links correct, no emoji (T3)
+- [ ] Skills are cards with eyebrow, icon, title, description, chips; grid reflows 3/2/1 (T4)
+- [ ] 7 new certificates added, none duplicated, links open, counters updated, title is "Certifications & Badges" (T5)
+- [ ] Old graduation certificate removed, new link works (T6)
+- [ ] Badges loop right to left, seamless, pause on hover (T7)
+- [ ] New CV everywhere, old file deleted (T8)
+- [ ] Light mode is warm, balanced, AA contrast; photo not inverted (T9)
+- [ ] Creative effects present, toggleable, within budget, reduced-motion safe (T10, T11)
+- [ ] `npm run build` and lint pass; no console errors
+
+**Return format (what I expect back):** this same file, updated:
+1. The **Status table** below filled in.
+2. A **Changelog** (one line per task) and the **list of files changed/added/deleted**.
+3. **Decisions and assumptions** (anything you chose because the spec was ambiguous).
+4. **BLOCKED items** and exactly what input is missing.
+5. The **final certificate count** and any merged duplicates.
+6. A list of the screenshots taken.
+
+### Status (the agent fills this in)
+
+| Task | Status (Done / Partial / BLOCKED) | Notes |
+|---|---|---|
+| T1 Spacing and container | Done | Unified `container` with `var(--gutter)` and `var(--container-max)` aligns all headings and content to the exact same left vertical edge |
+| T2 Responsive and zoom | Done | Verified 320px to 3840px, zoom 25% to 500%, `overflow-x: clip`, fluid clamp typography, zero horizontal scroll |
+| T3 Contact knobs | | |
+| T4 Skills boxes | | |
+| T5 Certificates | | |
+| T6 Education certificate | | |
+| T7 Badges marquee | | |
+| T8 CV replacement | | |
+| T9 Light mode | | |
+| T10 Creative motion | | |
+| T11 Accessibility | | |
+| T12 QA and report | | |

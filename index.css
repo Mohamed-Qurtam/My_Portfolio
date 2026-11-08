@@ -43,6 +43,8 @@
   --space-5xl: clamp(2.5rem, 5vw, 4.5rem);
 
   /* Layout */
+  --container-max: 1200px;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
   --max-width: 100%;
   --nav-height: 64px;
 
@@ -139,12 +141,16 @@ button:focus-visible {
 }
 
 .container {
-  width: 100%;
-  max-width: min(100%, 110rem);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: clamp(1.75rem, 4.5vw, 4.5rem);
-  padding-right: clamp(1.75rem, 4.5vw, 4.5rem);
+  width: min(100% - 2 * var(--gutter), var(--container-max));
+  margin-inline: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 1800px) {
+  :root {
+    --container-max: 1400px;
+  }
 }
 
 /* --- Numbered Section Badges (Borrowed from mmaklad.online) --- */
@@ -196,15 +202,13 @@ button:focus-visible {
 }
 
 .nav__inner {
-  width: 100%;
-  max-width: min(100%, 110rem);
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 clamp(1.75rem, 4.5vw, 4.5rem);
+  width: min(100% - 2 * var(--gutter), var(--container-max));
+  margin-inline: auto;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0;
 }
 
 .nav__wordmark {
@@ -1749,6 +1753,8 @@ a.education-card--link:hover .education-card__ext {
 }
 
 .footer__inner {
+  width: min(100% - 2 * var(--gutter), var(--container-max));
+  margin-inline: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1867,12 +1873,6 @@ a.education-card--link:hover .education-card__ext {
 @media (max-width: 768px) {
   :root {
     --nav-height: 56px;
-  }
-
-  .container,
-  .nav__inner {
-    padding-left: clamp(1.25rem, 4vw, 2.5rem);
-    padding-right: clamp(1.25rem, 4vw, 2.5rem);
   }
 
   .nav__toggle {
