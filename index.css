@@ -1638,49 +1638,236 @@ a.education-card--link:hover .education-card__ext {
   max-width: 72ch;
 }
 
-.contact-icons {
+/* ===================================================
+   TACTILE KNOB BUTTONS (Edit.md T3 matching reference)
+   =================================================== */
+.knob-row {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: var(--space-md);
-  list-style: none;
-  width: 100%;
-  padding: 0;
-  margin: 0;
+  gap: clamp(1.5rem, 4.5vw, 3rem);
+  margin-block: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.contact-icon-btn {
+.knob {
+  --size: clamp(76px, 11vw, 104px);
+  display: grid;
+  justify-items: center;
+  gap: 0.95rem;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font: 600 0.72rem/1 var(--font-mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.3s ease;
+}
+
+.knob__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.knob__dial {
+  position: relative;
+  width: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-lg);
+  background: radial-gradient(circle at 30% 24%, var(--k-bezel-hi), var(--k-bezel-lo) 78%);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.65) inset,
+              0 -3px 6px rgba(0, 0, 0, 0.14) inset,
+              0 14px 22px -8px var(--k-shadow),
+              0 2px 3px rgba(0, 0, 0, 0.22);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.35s ease;
+}
+
+.knob__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transition: transform 0.7s cubic-bezier(0.3, 1.5, 0.4, 1);
+}
+
+.knob__ring::before {
+  content: "";
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  width: 7%;
+  height: 10%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: var(--k-notch);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.knob__cap {
+  width: 57%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 32% 26%, var(--k-cap-hi), var(--k-cap-lo) 80%);
+  box-shadow: 0 1px 1px rgba(255, 255, 255, 0.7) inset,
+              0 -2px 4px rgba(0, 0, 0, 0.12) inset,
+              0 8px 12px -4px var(--k-shadow);
+  transition: transform 0.25s ease;
+}
+
+.knob__cap svg {
+  width: 46%;
+  height: 46%;
+  color: var(--k-icon);
+}
+
+/* Tokens per theme */
+:root {
+  --k-bezel-hi: #2b3238;
+  --k-bezel-lo: #14181c;
+  --k-cap-hi: #363e45;
+  --k-cap-lo: #1d2328;
+  --k-icon: #e9eef2;
+  --k-notch: #5c6670;
+  --k-shadow: rgba(0, 0, 0, 0.6);
+}
+
+html[data-theme="light"],
+[data-theme="light"] {
+  --k-bezel-hi: #fbfaf8;
+  --k-bezel-lo: #cfcbc3;
+  --k-cap-hi: #ffffff;
+  --k-cap-lo: #e9e6e0;
+  --k-icon: #14181b;
+  --k-notch: #bdb8ae;
+  --k-shadow: rgba(20, 24, 27, 0.32);
+}
+
+/* Color Variants */
+.knob--green {
+  --k-bezel-hi: #6fe0b0;
+  --k-bezel-lo: #1f9d6b;
+  --k-cap-hi: #82ecbf;
+  --k-cap-lo: #2bb27b;
+  --k-icon: #05261a;
+  --k-notch: #c9f7e2;
+}
+
+.knob--steel {
+  --k-bezel-hi: #b5b5b5;
+  --k-bezel-lo: #7d7d7d;
+  --k-cap-hi: #c4c4c4;
+  --k-cap-lo: #929292;
+  --k-icon: #ffffff;
+  --k-notch: #e8e8e8;
+}
+
+.knob--ink {
+  --k-bezel-hi: #4a4a4a;
+  --k-bezel-lo: #1c1c1c;
+  --k-cap-hi: #555555;
+  --k-cap-lo: #262626;
+  --k-icon: #ffffff;
+  --k-notch: #9a9a9a;
+}
+
+@media (hover: hover) {
+  .knob:hover .knob__dial {
+    transform: translateY(-4px);
+  }
+  .knob:hover .knob__ring {
+    transform: rotate(42deg);
+  }
+  .knob:hover .knob__label {
+    color: var(--text-primary);
+  }
+}
+
+.knob:active .knob__dial {
+  transform: translateY(1px) scale(0.96);
+}
+.knob:active .knob__cap {
+  transform: scale(0.94);
+}
+.knob:focus-visible {
+  outline: none;
+}
+.knob:focus-visible .knob__dial {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Contact text copy row */
+.contact-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
   border: 1px solid var(--border-primary);
-  background: rgba(255, 255, 255, 0.03);
+}
+
+.contact-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.contact-detail-label {
+  color: var(--text-tertiary);
+}
+
+.contact-detail-val {
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.contact-detail-val:hover {
   color: var(--accent);
-  text-decoration: none;
-  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), border-color 220ms ease, background 220ms ease, box-shadow 220ms ease;
 }
 
-.contact-icon-btn:hover {
-  transform: translateY(-4px) rotate(-6deg);
-  border-color: rgba(77, 187, 138, 0.6);
-  background: rgba(77, 187, 138, 0.12);
-  box-shadow: 0 8px 24px rgba(77, 187, 138, 0.2);
+.contact-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--border-accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.contact-icon-btn:active {
-  transform: scale(0.95);
+.contact-copy-btn:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+  transform: translateY(-1px);
 }
 
-.contact-icon-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
+.contact-copy-btn.copied {
+  background: var(--accent);
+  color: var(--bg-primary);
 }
 
-.contact-icon-btn svg {
-  width: 24px;
-  height: 24px;
+/* Light mode paper texture behind contact section */
+html[data-theme="light"] .contact {
+  background-color: var(--bg-primary);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
 .sr-only {

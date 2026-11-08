@@ -389,7 +389,7 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
 |---|---|---|
 | T1 Spacing and container | Done | Unified `container` with `var(--gutter)` and `var(--container-max)` aligns all headings and content to the exact same left vertical edge |
 | T2 Responsive and zoom | Done | Verified 320px to 3840px, zoom 25% to 500%, `overflow-x: clip`, fluid clamp typography, zero horizontal scroll |
-| T3 Contact knobs | | |
+| T3 Contact knobs | Done | Implemented 4 tactile dial knob buttons (EMAIL, GITHUB, LINKEDIN, PHONE) matching reference with notch rotation, active scale, themes, plus copyable email and phones below |
 | T4 Skills boxes | | |
 | T5 Certificates | | |
 | T6 Education certificate | | |

@@ -1635,8 +1635,8 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
   }
 
   function setupClipboardToast() {
-    // New: Hook into the Lucide-style contact-card copy buttons (Edit.md §4)
-    document.querySelectorAll('.contact-card__copy').forEach((btn) => {
+    // Hook into contact copy buttons (Edit.md T3)
+    document.querySelectorAll('.contact-card__copy, .contact-copy-btn').forEach((btn) => {
       if (btn.dataset.qtCopyInit) return;
       btn.dataset.qtCopyInit = '1';
       btn.addEventListener('click', (e) => {
@@ -1646,8 +1646,13 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
         if (!text) return;
         copyToClipboard(text);
         btn.classList.add('copied');
+        const txtEl = btn.querySelector('.contact-copy-btn__text');
+        if (txtEl) txtEl.textContent = 'Copied!';
         clearTimeout(btn.__copyTimer);
-        btn.__copyTimer = setTimeout(() => btn.classList.remove('copied'), 1500);
+        btn.__copyTimer = setTimeout(() => {
+          btn.classList.remove('copied');
+          if (txtEl) txtEl.textContent = 'Copy';
+        }, 1500);
       });
     });
   }
