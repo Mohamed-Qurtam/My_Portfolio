@@ -585,9 +585,9 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
 
   const ROLES_CYCLE = [
     'Network & Security Engineer',
-    'Next-Gen Firewall Architect (Fortinet · Palo Alto)',
-    'Enterprise Switching & Routing Specialist (Cisco · Ruijie)',
-    'Defensive Security & Incident Response (Splunk · EDR)'
+    'SOC Analyst',
+    'Infrastructure & Defense',
+    'Cybersecurity Instructor'
   ];
   let roleCycleIdx = 0;
   let roleTimer = null;
