@@ -395,7 +395,7 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
 | T6 Education certificate | Done | Replaced old graduation certificate Google Drive link with `https://drive.google.com/file/d/1-AZlTNMwmeJ9LeW6W23xMRvUwEHdLBbf/view?usp=drive_link` (opens in new tab with noopener noreferrer) |
 | T7 Badges marquee | Done | Added infinite seamless right-to-left marquee loop displaying all 5 Badges/ (CyberHoc, Cybersecurity, Kubernetes, Public_Cloud, SaaS) with pause on hover/focus, edge fade masks, natural color preservation, and reduced-motion support |
 | T8 CV replacement | BLOCKED: waiting for input | New CV file not provided in workspace; preserved existing `Mohamed_Qurtam-Security_Engineer-CV.pdf` and verified all CV links remain functional |
-| T9 Light mode | | |
+| T9 Light mode | Done | Warm paper palette (#f5f2ea bg, #faf8f3 card, #202b3a text, #0f7a56 emerald accent), no color inversion hacks, photos/badges/diagrams retain natural colors, mesh opacity 0.3, View Transitions API supported |
 | T10 Creative motion | | |
 | T11 Accessibility | | |
 | T12 QA and report | | |
