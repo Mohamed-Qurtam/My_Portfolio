@@ -360,21 +360,40 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
 
   function applyTheme(t) {
     document.documentElement.setAttribute('data-theme', t);
+    const isLight = t === 'light';
+    const label = isLight ? 'Dark' : 'Light';
+
+    // Update navbar theme button matching Pic 3
+    const navBtn = document.getElementById('navThemeToggle');
+    const navLabel = document.getElementById('navThemeLabel');
+    if (navLabel) navLabel.textContent = label;
+    if (navBtn) {
+      navBtn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    }
+
+    // Update CSS variables for dynamic elements
+    const root = document.documentElement;
+    root.style.setProperty('--qt-bg', isLight ? '#f5f2ea' : '#0d0f12');
+    root.style.setProperty('--qt-fg', isLight ? '#202b3a' : '#e6edf3');
+    root.style.setProperty('--qt-accent', isLight ? '#0f7a56' : '#4dbb8a');
+
     document.querySelectorAll('.qt-theme').forEach((b) => {
-      const label = t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-      b.setAttribute('aria-label', label);
-      b.setAttribute('title', label);
-      b.setAttribute('aria-pressed', String(t === 'light'));
+      const btnLabel = isLight ? 'Switch to dark mode' : 'Switch to light mode';
+      b.setAttribute('aria-label', btnLabel);
+      b.setAttribute('title', btnLabel);
+      b.setAttribute('aria-pressed', String(isLight));
     });
+
     if (document.head) {
       let m = document.querySelector('meta[name="theme-color"]');
       if (!m) { m = document.createElement('meta'); m.name = 'theme-color'; document.head.appendChild(m); }
-      m.content = t === 'dark' ? '#0d0f12' : '#f2f0ed';
+      m.content = isLight ? '#f5f2ea' : '#0d0f12';
     }
   }
 
   function toggleTheme() {
-    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    const current = document.documentElement.getAttribute('data-theme') || CONFIG.defaultTheme;
+    const next = current === 'light' ? 'dark' : 'light';
     const run = () => {
       applyTheme(next);
       try { localStorage.setItem(CONFIG.themeStorageKey, next); } catch (e) { /* ignore */ }
@@ -813,18 +832,12 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
   }
 
   function ensureTools() {
-    if (S.tools) return;
-    const wrap = document.createElement('div');
-    wrap.className = 'qt-tools';
-    const theme = document.createElement('button');
-    theme.type = 'button';
-    theme.className = 'qt-iconbtn qt-theme';
-    theme.innerHTML = SUN + MOON;
-    theme.addEventListener('click', toggleTheme);
-    wrap.appendChild(theme);
-    document.body.appendChild(wrap);
-    S.tools = wrap;
-    applyTheme(document.documentElement.getAttribute('data-theme') || CONFIG.defaultTheme);
+    const navThemeBtn = document.getElementById('navThemeToggle');
+    if (navThemeBtn && !navThemeBtn.dataset.bound) {
+      navThemeBtn.dataset.bound = '1';
+      navThemeBtn.addEventListener('click', toggleTheme);
+    }
+    applyTheme(getSavedTheme());
   }
 
   function ensureBurger() {
@@ -2022,6 +2035,46 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     });
   }
 
+  let hangingFrameInit = false;
+  function setupHangingFrameCard() {
+    if (hangingFrameInit) return;
+    const container = document.getElementById('heroPortraitCard');
+    if (!container) return;
+    hangingFrameInit = true;
+
+    container.addEventListener('click', () => {
+      container.classList.remove('swinging');
+      void container.offsetWidth; // trigger reflow
+      container.classList.add('swinging');
+    });
+
+    container.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        container.click();
+      }
+    });
+
+    // 3D perspective tilt on hover
+    if (finePointer && !reduceMotion) {
+      container.addEventListener('mousemove', (e) => {
+        if (container.classList.contains('swinging')) return;
+        const rect = container.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) / (rect.width / 2);
+        const dy = (e.clientY - cy) / (rect.height / 2);
+        const rotX = -dy * 8;
+        const rotY = dx * 8;
+        container.style.transform = `perspective(800px) rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg) translateY(-2px)`;
+      }, { passive: true });
+
+      container.addEventListener('mouseleave', () => {
+        container.style.transform = '';
+      });
+    }
+  }
+
   function setupFloatingProgressTop() {
     if (document.getElementById('qt-floating-top')) return;
     const btn = document.createElement('button');
@@ -2094,6 +2147,7 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     safe(setupCyberMeshCanvas);
     safe(setupHeroTelemetryTicker);
     safe(setupCardSpotlightGlow);
+    safe(setupHangingFrameCard);
     safe(updateVars);
     safe(updateSpy);
   }

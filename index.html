@@ -48,6 +48,13 @@
         <li><a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="nav__cv-btn" id="nav-cv" target="_blank" rel="noopener noreferrer" aria-label="Download CV (PDF)">Download CV</a></li>
       </ul>
 
+      <!-- Theme Toggle Pill Button (Pic 3 matching) -->
+      <button type="button" class="nav__theme-btn" id="navThemeToggle" aria-label="Toggle light and dark theme">
+        <svg class="nav__theme-icon nav__theme-icon--sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="nav__theme-icon nav__theme-icon--moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span class="nav__theme-label" id="navThemeLabel">Light</span>
+      </button>
+
       <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navLinks">
         <span class="nav__toggle-bar"></span>
         <span class="nav__toggle-bar"></span>
@@ -108,42 +115,104 @@
           </div>
         </div>
 
-        <!-- Arch-shaped Photo (with data-hero-photo for edit.js float & breathing glow) -->
+        <!-- Interactive Hanging Portrait Card (Pic 3 matching) -->
         <div class="hero__photo-col">
-          <figure class="hero__photo-wrapper">
-            <picture>
-              <source srcset="images/photo-arch.png" type="image/png">
-              <img
-                data-hero-photo
-                src="MyPhoto.jpeg"
-                alt="Portrait of Mohamed Qurtam in a graduation gown holding an appreciation award, Benha University, class of 2024"
-                class="hero__photo-arch"
-                width="300"
-                height="400"
-              >
-            </picture>
-            <figcaption class="hero__photo-caption">Benha University · Class of 2024</figcaption>
-          </figure>
+          <div class="hanging-frame-container" id="heroPortraitCard" role="button" tabindex="0" aria-label="Interactive Portrait Frame — Click to swing">
+            <!-- Top hanging fixture & cord -->
+            <div class="hanging-fixture" aria-hidden="true">
+              <span class="hanging-mount"></span>
+              <span class="hanging-cord"></span>
+            </div>
+
+            <!-- The Portrait Card -->
+            <div class="hanging-frame-card">
+              <div class="frame-card__header">
+                <div class="frame-card__eyebrow">
+                  <span class="frame-card__category">NETWORK &amp; DEFENSE</span>
+                  <span class="frame-card__role">ENGINEER</span>
+                </div>
+                <span class="frame-card__status-dot" aria-hidden="true" title="System Active"></span>
+              </div>
+
+              <div class="frame-card__photo-stage">
+                <span class="frame-card__spotlight" aria-hidden="true"></span>
+                <picture>
+                  <source srcset="images/photo-arch.png" type="image/png">
+                  <img
+                    data-hero-photo
+                    src="MyPhoto.jpeg"
+                    alt="Portrait of Mohamed Qurtam — Network & Security Engineer"
+                    class="frame-card__photo"
+                    width="280"
+                    height="350"
+                  >
+                </picture>
+              </div>
+
+              <div class="frame-card__footer">
+                <span class="frame-card__caption">Benha University · Class of 2024</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== TECH TICKER (with data-tools-strip for edit.js 40s marquee & Kaspersky EDR insertion) ========== -->
+    <!-- ========== TECH TICKER (with brand icons matching Pic 4) ========== -->
     <section class="tech-ticker" aria-label="Core Technologies">
       <div class="tech-ticker__strip" data-tools-strip>
-        <span class="tech-ticker__item">Palo Alto</span>
-        <span class="tech-ticker__item">Firepower</span>
-        <span class="tech-ticker__item">FortiGate</span>
-        <span class="tech-ticker__item">Splunk</span>
-        <span class="tech-ticker__item">Kaspersky EDR</span>
-        <span class="tech-ticker__item">Wireshark</span>
-        <span class="tech-ticker__item">Nmap</span>
-        <span class="tech-ticker__item">IDS/IPS</span>
-        <span class="tech-ticker__item">CCNA</span>
-        <span class="tech-ticker__item">Linux</span>
-        <span class="tech-ticker__item">AWS</span>
-        <span class="tech-ticker__item">Python</span>
-        <span class="tech-ticker__item">Bash</span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Palo Alto
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          Firepower
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          FortiGate
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/><line x1="16" y1="19" x2="21" y2="19"/></svg>
+          Splunk
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          Kaspersky EDR
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h20"/><path d="M20 12l-4-4"/><path d="M20 12l-4 4"/><path d="M4 8v8"/></svg>
+          Wireshark
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+          Nmap
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          IDS/IPS
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="10" rx="2"/><circle cx="6" cy="12" r="1"/><circle cx="10" cy="12" r="1"/><circle cx="14" cy="12" r="1"/><circle cx="18" cy="12" r="1"/></svg>
+          CCNA
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          Linux
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          AWS
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Python
+        </span>
+        <span class="tech-ticker__item">
+          <svg class="tech-ticker__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6-6-6"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+          Bash
+        </span>
       </div>
     </section>
 
@@ -669,7 +738,7 @@
           <span class="cert-card-clean__provider">Kaspersky</span>
         </div>
 
-        <div class="cert-card-clean cert-card--clickable" data-category="certs" data-links='[{"label":"Certificate","url":"https://drive.google.com/file/d/1Zu7S_-dQnHMSjr2NScvsbjc9_uuMpn7I/view?usp=sharing"}]' tabindex="0" role="button" aria-label="Open Fortinet NSE 1 certificate">
+        <div class="cert-card-clean cert-card--clickable" data-category="certs" data-links='[{"label":"Certificate","url":"https://drive.google.com/file/d/1yKGISHdaqezAW8PbhkDEHyNET48Z5kYr/view?usp=drive_link"}]' tabindex="0" role="button" aria-label="Open Fortinet NSE 1 certificate">
           <div class="cert-card-clean__header">
             <span class="cert-type-badge cert-type-badge--cert">PROGRAM</span>
             <svg class="cert-card-ext-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -678,7 +747,7 @@
           <span class="cert-card-clean__provider">Fortinet</span>
         </div>
 
-        <div class="cert-card-clean cert-card--clickable" data-category="certs" data-links='[{"label":"Certificate","url":"https://drive.google.com/file/d/1jlEzjSlGVRJN2dyuMWsMVSeIUxpMmn_p/view?usp=drive_link"}]' tabindex="0" role="button" aria-label="Open Fortinet NSE 2 certificate">
+        <div class="cert-card-clean cert-card--clickable" data-category="certs" data-links='[{"label":"Certificate","url":"https://drive.google.com/file/d/1Ui8skz5i6TUpEWZVqttZzLvNLgC4G55t/view?usp=drive_link"}]' tabindex="0" role="button" aria-label="Open Fortinet NSE 2 certificate">
           <div class="cert-card-clean__header">
             <span class="cert-type-badge cert-type-badge--cert">PROGRAM</span>
             <svg class="cert-card-ext-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -687,7 +756,7 @@
           <span class="cert-card-clean__provider">Fortinet</span>
         </div>
 
-        <div class="cert-card-clean cert-card--clickable" data-category="certs" data-links='[{"label":"Certificate","url":"https://drive.google.com/file/d/1BdfKHC5XRU3n-Hxxw6hA5dSsYvqes6-v/view?usp=drive_link"}]' tabindex="0" role="button" aria-label="Open Fortinet NSE 3 certificate">
+        <div class="cert-card-clean cert-card--clickable" data-category="certs" data-links='[{"label":"Certificate","url":"https://drive.google.com/file/d/1DiLk07fHYl5PI_iGY6O1MElSpWVvdUg-/view?usp=drive_link"}]' tabindex="0" role="button" aria-label="Open Fortinet NSE 3 certificate">
           <div class="cert-card-clean__header">
             <span class="cert-type-badge cert-type-badge--cert">PROGRAM</span>
             <svg class="cert-card-ext-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -881,99 +950,99 @@
         </div>
       </div>
 
-      <!-- Credential & Vendor Badges Marquee (Edit.md T7) -->
+      <!-- Credential & Vendor Badges Marquee (Edit.md T7 - Large format Drive link on click) -->
       <div class="vendor-badges-marquee-wrapper" aria-label="Accredited Credential & Vendor Badges">
-        <h4 class="vendor-badges__heading">// ACCREDITED VENDOR BADGES</h4>
+        <h4 class="vendor-badges__heading">// ACCREDITED VENDOR BADGES (CLICK TO ENLARGE)</h4>
         <div class="vendor-badges-marquee" tabindex="0" role="region" aria-label="Scrolling Credential & Vendor Badges Ticker">
           <div class="vendor-badges-track">
             <!-- Group 1 -->
             <div class="vendor-badges-group">
-              <div class="vendor-badge-item">
+              <a href="https://drive.google.com/file/d/1Rurj0HOrh76pFDjid1PJ3ss6FotMofON/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View CyberHoc credential badge">
                 <img src="Badges/CyberHoc.png" alt="CyberHoc Credential Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">CyberHoc</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/1D65Jqi49tzuBZAu2Cb7mL3mBW9NyS81a/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View Veeam Cybersecurity & DR Specialist credential badge">
                 <img src="Badges/Cybersecurity.png" alt="Veeam Cybersecurity & DR Specialist Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Cybersecurity &amp; DR</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/15a8e89wuFSUqgxmWyXtZh9xOvbxfV01z/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View Veeam Kubernetes Data Protection credential badge">
                 <img src="Badges/Kubernetes.png" alt="Veeam Kubernetes Data Protection Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Kubernetes</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/1U7I8voJt_r-Q7okIT8EJ9zIGX-xqBbHp/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View Veeam Public Cloud Specialist credential badge">
                 <img src="Badges/Public_Cloud.png" alt="Veeam Public Cloud Specialist Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Public Cloud</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/18nwYSCDqenH54ny43I8qZPmsrh3wdU4u/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View Veeam SaaS Protection Specialist credential badge">
                 <img src="Badges/SaaS.png" alt="Veeam SaaS Protection Specialist Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">SaaS Protection</span>
-              </div>
+              </a>
               <!-- Repeated set for wide screen coverage -->
-              <div class="vendor-badge-item">
+              <a href="https://drive.google.com/file/d/1Rurj0HOrh76pFDjid1PJ3ss6FotMofON/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View CyberHoc credential badge">
                 <img src="Badges/CyberHoc.png" alt="CyberHoc Credential Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">CyberHoc</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/1D65Jqi49tzuBZAu2Cb7mL3mBW9NyS81a/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View Veeam Cybersecurity & DR Specialist credential badge">
                 <img src="Badges/Cybersecurity.png" alt="Veeam Cybersecurity & DR Specialist Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Cybersecurity &amp; DR</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/15a8e89wuFSUqgxmWyXtZh9xOvbxfV01z/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View Veeam Kubernetes Data Protection credential badge">
                 <img src="Badges/Kubernetes.png" alt="Veeam Kubernetes Data Protection Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Kubernetes</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/1U7I8voJt_r-Q7okIT8EJ9zIGX-xqBbHp/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View Veeam Public Cloud Specialist credential badge">
                 <img src="Badges/Public_Cloud.png" alt="Veeam Public Cloud Specialist Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Public Cloud</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/18nwYSCDqenH54ny43I8qZPmsrh3wdU4u/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" title="View Veeam SaaS Protection Specialist credential badge">
                 <img src="Badges/SaaS.png" alt="Veeam SaaS Protection Specialist Badge" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">SaaS Protection</span>
-              </div>
+              </a>
             </div>
 
             <!-- Group 2 (duplicate for seamless -50% right-to-left loop) -->
             <div class="vendor-badges-group" aria-hidden="true">
-              <div class="vendor-badge-item">
+              <a href="https://drive.google.com/file/d/1Rurj0HOrh76pFDjid1PJ3ss6FotMofON/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/CyberHoc.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">CyberHoc</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/1D65Jqi49tzuBZAu2Cb7mL3mBW9NyS81a/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/Cybersecurity.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Cybersecurity &amp; DR</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/15a8e89wuFSUqgxmWyXtZh9xOvbxfV01z/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/Kubernetes.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Kubernetes</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/1U7I8voJt_r-Q7okIT8EJ9zIGX-xqBbHp/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/Public_Cloud.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Public Cloud</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/18nwYSCDqenH54ny43I8qZPmsrh3wdU4u/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/SaaS.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">SaaS Protection</span>
-              </div>
+              </a>
               <!-- Repeated set for wide screen coverage -->
-              <div class="vendor-badge-item">
+              <a href="https://drive.google.com/file/d/1Rurj0HOrh76pFDjid1PJ3ss6FotMofON/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/CyberHoc.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">CyberHoc</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/1D65Jqi49tzuBZAu2Cb7mL3mBW9NyS81a/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/Cybersecurity.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Cybersecurity &amp; DR</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/15a8e89wuFSUqgxmWyXtZh9xOvbxfV01z/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/Kubernetes.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Kubernetes</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/1U7I8voJt_r-Q7okIT8EJ9zIGX-xqBbHp/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/Public_Cloud.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">Public Cloud</span>
-              </div>
-              <div class="vendor-badge-item">
+              </a>
+              <a href="https://drive.google.com/file/d/18nwYSCDqenH54ny43I8qZPmsrh3wdU4u/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="vendor-badge-item" tabindex="-1">
                 <img src="Badges/SaaS.png" alt="" class="vendor-badge-img" loading="lazy">
                 <span class="vendor-badge-label">SaaS Protection</span>
-              </div>
+              </a>
             </div>
           </div>
         </div>
@@ -1032,31 +1101,6 @@
               </span>
             </span>
           </a>
-        </div>
-
-        <!-- Accessible plain-text details with copy buttons (Edit.md T3) -->
-        <div class="contact-details" aria-label="Direct contact information">
-          <div class="contact-detail-item">
-            <span class="contact-detail-label">Email</span>
-            <a href="mailto:moqurtam@gmail.com" class="contact-detail-val">moqurtam@gmail.com</a>
-            <button type="button" class="contact-copy-btn" data-copy="moqurtam@gmail.com" aria-label="Copy email address">
-              <span class="contact-copy-btn__text">Copy</span>
-            </button>
-          </div>
-          <div class="contact-detail-item">
-            <span class="contact-detail-label">Primary</span>
-            <a href="tel:+201024227004" class="contact-detail-val">+20 1024227004</a>
-            <button type="button" class="contact-copy-btn" data-copy="+201024227004" aria-label="Copy primary phone number">
-              <span class="contact-copy-btn__text">Copy</span>
-            </button>
-          </div>
-          <div class="contact-detail-item">
-            <span class="contact-detail-label">Secondary</span>
-            <a href="tel:+201015220163" class="contact-detail-val">+20 1015220163</a>
-            <button type="button" class="contact-copy-btn" data-copy="+201015220163" aria-label="Copy secondary phone number">
-              <span class="contact-copy-btn__text">Copy</span>
-            </button>
-          </div>
         </div>
       </div>
     </section>
