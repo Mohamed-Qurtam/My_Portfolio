@@ -391,7 +391,7 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
 | T2 Responsive and zoom | Done | Verified 320px to 3840px, zoom 25% to 500%, `overflow-x: clip`, fluid clamp typography, zero horizontal scroll |
 | T3 Contact knobs | Done | Implemented 4 tactile dial knob buttons (EMAIL, GITHUB, LINKEDIN, PHONE) matching reference with notch rotation, active scale, themes, plus copyable email and phones below |
 | T4 Skills boxes | Done | Replaced table with 3-column responsive card grid (5 domains) with colored eyebrows, icon tiles, descriptions, chips, hover elevation, and cursor spotlight glow |
-| T5 Certificates | | |
+| T5 Certificates | Done | Renamed to "Certifications & Badges", updated summary counter to 30, merged Fortinet NSE 3 with URL, added 6 new certs (Black Belt Stage 3, 4 Veeam Specialists, iSchool Cyber Security) for 30 total (16 certs, 9 training, 5 self-study) |
 | T6 Education certificate | | |
 | T7 Badges marquee | | |
 | T8 CV replacement | | |
