@@ -287,6 +287,7 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
 .project-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
 .project-filter-btn{font-family:var(--font-mono,monospace);font-size:.76rem;background:var(--bg-secondary,#161a1d);color:var(--text-secondary,#b6bfc9);border:1px solid var(--border-primary,#2a3038);padding:6px 14px;border-radius:4px;cursor:pointer;transition:all .2s ease}
 .project-filter-btn:hover,.project-filter-btn.active{background:rgba(63,184,131,.15);border-color:var(--qt-accent,#3fb883);color:#fff}
+html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-filter-btn:hover,html[data-theme="light"] .project-filter-btn.active{color:#121820!important}
 .qt-toast{position:fixed;bottom:24px;right:24px;background:#1c2126;color:#f0ede8;border:1px solid var(--border-accent,rgba(77,187,138,.4));border-left:4px solid var(--qt-accent,#3fb883);padding:12px 20px;border-radius:6px;font-family:var(--font-mono,monospace);font-size:.82rem;box-shadow:0 12px 32px rgba(0,0,0,.6);z-index:9999;transform:translateY(40px);opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;gap:10px}
 .qt-toast.visible{transform:translateY(0);opacity:1}
 .fade-in{opacity:1!important;transform:none!important}
@@ -1026,7 +1027,7 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
   }
 
   function buildMarquee() {
-    if (S.marquee || reduceMotion) return;
+    if (S.marquee || reduceMotion || document.querySelector('.tech-ticker__track')) return;
     const strip = findStrip();
     if (!strip || strip.dataset.qtMarquee) return;
     const track = document.createElement('div');

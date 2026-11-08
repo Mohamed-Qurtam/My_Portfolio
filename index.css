@@ -95,8 +95,9 @@ html, body, #root {
   padding: 0;
 }
 
-body {
+html, body {
   overflow-x: clip;
+}
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.65;
@@ -773,7 +774,7 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
   box-shadow: 0 24px 48px -10px rgba(32, 43, 58, 0.2), 0 0 28px rgba(15, 122, 86, 0.18);
 }
 
-/* --- Centered Tool Ticker / Marquee (Edit.md Section 3 & Pic 4) --- */
+/* --- Centered Tool Ticker / Marquee (Infinite Logo Marquee matching Pic 3 & 4) --- */
 .tech-ticker {
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
@@ -781,15 +782,47 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
   padding: var(--space-md) 0;
   overflow: hidden;
   position: relative;
+  width: 100%;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
-.tech-ticker__strip {
+.tech-ticker__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: tech-ticker-loop 34s linear infinite;
+}
+
+.tech-ticker:hover .tech-ticker__track,
+.tech-ticker:focus-within .tech-ticker__track {
+  animation-play-state: paused;
+}
+
+.tech-ticker__group {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  width: max-content;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+  flex-shrink: 0;
+  min-width: 100vw;
+  justify-content: space-around;
+}
+
+@keyframes tech-ticker-loop {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-ticker__track {
+    animation: none !important;
+  }
+  .tech-ticker {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 
 .tech-ticker__item {
@@ -2721,6 +2754,24 @@ html[data-theme="light"] .about__body-p {
 /* Hide old fixed widget that conflicted with top header */
 .qt-tools {
   display: none !important;
+}
+
+/* Pic 1: In light mode, project & cert filter buttons text must be black/dark */
+html[data-theme="light"] .project-filter-btn,
+html[data-theme="light"] .certs-filter-btn {
+  background: var(--bg-secondary) !important;
+  color: #121820 !important;
+  border-color: var(--border-primary) !important;
+}
+
+html[data-theme="light"] .project-filter-btn:hover,
+html[data-theme="light"] .project-filter-btn.active,
+html[data-theme="light"] .certs-filter-btn:hover,
+html[data-theme="light"] .certs-filter-btn.active {
+  background: rgba(15, 122, 86, 0.16) !important;
+  border-color: var(--accent) !important;
+  color: #121820 !important;
+  box-shadow: 0 2px 8px rgba(15, 122, 86, 0.15) !important;
 }
 
 /* Navbar actions container & mobile responsiveness */

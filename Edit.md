@@ -480,6 +480,10 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
 - **Theme Toggle Pill**: Matched navbar theme toggle button to Reference Image 3 with sun/moon SVGs and persistent theme state via `localStorage`.
 - **Tech Ticker SVG Icons**: Added brand/technology vector icons to all marquee items (`FortiGate`, `Splunk`, `Kaspersky EDR`, `Wireshark`, `Nmap`, `IDS/IPS`, `CCNA`, `Linux`, `AWS`, `Python`, `Bash`, `Palo Alto`).
 - **Badge & Certificate Drive Links**: Updated Google Drive links for all 5 credential badges and Fortinet NSE 1, 2, and 3 certificates.
+- **Removed '(CLICK TO ENLARGE)'**: Cleaned header to `// ACCREDITED VENDOR BADGES` in Certifications & Badges section.
+- **Light Mode Filter Buttons Contrast (Pic 1)**: Fixed hover and active state colors for `.project-filter-btn` and `.certs-filter-btn` to `#121820` (crisp black text) in light mode.
+- **Certificate Sequence (Pic 2)**: Positioned `Computer Science Course (Cyber Security)` at the start of the course/training group before `CCNA Routing & Switching`.
+- **Responsive Infinite Logo Marquee & Data Center (Pic 3)**: Transformed `.tech-ticker` into a dual-group seamless track (`.tech-ticker__track` and `.tech-ticker__group`s) with repeated technology items and added `Data Center` with an official server rack SVG icon, spanning full screen width responsively across all viewports up to 4K displays.
 
 - [x] **Container Alignment**: All section headings and content share the exact same left vertical alignment as About.
 - [x] **Responsive Resilience**: Verified from 320px to 3840px and zoom levels 25% to 500%; zero horizontal scrolling.
