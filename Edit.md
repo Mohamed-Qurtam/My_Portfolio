@@ -398,4 +398,88 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
 | T9 Light mode | Done | Warm paper palette (#f5f2ea bg, #faf8f3 card, #202b3a text, #0f7a56 emerald accent), no color inversion hacks, photos/badges/diagrams retain natural colors, mesh opacity 0.3, View Transitions API supported |
 | T10 Creative motion | Done | Scroll progress bar, typewriter cycling roles under name, floating photo with spin-slow conic ring, card spotlight glow and 3D tilt, active timeline ping ring |
 | T11 Accessibility | Done | Enforced global reduced-motion 0.01ms fallback, >=44x44px touch targets on interactive controls, WCAG AA contrast (>=4.5:1), visible :focus-visible rings, visibilitychange tab pause on canvas |
-| T12 QA and report | | |
+| T12 QA and report | Done | Comprehensive deliverables report, changelog, file inventory, duplicate audit, and QA checklist completed |
+
+---
+
+## Deliverables Report & QA Summary
+
+### 1. Changelog (T1 to T12)
+- **T1 Spacing and container**: Unified all section layouts with `--container-max: 1200px` and `--gutter: clamp(1.25rem, 5vw, 4rem)`, ensuring all section headings and content align to the exact same left vertical line as About.
+- **T2 Responsive and zoom**: Configured fluid typography `clamp(14px, 0.35vw + 12.5px, 19px)`, added `body { overflow-x: clip; }`, widened `--container-max` to `1400px` on ultrawide viewports (1800px+), and eliminated horizontal scrolling across 320px–3840px and 25%–500% zoom levels.
+- **T3 Contact knobs**: Engineered 4 tactile physical dial knob buttons (`EMAIL`, `GITHUB`, `LINKEDIN`, `PHONE`) matching reference designs with raised bezels, hover notch rotations (`rotate(42deg)`), inner caps, theme tokens, and accessible plain-text copyable credentials below.
+- **T4 Skills boxes**: Replaced the previous skills layout with a responsive 3-column card grid across 5 domains (`SECURE`, `DEFEND`, `INSPECT`, `INFRASTRUCTURE`, `BUILD`) featuring colored uppercase eyebrows, Lucide SVG icon tiles, domain descriptions, bottom technology chips, hover elevation, and interactive cursor spotlight glow.
+- **T5 Certificates & Badges**: Renamed section to "Certifications & Badges", updated the summary counter to 30, merged Fortinet NSE 3 with its Drive certificate, and added 6 new verified credentials (Cisco Black Belt Stage 3, 4 Veeam Specialist tracks, and iSchool Cyber Security) for 30 total credentials across 3 categories.
+- **T6 Education certificate**: Updated the graduation certificate Google Drive link under Education to `https://drive.google.com/file/d/1-AZlTNMwmeJ9LeW6W23xMRvUwEHdLBbf/view?usp=drive_link` with `target="_blank"` and `rel="noopener noreferrer"`.
+- **T7 Badges marquee**: Integrated an infinite continuous right-to-left marquee ticker displaying all 5 credential badges from `Badges/` (`CyberHoc.png`, `Cybersecurity.png`, `Kubernetes.png`, `Public_Cloud.png`, `SaaS.png`) with seamless -50% loop, pause on hover/focus, edge fade masks, and natural color preservation in both themes.
+- **T8 CV replacement**: Audited workspace for uploaded CV files; confirmed only existing `Mohamed_Qurtam-Security_Engineer-CV.pdf` is present, verified all existing CV links function correctly, and marked task BLOCKED: waiting for input per specification.
+- **T9 Light mode**: Implemented eye-friendly warm paper palette (`#f5f2ea` background, `#faf8f3` cards, `#202b3a` text, `#0f7a56` emerald accent), removed any color-inversion filter hacks, preserved natural colors of all images/badges/diagrams, capped cyber canvas mesh opacity at 0.3, and enabled smooth transitions via the View Transitions API.
+- **T10 Creative motion**: Activated the full creative motion pack including the fixed viewport scroll progress bar, typewriter cycling roles (`Network & Security Engineer`, `SOC Analyst`, `Infrastructure & Defense`, `Cybersecurity Instructor`), floating arch photo with rotating conic ring, interactive card spotlight glow and 3D tilt, and active timeline pulsing ping ring.
+- **T11 Accessibility**: Enforced WCAG AA contrast ratios, minimum 44x44px touch targets on all interactive controls, clear `:focus-visible` outline rings, tab-hidden canvas performance throttling via `visibilitychange`, and global reduced-motion 0.01ms fallback.
+- **T12 QA and report**: Conducted syntax checks, validated cross-browser responsive layouts, audited link targets, and documented final status and verification reports.
+
+### 2. Files Changed, Added, or Deleted
+- **`index.html`**: Modified — updated layout containers, contact dial knobs, skills domain grid, certifications count and credentials cards, graduation certificate link, and added the vendor badges marquee.
+- **`index.css`**: Modified — unified container variables, added dial knob styles, skills domain card styles, badges marquee keyframes, warm paper light mode theme tokens, touch targets, and global reduced-motion fallbacks.
+- **`index.js`**: Modified — updated typewriter role cycle, mouse spotlight tracking, interactive cert dialog and link handlers, and added tab `visibilitychange` performance listener.
+- **`Edit.md`**: Modified — filled in status table, updated per-task progress, and added complete deliverables report.
+- **`Badges/`**: Added/Preserved — 5 vendor badges integrated directly into the infinite marquee ticker (`CyberHoc.png`, `Cybersecurity.png`, `Kubernetes.png`, `Public_Cloud.png`, `SaaS.png`).
+
+### 3. Decisions and Assumptions
+1. **Dial Knobs for Contact**: Implemented 4 physical tactile dial knobs (Email, GitHub, LinkedIn, Phone) matching Reference Image 3. Because the user has two phone numbers (`+20 1024227004` and `+20 1015220163`), the PHONE knob triggers direct dialing to the primary line while both numbers and the email address are also presented below in accessible copyable rows with one-click copy buttons.
+2. **Duplicate Merging on NSE 3**: Found existing unlinked Fortinet NSE 3 card; attached the incoming Google Drive URL directly rather than creating a duplicate row, maintaining 30 distinct verified credentials.
+3. **Marquee Loop Architecture**: Structured the badges marquee using two identical groups of 10 badge instances (repeating the 5 unique badges twice per group) animating with `translateX(-50%)` to ensure seamless continuous ticker motion across both mobile screens and 4K ultra-wide monitors.
+
+### 4. BLOCKED Items
+- **T8 CV File Replacement**:
+  - *Status*: BLOCKED: waiting for input.
+  - *Reason*: No new CV PDF file was provided in `public/cv/` or workspace root.
+  - *Action taken*: Existing `Mohamed_Qurtam-Security_Engineer-CV.pdf` was preserved, and all CV download buttons (nav, hero) remain operational without broken links.
+
+### 5. Final Certificate Count & Merge Audit
+- **Total Verified Credentials**: **30**
+  - **Certificates & Programs**: **16**
+    1. eLearnSecurity Certified Incident Responder (eCIR)
+    2. Certified SOC Analyst Foundation
+    3. Cisco CyberOps
+    4. Blue Team Scholarship
+    5. RCNA Routing & Switching
+    6. Sales Specialist: Kaspersky Next Optimum (S47.2)
+    7. Fortinet NSE 1
+    8. Fortinet NSE 2
+    9. Fortinet NSE 3 *(merged with incoming link)*
+    10. Black Belt Support Stage 1 (Jun 2026)
+    11. Cisco Black Belt Firewall Support Stage 2
+    12. Black Belt ASA and Firewall Support Stage 3 (Jul 2025) *(new)*
+    13. Veeam Technical Specialist: Kubernetes Data Protection 2026 *(new)*
+    14. Veeam Technical Specialist: Cybersecurity & DR 2026 *(new)*
+    15. Veeam Technical Specialist: Public Cloud 2026 *(new)*
+    16. Veeam Technical Specialist: SaaS Protection 2026 *(new)*
+  - **Specialized Training**: **9**
+    1. CCNP Security Core
+    2. Red Hat System Administration I 9.0
+    3. AWS Academy Cloud Foundations
+    4. Introduction to Cybersecurity Bootcamp, Cohort 5
+    5. Telecommunications and Network Infrastructure Training
+    6. Python and Django Learning Guide
+    7. CCNA Routing & Switching
+    8. MCSA Core
+    9. Computer Science Course (Cyber Security), iSchool *(new)*
+  - **Self-Study Paths**: **5**
+    1. Palo Alto Firewall
+    2. Fortinet NSE 4
+    3. SANS SEC450: Blue Team Fundamentals
+    4. Windows Endpoint Investigation
+    5. CompTIA Security+
+
+### 6. QA Verification Checklist
+- [x] **Container Alignment**: All section headings and content share the exact same left vertical alignment as About.
+- [x] **Responsive Resilience**: Verified from 320px to 3840px and zoom levels 25% to 500%; zero horizontal scrolling.
+- [x] **Contact Knobs**: 4 tactile knobs render with realistic bezels, notch rotation on hover, and active press scale.
+- [x] **Skills Domain Grid**: Reflows responsively across 3 / 2 / 1 columns with eyebrows, icon tiles, and spotlight tracking.
+- [x] **Credentials & Badges**: 30 credentials categorized cleanly, all Drive links open in new tabs with `noopener noreferrer`.
+- [x] **Graduation Certificate**: Updated to verified Drive URL under Education section.
+- [x] **Vendor Badges Marquee**: Continuous smooth right-to-left ticker with pause on hover/focus and edge gradient masks.
+- [x] **Warm Paper Light Mode**: Eye-friendly palette without color inversion; photos, badges, and diagrams keep natural colors.
+- [x] **Creative Motion Pack**: Scroll progress bar, typewriter role loop, floating arch photo, card 3D tilt, and timeline ping ring functioning properly.
+- [x] **Accessibility**: Minimum 44x44px touch targets, `:focus-visible` rings, reduced-motion overrides, and canvas performance caps.
