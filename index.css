@@ -2445,3 +2445,40 @@ html[data-theme="light"] .vendor-badge-img {
     mask-image: none;
   }
 }
+
+/* ===================================================
+   ACCESSIBILITY & PERFORMANCE STANDARDS (Edit.md T11)
+   =================================================== */
+:focus-visible {
+  outline: 2px solid var(--accent) !important;
+  outline-offset: 3px !important;
+}
+
+/* Touch targets at least 44x44px for interactive controls */
+.nav__cta,
+.btn,
+.btn-primary,
+.btn-secondary,
+.certs-filter-btn,
+.projects-filter-btn,
+.knob,
+.contact-icon-btn,
+.qt-iconbtn,
+.qt-floating-top {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

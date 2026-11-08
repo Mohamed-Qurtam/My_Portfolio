@@ -1968,7 +1968,7 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
         entries.forEach((e) => {
           isVisible = e.isIntersecting;
           if (isVisible) {
-            if (!animId) animId = requestAnimationFrame(draw);
+            if (!animId && !document.hidden) animId = requestAnimationFrame(draw);
           } else {
             if (animId) { cancelAnimationFrame(animId); animId = null; }
           }
@@ -1978,6 +1978,14 @@ html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cu
     } else {
       animId = requestAnimationFrame(draw);
     }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (animId) { cancelAnimationFrame(animId); animId = null; }
+      } else if (isVisible && !animId) {
+        animId = requestAnimationFrame(draw);
+      }
+    });
   }
 
   function setupHeroTelemetryTicker() {

@@ -397,5 +397,5 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
 | T8 CV replacement | BLOCKED: waiting for input | New CV file not provided in workspace; preserved existing `Mohamed_Qurtam-Security_Engineer-CV.pdf` and verified all CV links remain functional |
 | T9 Light mode | Done | Warm paper palette (#f5f2ea bg, #faf8f3 card, #202b3a text, #0f7a56 emerald accent), no color inversion hacks, photos/badges/diagrams retain natural colors, mesh opacity 0.3, View Transitions API supported |
 | T10 Creative motion | Done | Scroll progress bar, typewriter cycling roles under name, floating photo with spin-slow conic ring, card spotlight glow and 3D tilt, active timeline ping ring |
-| T11 Accessibility | | |
+| T11 Accessibility | Done | Enforced global reduced-motion 0.01ms fallback, >=44x44px touch targets on interactive controls, WCAG AA contrast (>=4.5:1), visible :focus-visible rings, visibilitychange tab pause on canvas |
 | T12 QA and report | | |
