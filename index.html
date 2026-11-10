@@ -8,20 +8,61 @@
   <meta name="description"
     content="Mohamed Qurtam — Network &amp; Security Engineer. Securing networks. Engineering resilient infrastructure. Enterprise firewalls, network segmentation, SIEM monitoring, and incident response.">
   <meta name="author" content="Mohamed Ahmed Qurtam">
+  <meta name="robots" content="index, follow">
 
-  <!-- Open Graph -->
+  <!-- Canonical + Open Graph (SITE_URL: update these two constants if the deploy domain changes) -->
+  <!-- $SITE_URL=https://mohamed-qurtam.github.io/My_Portfolio/ -->
+  <link rel="canonical" href="https://mohamed-qurtam.github.io/My_Portfolio/">
   <meta property="og:title" content="Mohamed Qurtam — Network &amp; Security Engineer">
   <meta property="og:description" content="Securing networks. Engineering resilient infrastructure.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="images/photo-arch.png">
+  <meta property="og:url" content="https://mohamed-qurtam.github.io/My_Portfolio/">
+  <meta property="og:site_name" content="Mohamed Qurtam — Portfolio">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://mohamed-qurtam.github.io/My_Portfolio/images/og-card.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Mohamed Qurtam — Network &amp; Security Engineer">
 
-  <!-- Favicon -->
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mohamed Qurtam — Network &amp; Security Engineer">
+  <meta name="twitter:description" content="Securing networks. Engineering resilient infrastructure.">
+  <meta name="twitter:image" content="https://mohamed-qurtam.github.io/My_Portfolio/images/og-card.jpg">
+
+  <!-- Structured data: helps search engines show a correct person snippet -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Mohamed Qurtam",
+    "jobTitle": "Network & Security Engineer",
+    "url": "https://mohamed-qurtam.github.io/My_Portfolio/",
+    "image": "https://mohamed-qurtam.github.io/My_Portfolio/images/og-card.jpg",
+    "email": "mailto:moqurtam@gmail.com",
+    "telephone": "+20 1024227004",
+    "sameAs": [
+      "https://github.com/Mohamed-Qurtam",
+      "https://www.linkedin.com/in/mohamed-qurtam-128296215/"
+    ],
+    "knowsAbout": [
+      "Network Security", "Firewall Administration", "Palo Alto", "FortiGate",
+      "SIEM Monitoring", "Incident Response", "Network Segmentation"
+    ]
+  }
+  </script>
+
+  <!-- Favicon: shield mark rendered as SVG so it looks identical on every OS -->
   <link rel="icon" type="image/svg+xml"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80'>🛡</text></svg>">
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e1012'/%3E%3Cpath d='M32 10 14 17v14c0 12 8 19 18 23 10-4 18-11 18-23V17L32 10z' fill='none' stroke='%234dbb8a' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M24 31.5l6 6 11-11' fill='none' stroke='%234dbb8a' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
-  <!-- Preconnect for Google Fonts -->
+  <!-- Fonts: loaded via <link> instead of a CSS @import so they start
+       downloading immediately (an @import inside CSS is discovered late). -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
 
   <link rel="stylesheet" href="index.css">
 
@@ -30,6 +71,9 @@
 </head>
 
 <body>
+
+  <!-- Skip link: first focusable element, for keyboard and screen-reader users -->
+  <a href="#main" class="skip-link">Skip to content</a>
 
   <!-- Top Anchor -->
   <a id="top"></a>
@@ -85,7 +129,7 @@
     </div>
   </nav>
 
-  <main>
+  <main id="main">
     <!-- ========== HERO SECTION (Photo in Hero per Edit.md / mmaklad.online) ========== -->
     <section class="hero container reveal" id="hero" aria-label="Hero Introduction">
       <!-- Ambient Cyber Network Mesh Canvas -->
@@ -99,8 +143,8 @@
           </div>
           <h1 class="hero__name">Mohamed Qurtam</h1>
 
-          <!-- Role line with data-role-title for edit.js post-load typed reveal -->
-          <h2 class="hero__role-line" data-role-title aria-label="Role: Network and Security Engineer">
+          <!-- Role line: final text always in the DOM; CSS reveal replays on click -->
+          <h2 class="hero__role-line" data-role-title>
             Network &amp; Security Engineer
           </h2>
 
@@ -115,7 +159,10 @@
 
 
           <div class="hero__actions">
-            <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="btn-primary" id="hero-cv-btn" target="_blank"
+            <a href="#contact" class="btn-primary" id="hero-contact-btn">
+              Get in touch
+            </a>
+            <a href="Mohamed_Qurtam-Security_Engineer-CV.pdf" class="btn-secondary" id="hero-cv-btn" target="_blank"
               rel="noopener noreferrer" aria-label="Download Mohamed Qurtam's CV (PDF)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
@@ -180,8 +227,9 @@
               <div class="frame-card__photo-stage">
                 <span class="frame-card__spotlight" aria-hidden="true"></span>
                 <picture>
-                  <source srcset="images/photo-arch.png" type="image/png">
-                  <img data-hero-photo src="MyPhoto.jpeg" alt="Portrait of Mohamed Qurtam — Network & Security Engineer"
+                  <!-- portrait.webp: 600px-wide re-encode of the original 2773×4160 photo (689 KB → ~40 KB) -->
+                  <source srcset="images/portrait-600.webp" type="image/webp">
+                  <img data-hero-photo src="images/portrait-600.webp" alt="Portrait of Mohamed Qurtam — Network & Security Engineer"
                     class="frame-card__photo" width="280" height="350">
                 </picture>
               </div>
@@ -764,8 +812,8 @@
 
       <!-- Body verbatim from Edit.md with bold specialized titles (Pic 3) -->
       <p class="about__lead-text">
-        Adaptive <strong>Network Security Engineer</strong> and <strong>Tier 1 SOC Analyst</strong>, Communication &amp;
-        Electronics Engineering graduate (Excellent with Honors) with hands-on expertise in router/switch configuration,
+        <strong>Network &amp; Security Engineer</strong> with SOC-aligned monitoring experience, Communication &amp;
+        Electronics Engineering graduate (Excellent with Honors), with hands-on expertise in router/switch configuration,
         firewall administration, and real-time SIEM monitoring. Skilled in combining network topology insights with
         security operations to analyze log data, perform initial triage, and accelerate incident response. Proven track
         record in designing resilient architectures, minimizing attack surfaces, and executing proactive threat
@@ -809,9 +857,9 @@
       <div class="at-a-glance">
         <h4 class="at-a-glance__title">AT A GLANCE</h4>
         <div class="stats-grid">
-          <div class="stat-card" tabindex="0" role="region" aria-label="30 Certifications & Badges">
-            <span class="stat-card__number" data-count="30">30</span>
-            <span class="stat-card__label">Certifications &amp; Badges</span>
+          <div class="stat-card" tabindex="0" role="region" aria-label="23 verified certificates, plus 7 self-study and training items">
+            <span class="stat-card__number" data-count="23">23</span>
+            <span class="stat-card__label">Verified certificates <small>(+7 self-study)</small></span>
           </div>
           <div class="stat-card" tabindex="0" role="region" aria-label="20 plus Cybersecurity modules created">
             <span class="stat-card__number" data-count="20" data-suffix="+">20+</span>
@@ -1309,8 +1357,8 @@
     <section class="certifications container fade-in" id="certifications" aria-label="Certifications and Training">
       <span class="section-code-label">// 06 · CREDENTIALS</span>
       <h2 class="section-heading">Certifications &amp; Badges</h2>
-      <p class="section-subheading">30 verified credentials, specialized vendor tracks, cybersecurity scholarships and
-        structured engineering learning paths.</p>
+      <p class="section-subheading">23 verified certificates — plus specialized vendor tracks, cybersecurity
+        scholarships and structured engineering learning paths.</p>
 
       <!-- Category Filter Tabs -->
       <div class="certs-filter-tabs" role="tablist" aria-label="Filter credentials by category">
@@ -1908,6 +1956,39 @@
           For professional engineering opportunities, network infrastructure design, and defensive security
           collaboration.
         </p>
+
+        <p class="contact__open-to">
+          <strong>Open to:</strong> network &amp; security engineering roles · infrastructure projects ·
+          relocation across MENA &amp; Europe. Typical response time: under 24 hours.
+        </p>
+
+        <!-- Direct contact values: visible, selectable text with one-click copy -->
+        <ul class="contact-rows" aria-label="Direct contact details">
+          <li class="contact-row">
+            <span class="contact-row__label">Email</span>
+            <a class="contact-row__value" href="mailto:moqurtam@gmail.com">moqurtam@gmail.com</a>
+            <button type="button" class="contact-copy-btn" data-copy="moqurtam@gmail.com"
+              aria-label="Copy email address to clipboard">
+              <span class="contact-copy-btn__text">Copy</span>
+            </button>
+          </li>
+          <li class="contact-row">
+            <span class="contact-row__label">Phone (primary)</span>
+            <a class="contact-row__value" href="tel:+201024227004">+20&nbsp;102&nbsp;422&nbsp;7004</a>
+            <button type="button" class="contact-copy-btn" data-copy="+201024227004"
+              aria-label="Copy primary phone number to clipboard">
+              <span class="contact-copy-btn__text">Copy</span>
+            </button>
+          </li>
+          <li class="contact-row">
+            <span class="contact-row__label">Phone (alt)</span>
+            <a class="contact-row__value" href="tel:+201015220163">+20&nbsp;101&nbsp;522&nbsp;0163</a>
+            <button type="button" class="contact-copy-btn" data-copy="+201015220163"
+              aria-label="Copy alternate phone number to clipboard">
+              <span class="contact-copy-btn__text">Copy</span>
+            </button>
+          </li>
+        </ul>
 
         <!-- Tactile Physical Knob Buttons (Edit.md T3 matching reference image) -->
         <div class="knob-row" role="region" aria-label="Direct Contact Knobs">

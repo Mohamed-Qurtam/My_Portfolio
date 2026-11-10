@@ -1,6 +1,6 @@
 /*!
- * index.js v3: one script for the whole portfolio page (vanilla JS, no dependencies;
- * all CSS is injected by this file). It replaces edit.js from the previous update.
+ * index.js v3.1: one script for the whole portfolio page (vanilla JS, no dependencies;
+ * styling lives in index.css). Supersedes the legacy edit.js typed-reveal script.
  *
  * CONTENT / LINKS
  *   - "Read the project book" opens the Google Drive project book
@@ -113,220 +113,7 @@
   /* ------------------------------------------------------------------ *
    * CSS
    * ------------------------------------------------------------------ */
-  const CSS = `
-:root{--qt-accent:#3fb883;--qt-header-h:76px;--qt-bg:#0d0f12;--qt-fg:#f2f0ed}
-html{scroll-behavior:smooth;scroll-padding-top:calc(var(--qt-header-h) + 16px);-webkit-text-size-adjust:100%}
-section[id]{scroll-margin-top:calc(var(--qt-header-h) + 16px)}
-html,body{overflow-x:clip;max-width:100%}
-img,video{max-width:100%;height:auto}
-::selection{background:rgba(63,184,131,.35)}
-:focus-visible{outline:2px solid var(--qt-accent);outline-offset:3px}
-.qt-sr-only{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-/* ---------- light theme: clean transition ---------- */
-html, body, section, header, .card, .stat-card, .cert-card-clean, .project-card-interactive {
-  transition: background-color .35s ease, border-color .35s ease, color .35s ease;
-}
-::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
-
-/* ---------- header ---------- */
-.qt-header{-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);
-  background-color:color-mix(in srgb,var(--qt-bg) 78%,transparent)!important;transition:box-shadow .3s ease;
-  padding-right:calc(40px + 32px)!important}
-.qt-header.qt-scrolled{box-shadow:0 10px 30px -12px rgba(0,0,0,.55)}
-.qt-navlink{position:relative;transition:color .25s ease}
-.qt-navlink::after{content:"";position:absolute;left:0;right:0;bottom:-7px;height:2px;border-radius:2px;
-  background:var(--qt-accent);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-.qt-navlink:hover::after,.qt-navlink.qt-active::after{transform:scaleX(1)}
-.qt-navlink.qt-active{color:var(--qt-fg)!important}
-
-/* theme + menu buttons: fixed at the top-right corner of the page */
-.qt-tools{position:fixed;top:calc(var(--qt-header-h)/2 - 20px);right:16px;z-index:9998;display:flex;align-items:center;gap:8px}
-.qt-iconbtn{width:40px;height:40px;display:inline-grid;place-items:center;border:1px solid rgba(127,127,127,.35);
-  border-radius:10px;background:color-mix(in srgb,var(--qt-bg) 70%,transparent);color:var(--qt-fg);cursor:pointer;padding:0;
-  transition:border-color .25s,transform .25s,background .25s}
-.qt-iconbtn:hover{border-color:var(--qt-accent);transform:translateY(-2px);background:rgba(63,184,131,.14)}
-.qt-theme svg{grid-area:1/1;width:20px;height:20px;transition:transform .55s cubic-bezier(.2,.7,.2,1),opacity .3s}
-.qt-theme .qt-moon{opacity:0;transform:rotate(90deg) scale(.4)}
-html[data-theme="light"] .qt-theme .qt-moon{opacity:1;transform:none}
-html[data-theme="light"] .qt-theme .qt-sun{opacity:0;transform:rotate(-90deg) scale(.4)}
-.qt-burger{display:none;flex-direction:column;gap:5px;justify-content:center;align-items:center}
-.qt-burger span{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .35s ease,opacity .25s}
-.qt-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.qt-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
-.qt-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.qt-menu{position:fixed;left:0;right:0;top:var(--qt-header-h);z-index:60;padding:10px 20px 22px;display:grid;gap:2px;
-  background:color-mix(in srgb,var(--qt-bg) 96%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(127,127,127,.25);transform:translateY(-12px);opacity:0;visibility:hidden;
-  transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .3s,visibility 0s linear .35s}
-.qt-menu.qt-open{transform:none;opacity:1;visibility:visible;transition-delay:0s}
-.qt-menu a{padding:13px 8px;color:var(--qt-fg);text-decoration:none;font:inherit;border-bottom:1px solid rgba(127,127,127,.16)}
-.qt-menu a.qt-active{color:var(--qt-accent)}
-.qt-menu a.qt-menu__cta{margin-top:10px;text-align:center;border:1px solid var(--qt-accent);border-radius:10px;color:var(--qt-accent)}
-
-/* ---------- progress bar + cursor spotlight ---------- */
-.qt-progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:9999;transform-origin:0 50%;transform:scaleX(0);
-  background:linear-gradient(90deg,var(--qt-accent),#7be3b8);pointer-events:none}
-.qt-spot{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .4s;
-  background:radial-gradient(420px circle at var(--qt-x,50%) var(--qt-y,50%),rgba(63,184,131,.09),transparent 60%)}
-.qt-spot.qt-on{opacity:1}
-
-/* ---------- hero: entrance, aurora, network, photo, name sheen ---------- */
-.qt-hero{position:relative;isolation:isolate;overflow:hidden}
-.qt-hero-item{opacity:0}
-html.qt-go .qt-hero-item{opacity:1;animation:qt-rise .85s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--qt-i,0)*110ms + 60ms)}
-html.qt-go-all .qt-hero-item{opacity:1!important;animation:none!important}
-@keyframes qt-rise{from{opacity:0;transform:translate3d(0,28px,0);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
-.qt-aurora{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
-.qt-aurora i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.28;will-change:transform}
-.qt-aurora i:nth-child(1){width:42vmax;height:42vmax;left:-10vmax;top:-12vmax;
-  background:radial-gradient(circle,#3fb883,transparent 70%);animation:qt-drift-a 22s ease-in-out infinite alternate}
-.qt-aurora i:nth-child(2){width:36vmax;height:36vmax;right:-8vmax;bottom:-14vmax;
-  background:radial-gradient(circle,#2f7df0,transparent 70%);animation:qt-drift-b 28s ease-in-out infinite alternate}
-.qt-aurora::after{content:"";position:absolute;inset:0;background-size:48px 48px;
-  background-image:linear-gradient(rgba(127,127,127,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(127,127,127,.08) 1px,transparent 1px);
-  -webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 40%,#000 20%,transparent 75%)}
-.qt-net{position:absolute;inset:0;width:100%;height:100%}
-@keyframes qt-drift-a{to{transform:translate3d(8vmax,6vmax,0) scale(1.15)}}
-@keyframes qt-drift-b{to{transform:translate3d(-7vmax,-5vmax,0) scale(1.1)}}
-.qt-photo{position:relative;isolation:isolate;opacity:0}
-html.qt-go .qt-photo,html.qt-go-all .qt-photo{opacity:1;animation:qt-pop .95s cubic-bezier(.2,.7,.2,1) .35s backwards,qt-float 6s ease-in-out 1.3s infinite;will-change:transform}
-.qt-photo::before{content:"";position:absolute;inset:-6%;z-index:-1;border-radius:40%;
-  background:radial-gradient(closest-side,rgba(63,184,131,.34),transparent);animation:qt-breathe 5s ease-in-out infinite}
-.qt-photo img{transition:transform .25s ease-out;will-change:transform}
-@keyframes qt-pop{from{opacity:0;transform:scale(.86) translate3d(0,20px,0)}to{opacity:1;transform:none}}
-@keyframes qt-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes qt-breathe{0%,100%{opacity:.45;transform:scale(.96)}50%{opacity:1;transform:scale(1.06)}}
-@supports ((-webkit-background-clip:text) or (background-clip:text)){
-  .qt-sheen{background-image:linear-gradient(100deg,currentColor 38%,var(--qt-accent) 50%,currentColor 62%);
-    background-size:250% 100%;background-position:120% 0;-webkit-background-clip:text;background-clip:text;
-    -webkit-text-fill-color:transparent;animation:qt-sheen 7s ease-in-out 1.6s infinite}
-}
-@keyframes qt-sheen{0%,20%{background-position:120% 0}60%,100%{background-position:-20% 0}}
-.qt-cursor{display:inline-block;margin-left:.15em;color:var(--qt-accent);animation:qt-blink 1.1s steps(1,end) infinite}
-@keyframes qt-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
-
-/* ---------- tools strip ---------- */
-.qt-marquee{overflow:hidden;display:block!important;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.qt-marquee__track{display:flex;width:max-content;animation:qt-marquee var(--qt-marquee-duration,40s) linear infinite}
-.qt-marquee:hover .qt-marquee__track,.qt-marquee:focus-within .qt-marquee__track{animation-play-state:paused}
-.qt-marquee__group{display:flex;flex-shrink:0;align-items:center;justify-content:space-around;gap:12px;padding-right:12px;min-width:100vw}
-.qt-marquee__group>*{transition:transform .25s ease,border-color .25s ease}
-.qt-marquee__group>*:hover{transform:translateY(-3px);border-color:var(--qt-accent)}
-@keyframes qt-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ---------- section motion ---------- */
-.qt-reveal{opacity:0;transform:translate3d(0,26px,0);
-  transition:opacity .75s cubic-bezier(.2,.7,.2,1) calc(var(--qt-i,0)*70ms),transform .75s cubic-bezier(.2,.7,.2,1) calc(var(--qt-i,0)*70ms),
-  filter .75s cubic-bezier(.2,.7,.2,1) calc(var(--qt-i,0)*70ms),clip-path .9s cubic-bezier(.2,.7,.2,1) calc(var(--qt-i,0)*70ms)}
-.qt-reveal.qt-r-left{transform:translate3d(-34px,0,0)}
-.qt-reveal.qt-r-zoom{transform:translate3d(0,18px,0) scale(.95)}
-.qt-reveal.qt-r-pop{transform:scale(.7)}
-.qt-reveal.qt-r-blur{transform:translate3d(0,18px,0);filter:blur(8px)}
-.qt-reveal.qt-r-clip{opacity:1;transform:none;clip-path:inset(0 0 100% 0)}
-.qt-reveal.qt-in{opacity:1;transform:none;filter:none;clip-path:inset(0 0 0 0)}
-
-.qt-h2{background-image:linear-gradient(90deg,var(--qt-accent),transparent);background-repeat:no-repeat;
-  background-position:0 100%;background-size:0 3px;padding-bottom:.2em;
-  transition:background-size .9s cubic-bezier(.2,.7,.2,1) .25s}
-.qt-h2.qt-line{background-size:72px 3px}
-.qt-label{background-image:linear-gradient(100deg,transparent 30%,rgba(63,184,131,.28) 50%,transparent 70%);
-  background-size:250% 100%;background-position:150% 0;background-repeat:no-repeat;animation:qt-label 5.5s ease-in-out infinite}
-@keyframes qt-label{0%,30%{background-position:150% 0}70%,100%{background-position:-50% 0}}
-
-.qt-card{transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s ease,box-shadow .3s ease,background-position .9s ease;
-  background-image:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.07) 50%,transparent 60%);
-  background-size:250% 100%;background-position:150% 0;background-repeat:no-repeat}
-.qt-card:hover{transform:translateY(-4px);border-color:var(--qt-accent)!important;
-  box-shadow:0 14px 34px -14px rgba(63,184,131,.4);background-position:-50% 0}
-.qt-chip{transition:transform .25s ease,border-color .25s ease,background-color .25s ease,color .25s ease}
-.qt-chip:hover{transform:translateY(-2px);border-color:var(--qt-accent)!important}
-
-.qt-dot{animation:qt-ping 2.4s ease-out 2}
-.qt-dot.qt-live{animation:qt-ping 2.4s ease-out infinite}
-@keyframes qt-ping{0%{box-shadow:0 0 0 0 rgba(63,184,131,.6)}100%{box-shadow:0 0 0 12px rgba(63,184,131,0)}}
-.qt-check :is(path,polyline,circle){stroke-dasharray:70;stroke-dashoffset:70}
-.qt-check.qt-draw :is(path,polyline,circle){animation:qt-draw .9s ease forwards}
-@keyframes qt-draw{to{stroke-dashoffset:0}}
-.qt-flow{stroke-dasharray:5 7;animation:qt-dash 1.6s linear infinite}
-@keyframes qt-dash{to{stroke-dashoffset:-24}}
-.qt-emoji{display:inline-block;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
-.qt-card:hover .qt-emoji,a:hover .qt-emoji{animation:qt-wiggle .6s ease}
-@keyframes qt-wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg) scale(1.15)}60%{transform:rotate(10deg) scale(1.15)}}
-.qt-btn{position:relative;overflow:hidden}
-.qt-ripple{position:absolute;border-radius:50%;pointer-events:none;background:rgba(63,184,131,.45);
-  transform:scale(0);animation:qt-ripple .65s ease-out forwards}
-@keyframes qt-ripple{to{transform:scale(1);opacity:0}}
-.qt-magnet{transition:transform .25s cubic-bezier(.2,.7,.2,1)}
-.qt-top{transition:transform .25s ease}
-.qt-top:hover{transform:translateY(-4px)}
-
-/* ---------- responsive ---------- */
-@media (max-width:${CONFIG.mobileBreakpoint}px){
-  .qt-burger{display:inline-flex}
-  .qt-nav,.qt-cta{display:none!important}
-  .qt-header{padding-right:calc(40px*2 + 8px + 32px)!important}
-}
-@media (min-width:${CONFIG.mobileBreakpoint + 1}px){.qt-menu{display:none}}
-@media (max-width:900px){
-  h1{font-size:clamp(2rem,9vw,3.4rem)!important;line-height:1.08!important}
-  section[id]{padding-top:4.5rem!important;padding-bottom:4.5rem!important}
-}
-@media (max-width:${CONFIG.stackBreakpoint}px){
-  [data-qt-stack]{flex-direction:column!important;grid-template-columns:minmax(0,1fr)!important;align-items:stretch!important}
-  [data-qt-stack]>*{width:auto!important;max-width:100%!important}
-  [data-qt-stack] img{max-width:min(100%,360px);margin-inline:auto}
-  .qt-aurora i:nth-child(2){display:none}
-  table{display:block;overflow-x:auto}
-}
-/* ---------- creative interactive additions ---------- */
-.topology-telemetry{background:var(--bg-tertiary,#1c2126);border:1px solid var(--border-accent,rgba(77,187,138,.3));border-left:3px solid var(--qt-accent,#3fb883);border-radius:6px;padding:12px 18px;margin-top:16px;font-family:var(--font-mono,monospace);font-size:.78rem;line-height:1.5;color:var(--text-secondary,#b6bfc9);display:flex;flex-direction:column;gap:4px;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:all .25s ease}
-.topology-telemetry.active{border-color:var(--qt-accent,#3fb883);box-shadow:0 0 20px rgba(63,184,131,.2)}
-.telemetry-header{display:flex;align-items:center;gap:8px;color:var(--qt-accent,#3fb883);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
-.telemetry-dot{width:7px;height:7px;border-radius:50%;background:var(--qt-accent,#3fb883);display:inline-block;animation:qt-blink 1.5s infinite}
-.telemetry-body{color:var(--text-primary,#f0ede8)}
-.topology-interactive-node{cursor:pointer;transition:transform .2s ease,filter .2s ease}
-.topology-interactive-node:hover rect,.topology-interactive-node.active rect{stroke:var(--qt-accent,#3fb883)!important;stroke-width:2px!important;filter:drop-shadow(0 0 8px rgba(63,184,131,.5))}
-.project-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
-.project-filter-btn{font-family:var(--font-mono,monospace);font-size:.76rem;background:var(--bg-secondary,#161a1d);color:var(--text-secondary,#b6bfc9);border:1px solid var(--border-primary,#2a3038);padding:6px 14px;border-radius:4px;cursor:pointer;transition:all .2s ease}
-.project-filter-btn:hover,.project-filter-btn.active{background:rgba(63,184,131,.15);border-color:var(--qt-accent,#3fb883);color:#fff}
-html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-filter-btn:hover,html[data-theme="light"] .project-filter-btn.active{color:#121820!important}
-.qt-toast{position:fixed;bottom:24px;right:24px;background:#1c2126;color:#f0ede8;border:1px solid var(--border-accent,rgba(77,187,138,.4));border-left:4px solid var(--qt-accent,#3fb883);padding:12px 20px;border-radius:6px;font-family:var(--font-mono,monospace);font-size:.82rem;box-shadow:0 12px 32px rgba(0,0,0,.6);z-index:9999;transform:translateY(40px);opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.16,1,.3,1);display:flex;align-items:center;gap:10px}
-.qt-toast.visible{transform:translateY(0);opacity:1}
-.fade-in{opacity:1!important;transform:none!important}
-.contact__table-value{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
-.contact__copy-btn{background:rgba(255,255,255,.04);border:1px solid var(--border-primary,#2a3038);color:var(--text-secondary,#b6bfc9);cursor:pointer;padding:2px 8px;border-radius:4px;font-size:.72rem;font-family:var(--font-mono,monospace);line-height:1.4;transition:all .2s ease;display:inline-flex;align-items:center;gap:4px}
-.contact__copy-btn:hover{border-color:var(--qt-accent,#3fb883);color:var(--qt-accent,#3fb883);background:rgba(63,184,131,.12)}
-.qt-floating-top{position:fixed;bottom:28px;right:28px;width:46px;height:46px;border-radius:50%;background:color-mix(in srgb,var(--qt-bg,#0d0f12) 88%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--border-accent,rgba(77,187,138,.3));box-shadow:0 8px 24px rgba(0,0,0,.5);cursor:pointer;display:grid;place-items:center;z-index:999;opacity:0;transform:translateY(16px) scale(.85);pointer-events:none;transition:opacity .3s cubic-bezier(.2,.7,.2,1),transform .3s cubic-bezier(.2,.7,.2,1),border-color .25s ease}
-.qt-floating-top.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
-.qt-floating-top:hover{border-color:var(--qt-accent,#3fb883);transform:translateY(-3px) scale(1.05);box-shadow:0 12px 28px rgba(63,184,131,.25)}
-.qt-progress-circle{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.qt-top-arrow{color:var(--qt-accent,#3fb883);font-size:1.15rem;font-weight:700;line-height:1;transition:transform .25s ease}
-.qt-floating-top:hover .qt-top-arrow{transform:translateY(-2px)}
-.topology-interactive-node.active rect{stroke:var(--qt-accent,#3fb883)!important;stroke-width:2.2px!important;filter:drop-shadow(0 0 10px rgba(63,184,131,.6))!important}
-
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .qt-cursor,.qt-photo,.qt-photo::before,.qt-marquee__track,.qt-aurora i,.qt-sheen,.qt-label,.qt-dot,.qt-flow,.qt-hero-item,.qt-ripple{animation:none!important}
-  .qt-hero-item,.qt-photo{opacity:1!important}
-  .qt-reveal{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none!important}
-  .qt-check :is(path,polyline,circle){stroke-dashoffset:0!important}
-}`;
-
-  function injectCSS() {
-    const style = document.createElement('style');
-    style.setAttribute('data-qt-style', '');
-    style.textContent = CSS;
-    document.head.appendChild(style);
-    if (!document.querySelector('meta[name="viewport"]')) {
-      const m = document.createElement('meta');
-      m.name = 'viewport';
-      m.content = 'width=device-width, initial-scale=1, viewport-fit=cover';
-      document.head.appendChild(m);
-    }
-  }
 
   /* ------------------------------------------------------------------ *
    * Helpers
@@ -584,107 +371,23 @@ html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-f
    * ------------------------------------------------------------------ */
   function prepareRole() {
     if (S.role) return;
-    let el = document.querySelector(CONFIG.roleSelector);
-    if (!el) {
-      for (const c of document.querySelectorAll('h1,h2,h3,h4,p,span,div')) {
-        if (c.closest('nav,footer,[data-qt-role]')) continue;
-        if (CONFIG.rolePattern.test(ownText(c).replace(/\|$/, '').trim())) { el = c; break; }
-      }
-    }
+    const el = document.querySelector(CONFIG.roleSelector);
     if (!el) return;
-    el.style.minHeight = el.offsetHeight ? el.offsetHeight + 'px' : '';
-    const next = el.nextElementSibling;
-    const siblingCursor = next && (/cursor|caret|blink/i.test(next.className || '') || ownText(next) === '|');
-    const after = window.getComputedStyle(el, '::after').content;
-    const pseudoCursor = after && after !== 'none' && after !== 'normal';
-    S.role = { el, addCursor: CONFIG.addCursor && !siblingCursor && !pseudoCursor };
+    S.role = { el };
+    // The final text always stays in the DOM; the reveal is pure CSS, so
+    // screen readers, no-JS visitors and crawlers all see the real title.
     el.setAttribute('data-qt-role', 'pending');
     el.style.cursor = 'pointer';
-    el.title = 'Click to replay typing animation';
+    el.title = 'Click to replay animation';
     el.onclick = () => replayRole();
-    el.textContent = '';
     if (S.loaded) revealRole();
   }
-
-  const ROLES_CYCLE = [
-    'Network & Security Engineer',
-    'SOC Analyst',
-    'Infrastructure & Defense',
-    'Cybersecurity Instructor'
-  ];
-  let roleCycleIdx = 0;
-  let roleTimer = null;
 
   function revealRole() {
     if (S.revealed || !S.role) return;
     S.revealed = true;
-    const { el, addCursor } = S.role;
-    const visual = document.createElement('span');
-    visual.setAttribute('aria-hidden', 'true');
-    const sr = document.createElement('span');
-    sr.className = 'qt-sr-only';
-    sr.setAttribute('role', 'status');
-    sr.setAttribute('aria-live', 'polite');
-    el.appendChild(visual);
-    el.appendChild(sr);
-    if (addCursor) {
-      const c = document.createElement('span');
-      c.className = 'qt-cursor';
-      c.setAttribute('aria-hidden', 'true');
-      c.textContent = '|';
-      el.appendChild(c);
-    }
-    const finish = (text) => {
-      visual.textContent = text;
-      sr.textContent = text;
-      el.setAttribute('data-qt-role', 'done');
-      el.style.minHeight = '';
-    };
-    if (reduceMotion || !CONFIG.typeSpeedMs) { finish(ROLES_CYCLE[0]); return; }
-
-    let isDeleting = false;
-    let charIdx = 0;
-
-    function typeLoop() {
-      const currentRole = ROLES_CYCLE[roleCycleIdx];
-      sr.textContent = currentRole;
-
-      if (!isDeleting) {
-        charIdx++;
-        visual.textContent = currentRole.slice(0, charIdx);
-        if (charIdx === currentRole.length) {
-          el.setAttribute('data-qt-role', 'done');
-          roleTimer = setTimeout(() => {
-            isDeleting = true;
-            typeLoop();
-          }, 3200);
-          return;
-        }
-        roleTimer = setTimeout(typeLoop, CONFIG.typeSpeedMs);
-      } else {
-        charIdx--;
-        visual.textContent = currentRole.slice(0, charIdx);
-        if (charIdx === 0) {
-          isDeleting = false;
-          roleCycleIdx = (roleCycleIdx + 1) % ROLES_CYCLE.length;
-          roleTimer = setTimeout(typeLoop, 450);
-          return;
-        }
-        roleTimer = setTimeout(typeLoop, 25);
-      }
-    }
-
-    el.onclick = () => {
-      clearTimeout(roleTimer);
-      isDeleting = false;
-      charIdx = 0;
-      roleCycleIdx = (roleCycleIdx + 1) % ROLES_CYCLE.length;
-      typeLoop();
-    };
-
-    const item = el.closest('.qt-hero-item');
-    const idx = item ? Number(item.style.getPropertyValue('--qt-i')) || 0 : 0;
-    setTimeout(typeLoop, idx * 110 + 250);
+    S.role.el.setAttribute('data-qt-role', 'done');
+    if (!reduceMotion) S.role.el.classList.add('qt-role-reveal');
   }
 
   /* ------------------------------------------------------------------ *
@@ -785,7 +488,9 @@ html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-f
     if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
       current = S.nav.items[S.nav.items.length - 1].id;
     }
-    if (current) setActive(current);
+    // setActive(null) clears every highlight, so nothing is marked active
+    // while the page is still on the hero.
+    setActive(current);
   }
 
   function findHeader() {
@@ -857,7 +562,12 @@ html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-f
       navThemeBtn.dataset.bound = '1';
       navThemeBtn.addEventListener('click', toggleTheme);
     }
-    applyTheme(getSavedTheme());
+    // Only apply on first run; re-applying on every ensureTools() pass
+    // overwrote user toggles and repeated work.
+    if (!ensureTools._applied) {
+      ensureTools._applied = true;
+      applyTheme(savedTheme());
+    }
   }
 
   function ensureBurger() {
@@ -1821,11 +1531,11 @@ html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-f
   }
 
   function replayRole() {
-    if (!S.role || !S.role.el) return;
-    S.revealed = false;
-    S.role.el.setAttribute('data-qt-role', 'pending');
-    S.role.el.innerHTML = '';
-    revealRole();
+    const el = S.role && S.role.el;
+    if (!el || reduceMotion) return;
+    el.classList.remove('qt-role-reveal');
+    void el.offsetWidth;   // force reflow so the CSS animation restarts
+    el.classList.add('qt-role-reveal');
   }
 
   function fixFadeIn() {
@@ -2284,7 +1994,6 @@ html[data-theme="light"] .project-filter-btn,html[data-theme="light"] .project-f
   const schedule = () => { clearTimeout(timer); timer = setTimeout(S.settled ? light : run, S.settled ? 150 : 80); };
 
   function start() {
-    injectCSS();
     applyTheme(savedTheme());
 
     // Runs before paint on every DOM change, so old text never flashes
