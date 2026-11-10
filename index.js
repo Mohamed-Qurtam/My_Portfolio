@@ -1480,6 +1480,35 @@
         });
       });
     });
+
+    // 3. Education Card (Pic 4: pop-up instead of Google Drive redirect)
+    const eduCard = document.getElementById('educationCard') || document.querySelector('.education-card--link');
+    if (eduCard && !eduCard.dataset.qtEduBound) {
+      eduCard.dataset.qtEduBound = '1';
+      eduCard.style.cursor = 'pointer';
+
+      const openEduModal = (e) => {
+        if (e) e.preventDefault();
+        showCredentialPopup({
+          title: 'B.Sc. Communication & Electronics Engineering',
+          subtitle: 'Benha University · Faculty of Engineering at Shoubra · June 2024 · Excellent with Honors',
+          badge: 'GRADUATION CERTIFICATE',
+          type: 'cert',
+          links: [{
+            label: 'Graduation Certificate',
+            url: 'https://drive.google.com/file/d/1-AZlTNMwmeJ9LeW6W23xMRvUwEHdLBbf/view?usp=drive_link'
+          }]
+        });
+      };
+
+      eduCard.addEventListener('click', openEduModal);
+      eduCard.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openEduModal();
+        }
+      });
+    }
   }
 
   function showCredentialPopup(opts) {
@@ -1907,11 +1936,15 @@
     if (!container) return;
     hangingFrameInit = true;
 
-    container.addEventListener('click', () => {
+    const triggerSwing = (e) => {
+      container.style.transform = '';
       container.classList.remove('swinging');
       void container.offsetWidth; // trigger reflow
       container.classList.add('swinging');
-    });
+    };
+
+    container.addEventListener('click', triggerSwing);
+    container.addEventListener('touchstart', triggerSwing, { passive: true });
 
     container.addEventListener('animationend', () => {
       container.classList.remove('swinging');
@@ -1920,7 +1953,7 @@
     container.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        container.click();
+        triggerSwing();
       }
     });
 
