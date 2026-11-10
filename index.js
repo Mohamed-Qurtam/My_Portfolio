@@ -1578,21 +1578,18 @@
         const currentLink = opts.links[idx];
         const fileId = extractDriveFileId(currentLink.url);
 
-        if (fileId) {
-          const previewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-          const iframe = document.createElement('iframe');
-          iframe.src = previewUrl;
-          iframe.className = 'cert-popup-iframe';
-          iframe.setAttribute('title', currentLink.label || opts.title);
-          iframe.setAttribute('allow', 'autoplay');
-          iframe.setAttribute('loading', 'lazy');
-          viewerWrap.appendChild(iframe);
-        } else {
-          const fallback = document.createElement('div');
-          fallback.className = 'cert-popup-fallback';
-          fallback.innerHTML = `<p>Document viewer:</p><a href="${currentLink.url}" target="_blank" rel="noopener noreferrer" class="btn-primary">Open Document ↗</a>`;
-          viewerWrap.appendChild(fallback);
-        }
+        // Pic 1: Render all documents (Google Drive & Mindtickle verification) directly in popup iframe
+        const previewUrl = fileId
+          ? `https://drive.google.com/file/d/${fileId}/preview`
+          : currentLink.url;
+
+        const iframe = document.createElement('iframe');
+        iframe.src = previewUrl;
+        iframe.className = 'cert-popup-iframe';
+        iframe.setAttribute('title', currentLink.label || opts.title);
+        iframe.setAttribute('allow', 'autoplay');
+        iframe.setAttribute('loading', 'lazy');
+        viewerWrap.appendChild(iframe);
       }
 
       renderViewer(0);
