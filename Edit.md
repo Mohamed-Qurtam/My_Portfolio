@@ -494,6 +494,11 @@ Add an infinite scrolling ticker/marquee displaying the credential badges from t
   - Set Hero narrow-screen column order to `order: 1` with centered alignment so text comes first and the hanging frame card sits centered below.
   - Added `max-width: 100%` and `flex-wrap: wrap` on `.hero__status-badge` and `.project-book-btn` to prevent overflow on small viewports (320px–375px).
   - Confirmed 44x44px minimum touch targets on all interactive controls (buttons, tabs, knobs, toggles).
+- **Contact Refinement & Mobile Knobs (Pic 1)**: Removed contact table rows from Contact section, updated phone knob link to Alternate number (`+20 101 522 0163`), and made the 4 tactile knob buttons fluidly responsive on phones in a clean single-line strip (`clamp(52px, 18vw, 68px)`).
+- **In-Page Pop-up Modal for Badges & Certificates (Pic 2)**: Replaced external Google Drive redirects with an in-page accessible popup modal (`#cert-chooser-overlay`). Badges render in large format with verification subtitle; certificate cards embed Google Drive viewer preview iframes and multi-link tabs directly on-site.
+- **Compact Spacing Hierarchy (Pic 3)**: Reduced section and element spacing scale (`--space-5xl` to clamp(1.75rem, 3.5vw, 3rem)), tightened Hero padding, Tech Ticker vertical spacing, and section margins for a cohesive, balanced layout without empty gaps.
+- **Typewriter Role Title & CCNP Security Core Update (Pic 4)**: Added character-by-character typewriter animation for "Network & Security Engineer" on page load and on click with blinking accent cursor. Removed certificate link and external icon from "CCNP Security Core" as it has no certificate.
+- **Footer Cleanup (Pic 5)**: Removed textual "↑ Top" link from footer, keeping only the floating interactive progress circle icon button.
 
 - [x] **Container Alignment**: All section headings and content share the exact same left vertical alignment as About.
 - [x] **Responsive Resilience**: Verified from 320px to 3840px and zoom levels 25% to 500%; zero horizontal scrolling.

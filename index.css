@@ -29,17 +29,17 @@
   --font-body: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', 'Cascadia Code', monospace;
 
-  /* Spacing Scale */
-  --space-2xs: 0.25rem;
-  --space-xs: 0.5rem;
-  --space-sm: 0.75rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 4rem;
-  --space-4xl: 6rem;
-  --space-5xl: clamp(2.5rem, 5vw, 4.5rem);
+  /* Spacing Scale - Compact & balanced hierarchy (Pic 3) */
+  --space-2xs: 0.2rem;
+  --space-xs: 0.4rem;
+  --space-sm: 0.65rem;
+  --space-md: 0.9rem;
+  --space-lg: 1.25rem;
+  --space-xl: 1.5rem;
+  --space-2xl: 2rem;
+  --space-3xl: 2.75rem;
+  --space-4xl: 3.5rem;
+  --space-5xl: clamp(1.75rem, 3.5vw, 3rem);
 
   /* Layout */
   --container-max: 1200px;
@@ -378,8 +378,8 @@ html[data-theme="light"] .nav__theme-btn {
   min-height: min(100svh, 55rem);
   display: flex;
   align-items: center;
-  padding-top: calc(var(--nav-height) + clamp(1.5rem, 3vw, 3rem));
-  padding-bottom: clamp(2rem, 5vw, 4rem);
+  padding-top: calc(var(--nav-height) + clamp(1rem, 2vw, 1.75rem));
+  padding-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
   position: relative;
   overflow: hidden;
 }
@@ -829,15 +829,15 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
 
 /* --- Centered Tool Ticker / Marquee (Infinite Logo Marquee matching Pic 3 & 4) --- */
 .tech-ticker-container {
-  padding-top: var(--space-md);
-  padding-bottom: var(--space-md);
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
 }
 
 .tech-ticker {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   background: var(--bg-secondary);
-  padding: var(--space-md) 0;
+  padding: 0.6rem 0;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -2541,12 +2541,12 @@ html[data-theme="light"] .contact {
     order: -1;
   }
 
-  /* Contact knob mobile adjustments */
+  /* Contact knob mobile adjustments (Pic 1) */
   .knob {
-    --size: 72px;
+    --size: clamp(60px, 14vw, 76px);
   }
   .knob-row {
-    gap: 1.25rem;
+    gap: clamp(0.6rem, 2.5vw, 1.25rem);
   }
   .contact-details {
     flex-direction: column;
@@ -2583,6 +2583,29 @@ html[data-theme="light"] .contact {
 
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Contact knob icons: responsive 1-line strip on phone view (Pic 1) */
+  .knob-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+    width: 100% !important;
+    max-width: 380px !important;
+    margin-inline: auto !important;
+    margin-block: 1rem !important;
+  }
+
+  .knob {
+    --size: clamp(52px, 18vw, 68px) !important;
+    gap: 0.4rem !important;
+  }
+
+  .knob__label {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.08em !important;
   }
 
   .contact-icons {
@@ -3200,3 +3223,238 @@ html{scroll-behavior:auto}
 .qt-hero-item,.qt-photo{opacity:1!important}
 .qt-reveal{opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;transition:none!important}
 .qt-check :is(path,polyline,circle){stroke-dashoffset:0!important}
+}
+
+/* ===================================================
+   CREDENTIAL POPUP MODAL & BLINKING CURSOR (Pic 2 & 4)
+   =================================================== */
+@keyframes roleCursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.role-cursor {
+  font-weight: 300;
+  user-select: none;
+}
+
+.cert-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 10, 12, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 220ms ease, visibility 220ms ease;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.cert-popup-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cert-popup-dialog {
+  max-width: min(880px, 94vw);
+  width: 880px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 24px var(--accent-glow);
+  transform: scale(0.95);
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.cert-popup-overlay.open .cert-popup-dialog {
+  transform: scale(1);
+}
+
+.cert-popup-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-xs);
+  flex-shrink: 0;
+}
+
+.cert-popup-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cert-popup-type-badge {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.cert-popup-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.cert-popup-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.cert-popup-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cert-popup-close {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.cert-popup-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+
+.cert-popup-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: var(--space-xs);
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.cert-popup-tab {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cert-popup-tab.active,
+.cert-popup-tab:hover {
+  background: rgba(77, 187, 138, 0.15);
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.cert-popup-body {
+  flex: 1;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.cert-popup-viewer-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  flex: 1;
+  position: relative;
+}
+
+.cert-popup-iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  border: none;
+  display: block;
+  background: #ffffff;
+}
+
+.cert-popup-badge-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2xl) var(--space-md);
+  background: radial-gradient(circle at center, rgba(77, 187, 138, 0.1) 0%, transparent 72%);
+  min-height: 340px;
+  flex: 1;
+}
+
+.cert-popup-badge-img {
+  max-width: min(290px, 80vw);
+  max-height: 290px;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.55));
+  animation: badgePopZoom 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgePopZoom {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .cert-popup-dialog {
+    max-width: 96vw;
+    width: 96vw;
+    padding: var(--space-sm);
+    max-height: 94vh;
+  }
+  .cert-popup-body {
+    min-height: 300px;
+  }
+  .cert-popup-viewer-wrap,
+  .cert-popup-iframe {
+    min-height: 380px;
+  }
+}
+
+html[data-theme="light"] .cert-popup-dialog {
+  background: #fbf9f4;
+  border-color: var(--border-primary);
+  box-shadow: 0 24px 60px rgba(32, 43, 58, 0.2);
+}
+
+html[data-theme="light"] .cert-popup-close {
+  color: var(--text-primary);
+}
+
+html[data-theme="light"] .cert-popup-body {
+  background: #ffffff;
+}

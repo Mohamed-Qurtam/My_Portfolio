@@ -373,13 +373,13 @@
     if (S.role) return;
     const el = document.querySelector(CONFIG.roleSelector);
     if (!el) return;
-    S.role = { el };
-    // The final text always stays in the DOM; the reveal is pure CSS, so
-    // screen readers, no-JS visitors and crawlers all see the real title.
-    el.setAttribute('data-qt-role', 'pending');
+    S.role = { el, text: CONFIG.roleText };
     el.style.cursor = 'pointer';
-    el.title = 'Click to replay animation';
+    el.title = 'Click to replay typing';
     el.onclick = () => replayRole();
+    // Clear text; will be typed character-by-character on load
+    el.textContent = '';
+    el.setAttribute('data-qt-role', 'pending');
     if (S.loaded) revealRole();
   }
 
@@ -387,7 +387,7 @@
     if (S.revealed || !S.role) return;
     S.revealed = true;
     S.role.el.setAttribute('data-qt-role', 'done');
-    if (!reduceMotion) S.role.el.classList.add('qt-role-reveal');
+    typeRole();
   }
 
   /* ------------------------------------------------------------------ *
@@ -1401,9 +1401,16 @@
   }
 
   /* ------------------------------------------------------------------ *
-   * Certifications: Direct Link Opening & Multi-Link Chooser (Edit.md §4)
+   * Credentials (Badges & Certificates): In-Page Popup Modal (Pic 2)
    * ------------------------------------------------------------------ */
+  function extractDriveFileId(url) {
+    if (!url) return null;
+    const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+    return m ? m[1] : null;
+  }
+
   function setupCertModal() {
+    // 1. Certificate cards in #certsList
     document.querySelectorAll('.cert-card-clean').forEach((card) => {
       if (card.dataset.qtCertBound) return;
       card.dataset.qtCertBound = '1';
@@ -1428,72 +1435,171 @@
 
       card.style.cursor = 'pointer';
 
-      const openCredential = () => {
-        if (links.length === 1) {
-          window.open(links[0].url, '_blank', 'noopener,noreferrer');
-        } else {
-          showCertChooser(card, links);
-        }
+      const openModal = () => {
+        const title = (card.querySelector('.cert-card-clean__title') || {}).textContent || 'Certificate';
+        const provider = (card.querySelector('.cert-card-clean__provider') || {}).textContent || '';
+        const badge = (card.querySelector('.cert-type-badge') || {}).textContent || 'CREDENTIAL';
+        showCredentialPopup({
+          title: title.trim(),
+          subtitle: provider.trim(),
+          badge: badge.trim(),
+          links: links,
+          type: 'cert'
+        });
       };
 
-      card.addEventListener('click', openCredential);
+      card.addEventListener('click', openModal);
       card.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          openCredential();
+          openModal();
         }
+      });
+    });
+
+    // 2. Accredited Vendor Badges in Marquee (Pic 2: pop-up instead of Google Drive redirect)
+    document.querySelectorAll('.vendor-badge-item').forEach((badgeItem) => {
+      if (badgeItem.dataset.qtBadgeBound) return;
+      badgeItem.dataset.qtBadgeBound = '1';
+      badgeItem.style.cursor = 'pointer';
+
+      badgeItem.addEventListener('click', (e) => {
+        e.preventDefault();
+        const label = (badgeItem.querySelector('.vendor-badge-label') || {}).textContent || 'Vendor Badge';
+        const img = badgeItem.querySelector('.vendor-badge-img');
+        const imgSrc = img ? img.getAttribute('src') : '';
+        const driveUrl = badgeItem.getAttribute('href') || '';
+        showCredentialPopup({
+          title: label.trim(),
+          subtitle: 'Accredited Vendor Badge',
+          badge: 'VENDOR BADGE',
+          badgeImg: imgSrc,
+          driveUrl: driveUrl,
+          links: driveUrl ? [{ label: 'Google Drive', url: driveUrl }] : [],
+          type: 'badge'
+        });
       });
     });
   }
 
-  function showCertChooser(card, links) {
+  function showCredentialPopup(opts) {
     const existing = document.getElementById('cert-chooser-overlay');
     if (existing) existing.remove();
 
-    const title = (card.querySelector('.cert-card-clean__title') || {}).textContent || 'Choose Certificate';
-
     const overlay = document.createElement('div');
     overlay.id = 'cert-chooser-overlay';
-    overlay.className = 'cert-chooser-overlay';
+    overlay.className = 'cert-chooser-overlay cert-popup-overlay';
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
-    overlay.setAttribute('aria-label', title.trim());
+    overlay.setAttribute('aria-label', opts.title);
 
     const dialog = document.createElement('div');
-    dialog.className = 'cert-chooser-dialog';
+    dialog.className = 'cert-chooser-dialog cert-popup-dialog';
 
+    // Header
     const header = document.createElement('div');
-    header.className = 'cert-chooser-dialog__header';
+    header.className = 'cert-popup-header';
+
+    const infoWrap = document.createElement('div');
+    infoWrap.className = 'cert-popup-info';
+
+    const badgeSpan = document.createElement('span');
+    badgeSpan.className = 'cert-popup-type-badge';
+    badgeSpan.textContent = opts.badge || 'CREDENTIAL';
 
     const titleEl = document.createElement('h3');
-    titleEl.className = 'cert-chooser-dialog__title';
-    titleEl.textContent = title.trim();
+    titleEl.className = 'cert-popup-title';
+    titleEl.textContent = opts.title;
+
+    infoWrap.appendChild(badgeSpan);
+    infoWrap.appendChild(titleEl);
+
+    if (opts.subtitle) {
+      const subEl = document.createElement('span');
+      subEl.className = 'cert-popup-subtitle';
+      subEl.textContent = opts.subtitle;
+      infoWrap.appendChild(subEl);
+    }
+
+    const actionsWrap = document.createElement('div');
+    actionsWrap.className = 'cert-popup-actions';
 
     const closeBtn = document.createElement('button');
     closeBtn.type = 'button';
-    closeBtn.className = 'cert-chooser-dialog__close';
-    closeBtn.setAttribute('aria-label', 'Close credential chooser');
+    closeBtn.className = 'cert-popup-close';
+    closeBtn.setAttribute('aria-label', 'Close credential popup');
     closeBtn.innerHTML = '&times;';
 
-    header.appendChild(titleEl);
-    header.appendChild(closeBtn);
+    actionsWrap.appendChild(closeBtn);
+    header.appendChild(infoWrap);
+    header.appendChild(actionsWrap);
     dialog.appendChild(header);
 
-    const linksContainer = document.createElement('div');
-    linksContainer.className = 'cert-chooser-dialog__links';
+    // Body
+    const body = document.createElement('div');
+    body.className = 'cert-popup-body';
 
-    links.forEach((link) => {
-      const a = document.createElement('a');
-      a.href = link.url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.className = 'cert-chooser-link';
-      a.innerHTML = `<span>${link.label}</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
-      a.addEventListener('click', () => close());
-      linksContainer.appendChild(a);
-    });
+    if (opts.type === 'badge' && opts.badgeImg) {
+      // Badge display: Large high-res format
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'cert-popup-badge-view';
+      const img = document.createElement('img');
+      img.src = opts.badgeImg;
+      img.alt = opts.title;
+      img.className = 'cert-popup-badge-img';
+      imgWrap.appendChild(img);
+      body.appendChild(imgWrap);
+    } else if (opts.links && opts.links.length) {
+      // Multi-link tabs (e.g. AWS certificates)
+      let tabsWrap = null;
+      if (opts.links.length > 1) {
+        tabsWrap = document.createElement('div');
+        tabsWrap.className = 'cert-popup-tabs';
+        opts.links.forEach((l, idx) => {
+          const tabBtn = document.createElement('button');
+          tabBtn.type = 'button';
+          tabBtn.className = `cert-popup-tab ${idx === 0 ? 'active' : ''}`;
+          tabBtn.textContent = l.label || `Certificate ${idx + 1}`;
+          tabBtn.onclick = () => {
+            tabsWrap.querySelectorAll('.cert-popup-tab').forEach((b) => b.classList.remove('active'));
+            tabBtn.classList.add('active');
+            renderViewer(idx);
+          };
+          tabsWrap.appendChild(tabBtn);
+        });
+        dialog.appendChild(tabsWrap);
+      }
 
-    dialog.appendChild(linksContainer);
+      const viewerWrap = document.createElement('div');
+      viewerWrap.className = 'cert-popup-viewer-wrap';
+
+      function renderViewer(idx) {
+        viewerWrap.innerHTML = '';
+        const currentLink = opts.links[idx];
+        const fileId = extractDriveFileId(currentLink.url);
+
+        if (fileId) {
+          const previewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+          const iframe = document.createElement('iframe');
+          iframe.src = previewUrl;
+          iframe.className = 'cert-popup-iframe';
+          iframe.setAttribute('title', currentLink.label || opts.title);
+          iframe.setAttribute('allow', 'autoplay');
+          iframe.setAttribute('loading', 'lazy');
+          viewerWrap.appendChild(iframe);
+        } else {
+          const fallback = document.createElement('div');
+          fallback.className = 'cert-popup-fallback';
+          fallback.innerHTML = `<p>Document viewer:</p><a href="${currentLink.url}" target="_blank" rel="noopener noreferrer" class="btn-primary">Open Document ↗</a>`;
+          viewerWrap.appendChild(fallback);
+        }
+      }
+
+      renderViewer(0);
+      body.appendChild(viewerWrap);
+    }
+
+    dialog.appendChild(body);
     overlay.appendChild(dialog);
     document.body.appendChild(overlay);
 
@@ -1530,12 +1636,44 @@
     toast.__timer = setTimeout(() => toast.classList.remove('visible'), 2600);
   }
 
-  function replayRole() {
+  /* ------------------------------------------------------------------ *
+   * Typewriter Role Title on Load & On Click (Pic 4)
+   * ------------------------------------------------------------------ */
+  let typeRoleTimer = null;
+  function typeRole() {
     const el = S.role && S.role.el;
-    if (!el || reduceMotion) return;
-    el.classList.remove('qt-role-reveal');
-    void el.offsetWidth;   // force reflow so the CSS animation restarts
-    el.classList.add('qt-role-reveal');
+    if (!el) return;
+    const fullText = (S.role && S.role.text) || CONFIG.roleText || 'Network & Security Engineer';
+    if (reduceMotion) {
+      el.textContent = fullText;
+      return;
+    }
+    if (typeRoleTimer) {
+      clearInterval(typeRoleTimer);
+      typeRoleTimer = null;
+    }
+    el.textContent = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'role-cursor';
+    cursor.textContent = '|';
+    cursor.setAttribute('aria-hidden', 'true');
+    cursor.style.cssText = 'color:var(--accent,#3fb883);margin-left:3px;display:inline-block;animation:roleCursorBlink 0.75s infinite;';
+    el.appendChild(cursor);
+
+    let i = 0;
+    typeRoleTimer = setInterval(() => {
+      if (i < fullText.length) {
+        cursor.before(fullText.charAt(i));
+        i++;
+      } else {
+        clearInterval(typeRoleTimer);
+        typeRoleTimer = null;
+      }
+    }, CONFIG.typeSpeedMs || 50);
+  }
+
+  function replayRole() {
+    typeRole();
   }
 
   function fixFadeIn() {
