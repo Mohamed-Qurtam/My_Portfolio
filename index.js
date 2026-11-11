@@ -29,6 +29,12 @@
   if (window.__qtIndex) return;
   window.__qtIndex = true;
 
+  /* Force page to start from top on every load/reload */
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
   /* ------------------------------------------------------------------ *
    * CONFIG
    * ------------------------------------------------------------------ */
