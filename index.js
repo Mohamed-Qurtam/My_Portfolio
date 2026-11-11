@@ -370,23 +370,47 @@
    * Role title
    * ------------------------------------------------------------------ */
   function prepareRole() {
-    if (S.role) return;
-    const el = document.querySelector(CONFIG.roleSelector);
+    const el = document.querySelector(CONFIG.roleSelector) || document.querySelector('[data-role-title]');
     if (!el) return;
-    S.role = { el, text: CONFIG.roleText };
+    if (!S.role) {
+      S.role = { el, text: CONFIG.roleText || 'Network & Security Engineer' };
+    }
     el.style.cursor = 'pointer';
     el.title = 'Click to replay typing';
-    el.onclick = () => replayRole();
-    // Clear text; will be typed character-by-character on load
-    el.textContent = '';
-    el.setAttribute('data-qt-role', 'pending');
-    if (S.loaded) revealRole();
+
+    if (!el.dataset.qtRoleBound) {
+      el.dataset.qtRoleBound = '1';
+      const triggerReplay = (e) => {
+        if (e) e.stopPropagation();
+        replayRole();
+      };
+      el.addEventListener('click', triggerReplay);
+      el.addEventListener('touchstart', triggerReplay, { passive: true });
+      el.addEventListener('pointerdown', triggerReplay);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          triggerReplay(e);
+        }
+      });
+    }
+
+    // Start typing immediately on load across all devices
+    if (!S.roleStarted) {
+      S.roleStarted = true;
+      el.textContent = '';
+      setTimeout(() => {
+        typeRole();
+      }, 120);
+    }
   }
 
   function revealRole() {
-    if (S.revealed || !S.role) return;
-    S.revealed = true;
-    S.role.el.setAttribute('data-qt-role', 'done');
+    if (!S.role) return;
+    if (!S.revealed) {
+      S.revealed = true;
+      S.role.el.setAttribute('data-qt-role', 'done');
+    }
     typeRole();
   }
 
@@ -1667,13 +1691,10 @@
    * ------------------------------------------------------------------ */
   let typeRoleTimer = null;
   function typeRole() {
-    const el = S.role && S.role.el;
+    const el = (S.role && S.role.el) || document.querySelector(CONFIG.roleSelector) || document.querySelector('[data-role-title]');
     if (!el) return;
     const fullText = (S.role && S.role.text) || CONFIG.roleText || 'Network & Security Engineer';
-    if (reduceMotion) {
-      el.textContent = fullText;
-      return;
-    }
+
     if (typeRoleTimer) {
       clearInterval(typeRoleTimer);
       typeRoleTimer = null;
@@ -1695,7 +1716,7 @@
         clearInterval(typeRoleTimer);
         typeRoleTimer = null;
       }
-    }, CONFIG.typeSpeedMs || 50);
+    }, CONFIG.typeSpeedMs || 42);
   }
 
   function replayRole() {
@@ -1937,6 +1958,7 @@
     hangingFrameInit = true;
 
     const triggerSwing = (e) => {
+      container.dataset.swinging = '1';
       container.style.transform = '';
       container.classList.remove('swinging');
       void container.offsetWidth; // trigger reflow
@@ -1944,10 +1966,15 @@
     };
 
     container.addEventListener('click', triggerSwing);
-    container.addEventListener('touchstart', triggerSwing, { passive: true });
+    container.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'touch') {
+        triggerSwing(e);
+      }
+    });
 
     container.addEventListener('animationend', () => {
       container.classList.remove('swinging');
+      delete container.dataset.swinging;
     });
 
     container.addEventListener('keydown', (e) => {
@@ -1963,7 +1990,7 @@
       let raf = null;
 
       const onMove = (e) => {
-        if (container.classList.contains('swinging')) return;
+        if (container.dataset.swinging === '1' || container.classList.contains('swinging')) return;
         if (raf) cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => {
           const rect = container.getBoundingClientRect();
