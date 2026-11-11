@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "meta": {
+    "title": "Mohamed Qurtam — Network & Security Engineer",
+    "description": "Securing networks. Engineering resilient infrastructure. Enterprise firewalls, network segmentation, SIEM monitoring, and incident response.",
+    "canonical": "https://urtamportfolio.vercel.app/",
+    "lang": "en",
+    "themeColor": "#0e1012"
+  },
+  "candidate": {
+    "name": "Mohamed Ahmed Qurtam",
+    "preferredName": "Mohamed Qurtam",
+    "headline": "Network & Security Engineer",
+    "tagline": "Securing networks. Engineering resilient infrastructure.",
+    "subheadline": "Network & Security Engineer with Tier 1 SOC Operations Competency",
+    "status": "DEFENSIVE SECURITY · RESILIENT INFRASTRUCTURE",
+    "bio": "Working at the intersection of network infrastructure and defensive security. Designing, deploying and securing enterprise infrastructure across the MENA region at Co-brand Solution.",
+    "location": "Cairo, Egypt",
+    "email": "mohamedqurtam99@gmail.com",
+    "phone": "+20 101 522 0163",
+    "cvPdf": "Mohamed_Qurtam-Security_Engineer-CV.pdf",
+    "social": {
+      "linkedin": "https://www.linkedin.com/in/mohamed-qurtam-128296215/",
+      "github": "https://github.com/Mohamed-Qurtam"
+    }
+  },
+  "stats": [
+    { "value": "12+", "label": "Enterprise Deployments" },
+    { "value": "99.98%", "label": "Core Uptime SLA" },
+    { "value": "30+", "label": "Security Credentials" },
+    { "value": "24/7", "label": "SOC Triage Competency" }
+  ],
+  "experience": [
+    {
+      "role": "Network & Security Engineer",
+      "company": "Co-brand Solution",
+      "period": "Sep 2026 – Present",
+      "location": "MENA Region",
+      "bullets": [
+        "Architect, configure, and maintain enterprise perimeter defense using Palo Alto Networks NGFW and Fortinet FortiGate appliances.",
+        "Implement micro-segmentation, zero-trust network access (ZTNA), and multi-vendor IPsec VPN tunnels across distributed branch sites.",
+        "Integrate centralized syslog and SIEM feeds for real-time security event telemetry, alert correlation, and incident triage."
+      ]
+    },
+    {
+      "role": "Network Infrastructure & Security Specialist",
+      "company": "Enterprise Infrastructure Projects",
+      "period": "2024 – 2026",
+      "location": "Egypt",
+      "bullets": [
+        "Configured Cisco Catalyst switching hierarchies (VLANs, VTP, STP/RSTP, EtherChannel) and dynamic routing (OSPF, EIGRP, BGP).",
+        "Engineered redundant gateway protocols (HSRP/VRRP) and deployed ACL policies enforcing least-privilege traffic flow.",
+        "Conducted vulnerability assessments, baseline security hardening, and disaster recovery backup workflows using Veeam Backup & Replication."
+      ]
+    }
+  ],
+  "education": {
+    "degree": "B.Sc. Communication & Electronics Engineering",
+    "institution": "Benha University · Faculty of Engineering at Shoubra",
+    "graduation": "June 2024",
+    "grade": "Excellent with Honors",
+    "description": "An engineering foundation in communication systems, electronics, network theory, and technical problem-solving.",
+    "certificateDriveUrl": "https://drive.google.com/file/d/1-AZlTNMwmeJ9LeW6W23xMRvUwEHdLBbf/view?usp=drive_link"
+  },
+  "skills": {
+    "infrastructure": ["Palo Alto NGFW", "Fortinet FortiGate", "Cisco Firepower", "Cisco Catalyst", "BGP", "OSPF", "VLANs / Trunking", "IPsec VPN"],
+    "operations": ["Splunk SIEM", "Kaspersky EDR", "Wireshark", "Syslog Analysis", "Incident Response", "Veeam DR", "Network Segmentation", "Linux / Bash"]
+  },
+  "projects": [
+    {
+      "id": "palo-alto-ngfw",
+      "title": "Enterprise Palo Alto NGFW & Multi-Zone Security Architecture",
+      "badge": "FEATURED ARCHITECTURE",
+      "summary": "Full design and implementation of a zero-trust multi-zone perimeter defense architecture leveraging Palo Alto NGFW.",
+      "tags": ["Palo Alto NGFW", "Security Zones", "App-ID", "SSL Decryption", "NAT / IPsec"],
+      "metrics": ["3 Segmented Security Zones", "100% Inbound Threat Inspection", "Sub-millisecond Policy Lookup"]
+    },
+    {
+      "id": "enterprise-datacenter-routing",
+      "title": "High-Availability Core Campus & Datacenter Routing Fabric",
+      "badge": "INFRASTRUCTURE PROJECT",
+      "summary": "Dual-homed campus core network design featuring redundant OSPF/BGP routing, HSRP failover, and LACP link aggregation.",
+      "tags": ["Cisco Catalyst", "OSPF / BGP", "HSRP Failover", "EtherChannel", "ACL Hardening"],
+      "metrics": ["Sub-second Failover", "Zero Single-Point-of-Failure", "99.98% Core Reliability"]
+    }
+  ],
+  "vendorBadges": [
+    { "name": "CyberHoc", "image": "Badges/CyberHoc.png", "category": "Vetted Freelancer" },
+    { "name": "Cybersecurity & DR", "image": "Badges/Cybersecurity.png", "category": "Veeam Specialist" },
+    { "name": "Kubernetes", "image": "Badges/Kubernetes.png", "category": "Veeam Kasten" },
+    { "name": "Public Cloud", "image": "Badges/Public_Cloud.png", "category": "Cloud Protection" },
+    { "name": "SaaS Protection", "image": "Badges/SaaS.png", "category": "M365 Backup" }
+  ]
+}
