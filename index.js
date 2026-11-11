@@ -170,9 +170,9 @@
 
     // Update CSS variables for dynamic elements
     const root = document.documentElement;
-    root.style.setProperty('--qt-bg', isLight ? '#f5f2ea' : '#0d0f12');
-    root.style.setProperty('--qt-fg', isLight ? '#202b3a' : '#e6edf3');
-    root.style.setProperty('--qt-accent', isLight ? '#0f7a56' : '#4dbb8a');
+    root.style.setProperty('--qt-bg', isLight ? '#f7f9fc' : '#0d0f12');
+    root.style.setProperty('--qt-fg', isLight ? '#1c2b3d' : '#e6edf3');
+    root.style.setProperty('--qt-accent', isLight ? '#0c7d55' : '#4dbb8a');
 
     document.querySelectorAll('.qt-theme').forEach((b) => {
       const btnLabel = isLight ? 'Switch to dark mode' : 'Switch to light mode';
@@ -184,7 +184,7 @@
     if (document.head) {
       let m = document.querySelector('meta[name="theme-color"]');
       if (!m) { m = document.createElement('meta'); m.name = 'theme-color'; document.head.appendChild(m); }
-      m.content = isLight ? '#f5f2ea' : '#0d0f12';
+      m.content = isLight ? '#f7f9fc' : '#0d0f12';
     }
   }
 
@@ -2401,4 +2401,163 @@
 
   window.qtIndex = { run, config: CONFIG, goTo, showToast, replayRole };
   if (document.head) start(); else document.addEventListener('DOMContentLoaded', start, { once: true });
+})();
+
+/* ==================================================================
+ * FANTASY LAYER v1: custom cursor + click sparkles
+ * - Custom cursor only on fine-pointer, hover-capable devices with
+ *   motion allowed (touch devices and reduced-motion users keep the
+ *   native cursor and see zero extra work).
+ * - Dot follows instantly; ring trails with easing and grows over
+ *   interactive elements, compresses on press.
+ * - Sparkle burst on every click (desktop, motion-allowed only).
+ * - CSP-safe: DOM primitives only, no innerHTML, no eval.
+ * ================================================================== */
+(function () {
+  'use strict';
+  if (window.__qtFantasy) return;
+  window.__qtFantasy = true;
+
+  var reduceMotion = false;
+  var finePointer = false;
+  try {
+    reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    finePointer = window.matchMedia('(pointer: fine)').matches &&
+                  window.matchMedia('(hover: hover)').matches;
+  } catch (e) { /* very old engines: keep native cursor */ }
+  if (!finePointer || reduceMotion) return;
+
+  function init() {
+    if (!document.body) return;
+    var root = document.documentElement;
+    root.classList.add('qt-cursor-active');
+
+    var dot = document.createElement('div');
+    dot.className = 'qt-cursor-dot qt-hidden';
+    dot.setAttribute('aria-hidden', 'true');
+    var ring = document.createElement('div');
+    ring.className = 'qt-cursor-ring qt-hidden';
+    ring.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+
+    var x = -100, y = -100, rx = -100, ry = -100, seen = false;
+    var INTERACTIVE = 'a, button, [role="button"], [onclick], summary, input[type="submit"], input[type="checkbox"], label, .knob, .cert-card-clean, .stat-card, .qt-theme, .timeline-item';
+
+    function applyDot() {
+      dot.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-50%,-50%)';
+    }
+
+    document.addEventListener('pointermove', function (e) {
+      x = e.clientX; y = e.clientY;
+      if (!seen) {
+        seen = true; rx = x; ry = y;
+        dot.classList.remove('qt-hidden');
+        ring.classList.remove('qt-hidden');
+        applyDot();
+      }
+      applyDot();
+    }, { passive: true });
+
+    // Ring trails behind the dot with easing
+    (function loop() {
+      rx += (x - rx) * 0.18;
+      ry += (y - ry) * 0.18;
+      ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    })();
+
+    document.addEventListener('pointerover', function (e) {
+      var t = e.target && e.target.closest ? e.target.closest(INTERACTIVE) : null;
+      ring.classList.toggle('qt-hover', !!t);
+      dot.classList.toggle('qt-hover', !!t);
+    }, { passive: true });
+
+    document.addEventListener('pointerdown', function (e) {
+      ring.classList.add('qt-press');
+      sparkle(e.clientX, e.clientY);
+    }, { passive: true });
+
+    window.addEventListener('pointerup', function () {
+      ring.classList.remove('qt-press');
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', function () {
+      dot.classList.add('qt-hidden');
+      ring.classList.add('qt-hidden');
+    });
+
+    document.addEventListener('mouseenter', function () {
+      if (seen) {
+        dot.classList.remove('qt-hidden');
+        ring.classList.remove('qt-hidden');
+      }
+    });
+
+    // --- Sparkle burst on click ---
+    var COLORS = ['#4dbb8a', '#8fe6bd', '#e8d27a', '#f0ede8'];
+    function sparkle(px, py) {
+      if (reduceMotion) return;
+      for (var i = 0; i < 12; i++) {
+        (function (i) {
+          var s = document.createElement('span');
+          s.className = 'qt-spark';
+          var c = COLORS[i % COLORS.length];
+          s.style.background = c;
+          s.style.boxShadow = '0 0 8px ' + c;
+          s.style.left = px + 'px';
+          s.style.top = py + 'px';
+          document.body.appendChild(s);
+          var angle = (Math.PI * 2 * i) / 12 + Math.random() * 0.5;
+          var dist = 26 + Math.random() * 40;
+          var dx = Math.cos(angle) * dist;
+          var dy = Math.sin(angle) * dist;
+          var anim = s.animate([
+            { transform: 'translate(-50%,-50%) rotate(0deg) scale(1)', opacity: 1 },
+            { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) rotate(180deg) scale(0.15)', opacity: 0 }
+          ], { duration: 560 + Math.random() * 280, easing: 'cubic-bezier(0.2, 0.7, 0.3, 1)' });
+          anim.onfinish = function () {
+            if (s.parentNode) s.parentNode.removeChild(s);
+          };
+        })(i);
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();
+
+/* ==================================================================
+ * FEATURED-SIX LAYER: collapse the credential wall to six flagship
+ * certificates; "Show all 30 credentials" reveals the rest and the
+ * category filter tabs. CSP-safe DOM primitives only.
+ * ================================================================== */
+(function () {
+  'use strict';
+  if (window.__qtFeatured) return;
+  window.__qtFeatured = true;
+
+  function init() {
+    var btn = document.getElementById('certsShowAllBtn');
+    if (!btn || btn.dataset.qtFeatInit) return;
+    btn.dataset.qtFeatInit = '1';
+    var label = btn.querySelector('.certs-showall-btn__label');
+    var count = btn.querySelector('.certs-showall-btn__count');
+    btn.addEventListener('click', function () {
+      var expanded = document.body.classList.toggle('certs-expanded');
+      btn.setAttribute('aria-expanded', String(expanded));
+      if (label) label.textContent = expanded ? 'Show featured six only' : 'Show all 30 credentials';
+      if (count) count.textContent = expanded ? '−24' : '+24';
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
 })();

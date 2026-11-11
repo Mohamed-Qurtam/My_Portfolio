@@ -4062,3 +4062,414 @@ html[data-theme="light"] .cert-popup-direct-btn--secondary {
     font-size: 9pt;
   }
 }
+
+/* ===================================================
+   FANTASY LAYER v1 — elegant motion + custom cursor
+   (appended last so it wins the cascade; everything is
+   disabled for touch devices and prefers-reduced-motion)
+   =================================================== */
+
+/* --- Section labels: elegant tick line before the text --- */
+.section-code-label::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  margin-right: 8px;
+  vertical-align: middle;
+  background: currentColor;
+  opacity: 0.65;
+}
+
+/* --- Current role highlight (Experience): gradient text, no bullet --- */
+.role-highlight {
+  background: linear-gradient(94deg, var(--accent) 20%, #7ee2b8 60%, var(--accent) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent); /* fallback when background-clip:text is unsupported */
+  text-shadow: 0 0 24px rgba(77, 187, 138, 0.25);
+  animation: role-shimmer 5.5s ease-in-out infinite;
+}
+
+@keyframes role-shimmer {
+  0%, 100% { background-position: 0% 0; }
+  50% { background-position: 100% 0; }
+}
+
+/* --- Stat cards: rotating emerald border halo on hover --- */
+@property --qt-spin {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--qt-spin),
+    transparent 0 62%, rgba(77, 187, 138, 0.85) 80%, rgba(232, 210, 122, 0.9) 88%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  animation: qt-spin 3.4s linear infinite;
+  pointer-events: none;
+}
+
+.stat-card:hover::after,
+.stat-card:focus-visible::after {
+  opacity: 1;
+}
+
+@keyframes qt-spin {
+  to { --qt-spin: 360deg; }
+}
+
+/* --- Custom fantasy cursor --------------------------------------
+   Activated only when JS adds html.qt-cursor-active (fine pointer,
+   hover-capable device, motion allowed). The dot follows the mouse
+   instantly; the ring trails with a lerp and orbits a dashed halo. */
+html.qt-cursor-active,
+html.qt-cursor-active * {
+  cursor: none !important;
+}
+
+html.qt-cursor-active input,
+html.qt-cursor-active textarea {
+  cursor: text !important;
+}
+
+.qt-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(77, 187, 138, 0.9), 0 0 22px rgba(77, 187, 138, 0.4);
+  pointer-events: none;
+  z-index: 2147483647;
+  will-change: transform;
+  transition: opacity 0.25s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.qt-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(77, 187, 138, 0.75);
+  pointer-events: none;
+  z-index: 2147483646;
+  opacity: 0.75;
+  will-change: transform, width, height;
+  transition: width 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    height 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.qt-cursor-ring::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1px dashed rgba(77, 187, 138, 0.4);
+  animation: qt-cursor-orbit 7s linear infinite;
+}
+
+@keyframes qt-cursor-orbit {
+  to { transform: rotate(360deg); }
+}
+
+.qt-cursor-ring.qt-hover {
+  width: 54px;
+  height: 54px;
+  background: rgba(77, 187, 138, 0.08);
+  border-color: rgba(77, 187, 138, 0.95);
+}
+
+.qt-cursor-dot.qt-hover {
+  width: 4px;
+  height: 4px;
+}
+
+.qt-cursor-ring.qt-press {
+  width: 26px;
+  height: 26px;
+  background: rgba(77, 187, 138, 0.16);
+}
+
+.qt-cursor-dot.qt-hidden,
+.qt-cursor-ring.qt-hidden {
+  opacity: 0;
+}
+
+/* --- Click sparkles (fantasy burst) --- */
+.qt-spark {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 2147483645;
+  will-change: transform, opacity;
+}
+
+/* --- Motion safety: switch everything in this layer off --- */
+@media (prefers-reduced-motion: reduce) {
+  .role-highlight { animation: none; }
+  .stat-card::after { display: none; }
+  .qt-cursor-ring::before { animation: none; }
+  .qt-spark { display: none; }
+}
+
+/* The cursor module itself checks pointer type + reduced motion in JS,
+   so html.qt-cursor-active is never added where it should not be. */
+
+/* ===================================================
+   POLISH LAYER v2 — brighter light mode + gradient seams
+   =================================================== */
+
+/* ---------- Light mode: brighter, cleaner, more color ---------- */
+html[data-theme="light"],
+[data-theme="light"] {
+  --bg-primary: #f7f9fc;           /* bright airy paper (was warm #f5f2ea) */
+  --bg-secondary: #ffffff;         /* pure white cards */
+  --bg-tertiary: #edf1f7;
+  --bg-elevated: #ffffff;
+  --text-primary: #1c2b3d;
+  --text-secondary: #44546a;
+  --text-tertiary: #5a6b7f;        /* 5.18:1 on bg — AA holds */
+  --accent: #0c7d55;               /* brighter emerald, 4.88:1 — AA holds */
+  --accent-dim: #0b5e42;
+  --accent-glow: rgba(12, 125, 85, 0.14);
+  --border-primary: #d7dfe9;
+  --border-subtle: #e7ecf3;
+  --border-accent: rgba(12, 125, 85, 0.4);
+  --shadow-soft: 0 0.25rem 1.75rem -0.5rem rgba(28, 43, 61, 0.14);
+}
+
+/* softer, brighter navbar */
+html[data-theme="light"] .nav {
+  background: rgba(247, 250, 252, 0.88) !important;
+}
+
+/* colorful atmosphere behind the hero */
+html[data-theme="light"] .hero {
+  background:
+    radial-gradient(58% 52% at 78% 28%, rgba(12, 125, 85, 0.10), transparent 62%),
+    radial-gradient(46% 42% at 15% 72%, rgba(56, 132, 255, 0.08), transparent 62%),
+    radial-gradient(40% 36% at 50% 90%, rgba(232, 210, 122, 0.10), transparent 65%);
+}
+
+html[data-theme="light"] .hero__cyber-canvas {
+  opacity: 0.42;
+}
+
+/* cards: white with a colored top hairline */
+html[data-theme="light"] .stat-card,
+html[data-theme="light"] .card {
+  position: relative;
+}
+
+html[data-theme="light"] .stat-card::before,
+html[data-theme="light"] .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(12, 125, 85, 0.55), rgba(56, 132, 255, 0.35), transparent);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* section label chips get a soft emerald tint */
+html[data-theme="light"] .section-code-label {
+  background: linear-gradient(120deg, rgba(12, 125, 85, 0.10), rgba(56, 132, 255, 0.07));
+  border-color: rgba(12, 125, 85, 0.28);
+}
+
+/* tools strip: tinted, lighter */
+html[data-theme="light"] .tech-ticker {
+  background: linear-gradient(180deg, rgba(12, 125, 85, 0.05), rgba(255, 255, 255, 0.02) 60%, transparent);
+  border-color: transparent;
+}
+
+/* ---------- Dark mode: gradient seams instead of sharp edges ---------- */
+
+/* nav bottom border melts from transparent at both ends */
+.nav {
+  border-bottom: 1px solid var(--border-subtle);
+  border-image: linear-gradient(90deg,
+    transparent 0%,
+    var(--border-primary) 22%,
+    var(--border-primary) 78%,
+    transparent 100%) 1;
+}
+
+/* hero bottom fades into the next section */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20%;
+  background: linear-gradient(180deg, transparent 0%, var(--bg-primary) 88%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+/* tools strip: hairline softens, edges blend vertically */
+.tech-ticker {
+  border-color: color-mix(in srgb, var(--border-subtle) 45%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
+    linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
+            linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+          mask-composite: intersect;
+}
+
+/* role highlight + label ticks stay vivid in light mode */
+html[data-theme="light"] .role-highlight {
+  background: linear-gradient(94deg, var(--accent) 20%, #0fa06e 55%, var(--accent) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ===================================================
+   FEATURED-SIX LAYER — flagship credentials first
+   =================================================== */
+
+/* Collapsed by default: only the six featured cards show */
+body:not(.certs-expanded) .cert-card-clean:not([data-featured]) {
+  display: none;
+}
+
+/* Filter tabs are only meaningful once the full wall is open */
+body:not(.certs-expanded) .certs-filter-tabs {
+  display: none !important;  /* the base rule sets flex !important */
+}
+
+/* Featured cards lead the grid */
+.cert-card-clean[data-featured] {
+  order: -1;
+  position: relative;
+  border-color: var(--border-accent);
+  background: linear-gradient(160deg,
+    color-mix(in srgb, var(--accent) 8%, var(--bg-secondary)) 0%,
+    var(--bg-secondary) 55%);
+  box-shadow: 0 0 0 1px rgba(63, 184, 131, 0.08),
+    0 14px 34px -20px rgba(63, 184, 131, 0.55);
+}
+
+.cert-card-clean[data-featured]:hover,
+.cert-card-clean[data-featured]:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 0 0 1px rgba(63, 184, 131, 0.14),
+    0 18px 40px -18px rgba(63, 184, 131, 0.65);
+}
+
+/* "FEATURED" corner chip (bottom-right, clear of the header icons) */
+.cert-card-clean[data-featured]::after {
+  content: '★ FEATURED';
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid var(--border-accent);
+  border-radius: 999px;
+  padding: 3px 9px;
+  pointer-events: none;
+}
+
+/* Show-all toggle */
+.certs-showall {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-lg);
+}
+
+.certs-showall-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 999px;
+  padding: 12px 26px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.certs-showall-btn:hover,
+.certs-showall-btn:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--border-accent),
+    0 10px 26px -14px rgba(63, 184, 131, 0.6);
+  transform: translateY(-2px);
+}
+
+.certs-showall-btn__count {
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid var(--border-accent);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-card-clean[data-featured]:hover {
+    transform: none;
+  }
+  .certs-showall-btn:hover {
+    transform: none;
+  }
+}
+
+/* Tighten the vertical gap while the wall is collapsed */
+body:not(.certs-expanded) #certifications .section-subheading {
+  margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.certs-showall {
+  margin-top: 14px;
+}
