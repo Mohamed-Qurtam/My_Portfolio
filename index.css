@@ -2233,7 +2233,9 @@ a.education-card--link:hover .education-card__ext,
   margin-block: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.knob {
+.knob,
+button.knob,
+#phoneRevealBtn {
   --size: clamp(76px, 11vw, 104px);
   display: grid;
   justify-items: center;
@@ -2245,6 +2247,14 @@ a.education-card--link:hover .education-card__ext,
   text-transform: uppercase;
   -webkit-tap-highlight-color: transparent;
   transition: color 0.3s ease;
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .knob__label {
@@ -2644,15 +2654,16 @@ html[data-theme="light"] .contact {
     gap: clamp(1rem, 3vw, 1.5rem);
   }
 
-  .hero__content {
-    order: 0;
-  }
-
   .hero__photo-col {
-    order: 1;
+    order: -1;
     display: flex;
     justify-content: center;
     width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero__content {
+    order: 1;
   }
 
   .hanging-frame-container {
