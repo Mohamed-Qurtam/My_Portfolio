@@ -933,6 +933,10 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
   width: 100%;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  isolation: isolate;
+  contain: paint;
 }
 
 .tech-ticker__track {
@@ -940,18 +944,27 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   width: max-content !important;
+  flex-shrink: 0 !important;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   will-change: transform;
-  animation: tech-ticker-loop 34s linear infinite;
+  -webkit-animation: tech-ticker-loop 34s linear infinite !important;
+  animation: tech-ticker-loop 34s linear infinite !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .tech-ticker:hover .tech-ticker__track,
   .tech-ticker:focus-within .tech-ticker__track {
     animation-play-state: paused;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .tech-ticker__track {
+    -webkit-animation-play-state: running !important;
+    animation-play-state: running !important;
   }
 }
 
@@ -962,9 +975,7 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
   align-items: center;
   gap: 1.25rem;
   padding-right: 1.25rem;
-  flex-shrink: 0;
-  min-width: 100%;
-  justify-content: space-around;
+  flex-shrink: 0 !important;
 }
 
 @-webkit-keyframes tech-ticker-loop {
@@ -2237,8 +2248,9 @@ a.education-card--link:hover .education-card__ext,
 button.knob,
 #phoneRevealBtn {
   --size: clamp(76px, 11vw, 104px);
-  display: grid;
-  justify-items: center;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   gap: 0.95rem;
   text-decoration: none;
   color: var(--text-secondary);
@@ -2247,24 +2259,26 @@ button.knob,
   text-transform: uppercase;
   -webkit-tap-highlight-color: transparent;
   transition: color 0.3s ease;
-  background: transparent;
-  background-color: transparent;
-  border: none;
-  padding: 0;
-  box-shadow: none;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
+  min-height: 44px;
+  min-width: 44px;
 }
 
 .knob__label {
-  order: 1;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   color: var(--text-secondary);
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 
 .knob__dial {
@@ -2768,7 +2782,9 @@ html[data-theme="light"] .contact {
     margin-block: 1rem !important;
   }
 
-  .knob {
+  .knob,
+  button.knob,
+  #phoneRevealBtn {
     --size: clamp(52px, 18vw, 68px) !important;
     gap: 0.4rem !important;
   }
@@ -2946,6 +2962,10 @@ html[data-theme="light"] .chip {
   border: 1px solid var(--border-subtle);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  isolation: isolate;
+  contain: paint;
 }
 
 .vendor-badges-track {
@@ -2953,18 +2973,27 @@ html[data-theme="light"] .chip {
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   width: max-content !important;
+  flex-shrink: 0 !important;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   will-change: transform;
-  animation: vendor-marquee-loop 28s linear infinite;
+  -webkit-animation: vendor-marquee-loop 28s linear infinite !important;
+  animation: vendor-marquee-loop 28s linear infinite !important;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .vendor-badges-marquee:hover .vendor-badges-track,
   .vendor-badges-marquee:focus-within .vendor-badges-track {
     animation-play-state: paused;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .vendor-badges-track {
+    -webkit-animation-play-state: running !important;
+    animation-play-state: running !important;
   }
 }
 
@@ -2975,7 +3004,7 @@ html[data-theme="light"] .chip {
   align-items: center;
   gap: 2.25rem;
   padding-right: 2.25rem;
-  flex-shrink: 0;
+  flex-shrink: 0 !important;
 }
 
 .vendor-badge-item {
@@ -3054,8 +3083,20 @@ html[data-theme="light"] .vendor-badge-img {
 
 /* Vendor badges: mobile responsiveness — smaller items, tighter gaps */
 @media (max-width: 768px) {
+  .tech-ticker__track {
+    -webkit-animation: tech-ticker-loop 34s linear infinite !important;
+    animation: tech-ticker-loop 34s linear infinite !important;
+    -webkit-animation-play-state: running !important;
+    animation-play-state: running !important;
+  }
   .vendor-badges-marquee {
     padding: 1rem 0;
+  }
+  .vendor-badges-track {
+    -webkit-animation: vendor-marquee-loop 28s linear infinite !important;
+    animation: vendor-marquee-loop 28s linear infinite !important;
+    -webkit-animation-play-state: running !important;
+    animation-play-state: running !important;
   }
   .vendor-badges-group {
     gap: 1.25rem;
