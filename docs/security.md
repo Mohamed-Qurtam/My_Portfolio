@@ -93,3 +93,4 @@ Run your live Vercel URL against industry benchmark scanners:
    - Verify that all fonts load with `200` or `304` directly from `/fonts/*.woff2`.
 3. Inspect the **Console** tab:
    - Verify there are **0 CSP violation warnings** or blocked resources.
+

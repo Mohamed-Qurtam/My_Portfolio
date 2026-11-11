@@ -70,7 +70,7 @@ html[data-theme="light"],
   --bg-elevated: #ffffff;
   --text-primary: #202b3a;         /* soft navy, not harsh black */
   --text-secondary: #4a5568;       /* readable slate grey, > 5:1 contrast */
-  --text-tertiary: #718096;
+  --text-tertiary: #596775;        /* 5.18:1 contrast, WCAG AA compliant */
   --accent: #0f7a56;               /* deeper emerald: readable & WCAG AA on light */
   --accent-dim: #0b5e42;
   --accent-glow: rgba(15, 122, 86, 0.12);
@@ -137,9 +137,11 @@ a:hover {
 }
 
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+[tabindex="0"]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 
 .container {
@@ -1054,7 +1056,7 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
   font-size: 1.05rem;
   color: var(--text-secondary);
   line-height: 1.8;
-  max-width: 76ch;
+  max-width: 68ch;
   margin-bottom: var(--space-3xl);
 }
 
