@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Internal developer notes & prompt records
+_internal/
+Edit.md
+edit.js
+MyPhoto.jpeg
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+.vscode/
+.idea/
+
+# Environment & secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Archives & Temporary directories
+*.zip
+*.tar.gz
+scratch/
+.system_generated/
