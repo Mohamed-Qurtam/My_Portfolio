@@ -1,0 +1,8 @@
+# RFC 9116 Security Contact Information
+Contact: mailto:mohamedqurtam99@gmail.com
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en, ar
+Canonical: https://urtamportfolio.vercel.app/.well-known/security.txt
+Policy: https://urtamportfolio.vercel.app/
+Acknowledgments: https://urtamportfolio.vercel.app/
+

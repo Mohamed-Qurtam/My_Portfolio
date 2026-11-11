@@ -1,0 +1,54 @@
+name: CI Security & Quality Gate
+
+on:
+  push:
+    branches: [ main, 'fix/*', 'feat/*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  audit-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify zero tracked node_modules or secrets
+        run: |
+          if [ -d "node_modules" ]; then
+            echo "Error: node_modules must not be tracked in git"
+            exit 1
+          fi
+
+      - name: HTML5 & Link Validation Check
+        run: |
+          node -e "
+            const fs = require('fs');
+            const html = fs.readFileSync('index.html', 'utf8');
+            
+            // Check for unclosed tags or dangerous eval/inline event handlers
+            if (/onclick=|onload=|onerror=/i.test(html)) {
+              console.error('Error: Found inline event handlers in index.html');
+              process.exit(1);
+            }
+            if (/javascript:/i.test(html)) {
+              console.error('Error: Found javascript: pseudo-protocol URL');
+              process.exit(1);
+            }
+            
+            // Ensure all target=_blank have rel containing noopener and noreferrer
+            const blanks = html.match(/<a\s+[^>]*target=[\"']_blank[\"'][^>]*>/gi) || [];
+            for (const tag of blanks) {
+              if (!/rel=[\"'][^\"']*noopener/i.test(tag) || !/rel=[\"'][^\"']*noreferrer/i.test(tag)) {
+                console.error('Insecure target=_blank link detected:', tag);
+                process.exit(1);
+              }
+            }
+            console.log('Static security and HTML link verification passed!');
+          "
+

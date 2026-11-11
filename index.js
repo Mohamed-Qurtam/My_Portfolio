@@ -223,7 +223,26 @@
       (e) => /(hands-on experience|Adaptive Network Security)/i.test(e.textContent)
     );
     if (h && norm(h.textContent) !== CONFIG.aboutHeading) h.textContent = CONFIG.aboutHeading;
-    if (p && !p.querySelector('strong')) p.innerHTML = CONFIG.aboutHTML;
+    if (p && !p.querySelector('strong')) {
+      // Build about text using safe DOM APIs (SEC-03: no innerHTML)
+      p.textContent = '';
+      const parts = [
+        { text: 'Adaptive ' },
+        { text: 'Network Security Engineer', bold: true },
+        { text: ' and ' },
+        { text: 'Tier 1 SOC Analyst', bold: true },
+        { text: ', Communication & Electronics Engineering graduate (Excellent with Honors) with hands-on expertise in router/switch configuration, firewall administration, and real-time SIEM monitoring. Skilled in combining network topology insights with security operations to analyze log data, perform initial triage, and accelerate incident response. Proven track record in designing resilient architectures, minimizing attack surfaces, and executing proactive threat detection strategies to defend enterprise environments.' }
+      ];
+      parts.forEach(part => {
+        if (part.bold) {
+          const strong = document.createElement('strong');
+          strong.textContent = part.text;
+          p.appendChild(strong);
+        } else {
+          p.appendChild(document.createTextNode(part.text));
+        }
+      });
+    }
     if (h && p) S.about = true;
   }
 
@@ -602,7 +621,9 @@
     b.setAttribute('aria-controls', 'qt-menu');
     b.setAttribute('aria-expanded', 'false');
     b.setAttribute('aria-label', 'Open menu');
-    b.innerHTML = '<span></span><span></span><span></span>';
+    b.appendChild(document.createElement('span'));
+    b.appendChild(document.createElement('span'));
+    b.appendChild(document.createElement('span'));
     b.addEventListener('click', () => setMenu(!S.menuEl.classList.contains('qt-open')));
     S.tools.insertBefore(b, S.tools.firstChild);   // burger sits left of the theme button
     S.burger = b;
@@ -703,7 +724,8 @@
       const a = document.createElement('div');
       a.className = 'qt-aurora';
       a.setAttribute('aria-hidden', 'true');
-      a.innerHTML = '<i></i><i></i>';
+      a.appendChild(document.createElement('i'));
+      a.appendChild(document.createElement('i'));
       hero.insertBefore(a, hero.firstChild);
       startNetwork(a, hero);
     }
@@ -1150,15 +1172,23 @@
     const hud = document.createElement('div');
     hud.id = 'topology-telemetry';
     hud.className = 'topology-telemetry';
-    hud.innerHTML = `
-      <div class="telemetry-header">
-        <span class="telemetry-dot" aria-hidden="true"></span>
-        <span id="telemetry-title">PALO ALTO NGFW TELEMETRY CONSOLE // STANDBY</span>
-      </div>
-      <div class="telemetry-body" id="telemetry-desc">
-        Select or hover any network zone or security policy in the topology above to inspect verified architectural parameters.
-      </div>
-    `;
+    // Build telemetry HUD using safe DOM APIs (SEC-03: no innerHTML)
+    const telHeader = document.createElement('div');
+    telHeader.className = 'telemetry-header';
+    const telDot = document.createElement('span');
+    telDot.className = 'telemetry-dot';
+    telDot.setAttribute('aria-hidden', 'true');
+    const telTitle = document.createElement('span');
+    telTitle.id = 'telemetry-title';
+    telTitle.textContent = 'PALO ALTO NGFW TELEMETRY CONSOLE // STANDBY';
+    telHeader.appendChild(telDot);
+    telHeader.appendChild(telTitle);
+    const telBody = document.createElement('div');
+    telBody.className = 'telemetry-body';
+    telBody.id = 'telemetry-desc';
+    telBody.textContent = 'Select or hover any network zone or security policy in the topology above to inspect verified architectural parameters.';
+    hud.appendChild(telHeader);
+    hud.appendChild(telBody);
     diagram.appendChild(hud);
 
     const titleEl = document.getElementById('telemetry-title');
@@ -1577,11 +1607,25 @@
     const actionsWrap = document.createElement('div');
     actionsWrap.className = 'cert-popup-actions';
 
+    // If external link exists, provide an explicit "Open in New Tab" action
+    if (opts.links && opts.links.length) {
+      const extBtn = document.createElement('a');
+      extBtn.className = 'cert-popup-ext-link';
+      extBtn.target = '_blank';
+      extBtn.rel = 'noopener noreferrer';
+      extBtn.setAttribute('aria-label', 'Open document in new tab');
+      extBtn.textContent = 'Open ↗';
+      extBtn.href = opts.links[0].url;
+      actionsWrap.appendChild(extBtn);
+      // update link when tab changes
+      dialog.__updateExtLink = (url) => { extBtn.href = url; };
+    }
+
     const closeBtn = document.createElement('button');
     closeBtn.type = 'button';
     closeBtn.className = 'cert-popup-close';
     closeBtn.setAttribute('aria-label', 'Close credential popup');
-    closeBtn.innerHTML = '&times;';
+    closeBtn.textContent = '\u00d7';
 
     actionsWrap.appendChild(closeBtn);
     header.appendChild(infoWrap);
@@ -1616,6 +1660,7 @@
           tabBtn.onclick = () => {
             tabsWrap.querySelectorAll('.cert-popup-tab').forEach((b) => b.classList.remove('active'));
             tabBtn.classList.add('active');
+            if (dialog.__updateExtLink) dialog.__updateExtLink(l.url);
             renderViewer(idx);
           };
           tabsWrap.appendChild(tabBtn);
@@ -1627,22 +1672,94 @@
       viewerWrap.className = 'cert-popup-viewer-wrap';
 
       function renderViewer(idx) {
-        viewerWrap.innerHTML = '';
+        viewerWrap.textContent = '';
         const currentLink = opts.links[idx];
+        const isMindtickle = currentLink.url && currentLink.url.includes('mindtickle.com');
         const fileId = extractDriveFileId(currentLink.url);
 
-        // Pic 1: Render all documents (Google Drive & Mindtickle verification) directly in popup iframe
-        const previewUrl = fileId
-          ? `https://drive.google.com/file/d/${fileId}/preview`
-          : currentLink.url;
+        if (isMindtickle) {
+          // Mindtickle denies iframe embedding via X-Frame-Options / CSP.
+          // Render a verified digital credential card with direct verification action.
+          const card = document.createElement('div');
+          card.className = 'cert-popup-direct-card';
 
-        const iframe = document.createElement('iframe');
-        iframe.src = previewUrl;
-        iframe.className = 'cert-popup-iframe';
-        iframe.setAttribute('title', currentLink.label || opts.title);
-        iframe.setAttribute('allow', 'autoplay');
-        iframe.setAttribute('loading', 'lazy');
-        viewerWrap.appendChild(iframe);
+          const badge = document.createElement('div');
+          badge.className = 'cert-popup-direct-badge';
+          const dot = document.createElement('span');
+          dot.textContent = '● ';
+          dot.style.color = 'var(--accent, #4dbb8a)';
+          badge.appendChild(dot);
+          badge.appendChild(document.createTextNode('Cisco Black Belt Academy · Verified'));
+
+          const svgNS = 'http://www.w3.org/2000/svg';
+          const svg = document.createElementNS(svgNS, 'svg');
+          svg.setAttribute('viewBox', '0 0 24 24');
+          svg.setAttribute('class', 'cert-popup-direct-icon');
+          svg.setAttribute('fill', 'none');
+          svg.setAttribute('stroke', 'currentColor');
+          svg.setAttribute('stroke-width', '1.75');
+          svg.setAttribute('stroke-linecap', 'round');
+          svg.setAttribute('stroke-linejoin', 'round');
+          const path1 = document.createElementNS(svgNS, 'path');
+          path1.setAttribute('d', 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z');
+          const path2 = document.createElementNS(svgNS, 'path');
+          path2.setAttribute('d', 'M9 12l2 2 4-4');
+          svg.appendChild(path1);
+          svg.appendChild(path2);
+
+          const title = document.createElement('h4');
+          title.className = 'cert-popup-direct-title';
+          title.textContent = currentLink.label || opts.title;
+
+          const desc = document.createElement('p');
+          desc.className = 'cert-popup-direct-desc';
+          desc.textContent = 'This credential is authenticated through Cisco Systems Mindtickle verification service. Cisco restricts iframe embedding for security; click below to verify the official record live.';
+
+          const actions = document.createElement('div');
+          actions.className = 'cert-popup-direct-actions';
+
+          const verifyBtn = document.createElement('a');
+          verifyBtn.className = 'cert-popup-direct-btn cert-popup-direct-btn--primary';
+          verifyBtn.href = currentLink.url;
+          verifyBtn.target = '_blank';
+          verifyBtn.rel = 'noopener noreferrer';
+          verifyBtn.textContent = 'Verify Official Credential ↗';
+
+          const copyBtn = document.createElement('button');
+          copyBtn.type = 'button';
+          copyBtn.className = 'cert-popup-direct-btn cert-popup-direct-btn--secondary';
+          copyBtn.textContent = 'Copy Verification Link';
+          copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(currentLink.url).then(() => {
+              showToast('Verification URL copied to clipboard!');
+            }).catch(() => {
+              showToast('Link: ' + currentLink.url);
+            });
+          });
+
+          actions.appendChild(verifyBtn);
+          actions.appendChild(copyBtn);
+
+          card.appendChild(badge);
+          card.appendChild(svg);
+          card.appendChild(title);
+          card.appendChild(desc);
+          card.appendChild(actions);
+
+          viewerWrap.appendChild(card);
+        } else {
+          const previewUrl = fileId
+            ? `https://drive.google.com/file/d/${fileId}/preview`
+            : currentLink.url;
+
+          const iframe = document.createElement('iframe');
+          iframe.src = previewUrl;
+          iframe.className = 'cert-popup-iframe';
+          iframe.setAttribute('title', currentLink.label || opts.title);
+          iframe.setAttribute('allow', 'autoplay');
+          iframe.setAttribute('loading', 'lazy');
+          viewerWrap.appendChild(iframe);
+        }
       }
 
       renderViewer(0);
@@ -1680,7 +1797,12 @@
       toast.className = 'qt-toast';
       document.body.appendChild(toast);
     }
-    toast.innerHTML = `<span style="color:var(--qt-accent,#3fb883);">🛡️</span> ${message}`;
+    toast.textContent = '';
+    const icon = document.createElement('span');
+    icon.style.cssText = 'color:var(--qt-accent,#3fb883)';
+    icon.textContent = '🛡️';
+    toast.appendChild(icon);
+    toast.appendChild(document.createTextNode(' ' + message));
     toast.classList.add('visible');
     clearTimeout(toast.__timer);
     toast.__timer = setTimeout(() => toast.classList.remove('visible'), 2600);
@@ -1950,6 +2072,41 @@
     });
   }
 
+  let phoneRevealInit = false;
+  function setupPhoneReveal() {
+    if (phoneRevealInit) return;
+    const btn = document.getElementById('phoneRevealBtn');
+    if (!btn) return;
+    phoneRevealInit = true;
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const a = btn.dataset.phA || '';
+      const b = btn.dataset.phB || '';
+      const phone = (a + b).trim();
+      const cleanPhone = phone.replace(/\s+/g, '');
+
+      const label = btn.querySelector('.knob__label');
+      if (label) label.textContent = phone;
+      btn.setAttribute('aria-label', 'Phone: ' + phone);
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(phone).then(() => {
+          showToast('Phone copied: ' + phone);
+        }).catch(() => {
+          showToast('Phone: ' + phone);
+        });
+      } else {
+        showToast('Phone: ' + phone);
+      }
+
+      // Next click opens dialer directly
+      btn.onclick = () => {
+        window.location.href = 'tel:' + cleanPhone;
+      };
+    });
+  }
+
   let hangingFrameInit = false;
   function setupHangingFrameCard() {
     if (hangingFrameInit) return;
@@ -2108,13 +2265,27 @@
     btn.setAttribute('type', 'button');
     btn.setAttribute('aria-label', 'Back to top');
     btn.title = 'Back to top';
-    btn.innerHTML = `
-      <svg viewBox="0 0 44 44" class="qt-progress-circle" aria-hidden="true">
-        <circle cx="22" cy="22" r="18" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
-        <circle id="qt-scroll-progress" cx="22" cy="22" r="18" fill="none" stroke="var(--qt-accent, #3fb883)" stroke-width="3" stroke-dasharray="113.1" stroke-dashoffset="113.1"/>
-      </svg>
-      <span class="qt-top-arrow" aria-hidden="true">↑</span>
-    `;
+    // Build back-to-top button using safe DOM APIs (SEC-03: no innerHTML)
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 44 44');
+    svg.setAttribute('class', 'qt-progress-circle');
+    svg.setAttribute('aria-hidden', 'true');
+    const bgCircle = document.createElementNS(svgNS, 'circle');
+    bgCircle.setAttribute('cx', '22'); bgCircle.setAttribute('cy', '22'); bgCircle.setAttribute('r', '18');
+    bgCircle.setAttribute('fill', 'none'); bgCircle.setAttribute('stroke', 'rgba(255,255,255,0.08)'); bgCircle.setAttribute('stroke-width', '3');
+    const fgCircle = document.createElementNS(svgNS, 'circle');
+    fgCircle.id = 'qt-scroll-progress';
+    fgCircle.setAttribute('cx', '22'); fgCircle.setAttribute('cy', '22'); fgCircle.setAttribute('r', '18');
+    fgCircle.setAttribute('fill', 'none'); fgCircle.setAttribute('stroke', 'var(--qt-accent, #3fb883)'); fgCircle.setAttribute('stroke-width', '3');
+    fgCircle.setAttribute('stroke-dasharray', '113.1'); fgCircle.setAttribute('stroke-dashoffset', '113.1');
+    svg.appendChild(bgCircle); svg.appendChild(fgCircle);
+    btn.appendChild(svg);
+    const arrow = document.createElement('span');
+    arrow.className = 'qt-top-arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = '\u2191';
+    btn.appendChild(arrow);
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       smoothTo(0);
@@ -2173,6 +2344,7 @@
     safe(setupHeroTelemetryTicker);
     safe(setupCardSpotlightGlow);
     safe(setupHangingFrameCard);
+    safe(setupPhoneReveal);
     safe(setupMobileNav);
     safe(updateVars);
     safe(updateSpy);
