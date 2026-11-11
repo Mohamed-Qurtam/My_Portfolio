@@ -76,3 +76,4 @@ All assets, fonts, icons, and scripts are 100% self-hosted, generating **zero th
   - `Person` schema with `name`, `jobTitle`, `worksFor` (Co-brand Solution), `alumniOf` (Benha University), `knowsAbout`, and `sameAs` (LinkedIn and GitHub).
 - [x] **Crawler Directives:** `robots.txt` / meta `robots: index, follow` enabled for production pages; `noindex` applied to `404.html`.
 - [x] **Zero Tracking Leaks:** Zero analytics pixels, zero external cookies, zero third-party font calls.
+

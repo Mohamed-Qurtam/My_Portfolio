@@ -42,3 +42,4 @@ All notable improvements, security hardening measures, architectural decouplings
 - [`docs/security.md`](file:///m:/Personal/Portfolio/docs/security.md): Threat model and verification instructions.
 - [`docs/design-system.md`](file:///m:/Personal/Portfolio/docs/design-system.md): Tokens table, contrast matrix, and component state specifications.
 - [`docs/audit-results.md`](file:///m:/Personal/Portfolio/docs/audit-results.md): Lighthouse 95+ projections and performance budget verification (504.9 KB raw payload).
+

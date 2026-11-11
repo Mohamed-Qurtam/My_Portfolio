@@ -42,3 +42,4 @@ console.log(`✓ Validated ${siteData.vendorBadges.length} vendor badges`);
 
 fs.writeFileSync(indexPath, indexHtml, 'utf8');
 console.log('✨ [build.js] Static build verification passed successfully.');
+

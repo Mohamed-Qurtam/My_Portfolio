@@ -130,3 +130,4 @@ All color tokens were mathematically verified using the W3C Relative Luminance F
 3. **Prefers-Reduced-Motion:**
    - Under `@media (prefers-reduced-motion: reduce)`, all animations (`tech-ticker-loop`, `vendor-marquee-loop`, `frame-swing`, ambient canvas) are stopped immediately.
    - Transitions drop to `0s` and tickers switch to accessible horizontal scrollbars.
+
