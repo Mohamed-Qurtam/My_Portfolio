@@ -4770,3 +4770,229 @@ body:not(.certs-expanded) #certifications .section-subheading {
 .cert-legend strong {
   color: var(--text-secondary);
 }
+
+
+/* ===================================================
+   MMKLAD-STYLE HERO — full-bleed portrait, T-mount,
+   watermark, ambient glows, float & sway motions
+   =================================================== */
+
+/* --- Portrait fills the card like a standing cutout --- */
+.frame-card__photo-stage {
+  margin: 0 -1.25rem;
+  border-radius: 0;
+  aspect-ratio: 4 / 5.4;
+  background: radial-gradient(circle at 50% 28%, rgba(77, 187, 138, 0.16), transparent 72%);
+}
+
+.frame-card__photo {
+  border-radius: 0;
+  object-position: center 18%;
+}
+
+.frame-card__spotlight {
+  inset: 5% -12%;
+  border-color: rgba(77, 187, 138, 0.2);
+}
+
+/* --- Glass card --- */
+.hanging-frame-card {
+  background: linear-gradient(165deg, rgba(28, 33, 38, 0.78), rgba(18, 22, 26, 0.86));
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+html[data-theme="light"] .hanging-frame-card {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.82), rgba(250, 248, 243, 0.9));
+}
+
+/* --- Reference-style T-mount, cord and clip --- */
+.hanging-mount {
+  width: 64px;
+  height: 8px;
+  background: linear-gradient(180deg, var(--border-primary), var(--border-accent));
+  border-radius: 4px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+.hanging-mount::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.85;
+}
+
+.hanging-cord {
+  width: 2px;
+  height: 30px;
+  position: relative;
+}
+
+.hanging-cord::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 7px;
+  border: 2px solid var(--accent);
+  border-bottom: none;
+  border-radius: 7px 7px 0 0;
+  opacity: 0.9;
+}
+
+/* --- Gentle float + sway (container origin is top-center) --- */
+.hanging-frame-container {
+  animation: qt-hero-bob 7s ease-in-out infinite;
+}
+
+@keyframes qt-hero-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(0.7deg); }
+}
+
+/* --- Giant watermark behind the hero --- */
+.hero-watermark {
+  position: absolute;
+  top: 50%;
+  right: 6%;
+  transform: translateY(-50%);
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+  animation: qt-watermark-drift 14s ease-in-out infinite alternate;
+  max-width: 44vw;
+}
+
+.hero-watermark__name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 6.5vw, 5.8rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(240, 237, 232, 0.055);
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .hero-watermark__name {
+  color: rgba(28, 43, 61, 0.06);
+}
+
+.hero-watermark__role {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.2vw, 1rem);
+  letter-spacing: 0.42em;
+  color: rgba(77, 187, 138, 0.2);
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .hero-watermark__role {
+  color: rgba(12, 125, 85, 0.22);
+}
+
+.hero-watermark__line {
+  width: min(320px, 30vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(77, 187, 138, 0.4), transparent);
+  background-size: 200% 100%;
+  animation: qt-watermark-shimmer 5s ease-in-out infinite;
+}
+
+.hero-watermark__caption {
+  font-family: var(--font-mono);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: rgba(146, 157, 169, 0.4);
+}
+
+html[data-theme="light"] .hero-watermark__caption {
+  color: rgba(90, 107, 127, 0.5);
+}
+
+[dir="rtl"] .hero-watermark__role {
+  letter-spacing: 0;
+  word-spacing: 0.35em;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.6rem);
+}
+
+[dir="rtl"] .hero-watermark {
+  right: auto;
+  left: 6%;
+}
+
+@keyframes qt-watermark-drift {
+  from { transform: translateY(-50%) translateX(-8px); }
+  to { transform: translateY(-50%) translateX(8px); }
+}
+
+@keyframes qt-watermark-shimmer {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
+}
+
+/* --- Ambient corner glows (whole page, both themes) --- */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 46vw;
+  height: 46vw;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
+  background: radial-gradient(circle, rgba(77, 187, 138, 0.42), transparent 68%);
+  bottom: -20vw;
+  left: -14vw;
+  opacity: 0.12;
+  animation: qt-glow-drift 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  background: radial-gradient(circle, rgba(232, 210, 122, 0.32), transparent 68%);
+  top: -18vw;
+  right: -16vw;
+  opacity: 0.1;
+  animation: qt-glow-drift 24s ease-in-out infinite alternate-reverse;
+}
+
+html[data-theme="light"] body::before { opacity: 0.16; }
+html[data-theme="light"] body::after { opacity: 0.12; }
+
+@keyframes qt-glow-drift {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(4vw, 3vw) scale(1.12); }
+}
+
+/* --- Responsive guards --- */
+@media (max-width: 900px) {
+  .hero-watermark { display: none; }
+  body::before, body::after { opacity: 0.07; }
+  html[data-theme="light"] body::before,
+  html[data-theme="light"] body::after { opacity: 0.09; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hanging-frame-container,
+  .hero-watermark,
+  .hero-watermark__line,
+  body::before,
+  body::after {
+    animation: none !important;
+  }
+}
