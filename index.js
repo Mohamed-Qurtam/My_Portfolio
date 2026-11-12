@@ -2586,6 +2586,7 @@
 
   function init() {
     if (reduceMotion) return;
+    window.__mqDebug = {};
     SPECS.forEach(function (spec) {
       var track = document.querySelector(spec.sel);
       if (!track || track.dataset.qtMarquee) return;
@@ -2609,6 +2610,7 @@
         new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(track);
       }
 
+      window.__mqDebug[spec.sel] = { ticks: 0, elapsed: 0, half: 0, visible: null, hovered: null };
       var speed = half / (spec.duration * 1000); // px per ms
       // الموضع محسوب من الزمن المتراكم — يصحح نفسه عند أي throttle
       function tick(now) {
@@ -2618,6 +2620,7 @@
         if (!hovered && visible && half > 0) elapsed += dt;
         var p = (elapsed * speed) % half;
         track.style.transform = 'translate3d(' + (-(half - p)).toFixed(2) + 'px, 0, 0)';
+        if (window.__mqDebug) { var d = window.__mqDebug[spec.sel]; d.ticks++; d.elapsed = Math.round(elapsed); d.half = Math.round(half); d.visible = visible; d.hovered = hovered; }
       }
       function step(now) { tick(now); requestAnimationFrame(step); }
       requestAnimationFrame(step);
