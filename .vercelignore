@@ -1,18 +1,16 @@
-# Deploy only the production surface; everything else stays out of the build
-/*
-!/.vercelignore
-!/index.html
-!/index.css
-!/index.js
-!/ar.html
-!/ar.js
-!/404.html
-!/robots.txt
-!/sitemap.xml
-!/Mohamed_Qurtam-Security_Engineer-CV.pdf
-!/vercel.json
-!/_headers
-!/.well-known/**
-!/fonts/**
-!/images/**
-!/Badges/**
+# Internal / development-only paths — excluded from the deployment.
+# Everything else tracked in git deploys as-is.
+docs
+docs/**
+content
+content/**
+build.js
+package.json
+package-lock.json
+CHANGELOG.md
+.github
+.github/**
+_internal
+_internal/**
+scratch
+scratch/**
