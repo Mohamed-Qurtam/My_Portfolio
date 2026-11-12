@@ -4753,3 +4753,20 @@ body:not(.certs-expanded) #certifications .section-subheading {
     content-visibility: visible;
   }
 }
+
+/* --- شهادات: سطر توضيح الفرق بين الأنواع (الصفحة العربية) --- */
+.cert-legend {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--text-tertiary);
+  max-width: 72ch;
+  margin: -6px 0 var(--space-lg);
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  border: 1px dashed var(--border-accent);
+  border-radius: var(--radius-sm, 4px);
+}
+
+.cert-legend strong {
+  color: var(--text-secondary);
+}

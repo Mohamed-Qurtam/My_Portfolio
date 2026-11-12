@@ -7,7 +7,7 @@
   if (!window.qtIndex || !window.qtIndex.config) return;
   var C = window.qtIndex.config;
   window.__arBootAt = Math.round(performance.now());
-  C.roleText = 'مهندس شبكات وأمن سيبراني';
+  C.roleText = 'مهندس اتصالات وأمن سيبراني';
 
   /* The dynamic strings live inside index.js closures; override at the DOM
      level with a Mutation-free micro-patch: rebind textContent after builders
