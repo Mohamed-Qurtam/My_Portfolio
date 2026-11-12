@@ -101,6 +101,9 @@
   <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
   <!-- Fonts: self-hosted WOFF2 for zero external requests, strict CSP font-src 'self', and faster loading -->
+  <!-- theme.js: sync pre-paint theme restore (tiny); index.js runs deferred -->
+  <script src="theme.js?v=2.2.1"></script>
+
   <link rel="stylesheet" href="fonts/fonts.css">
 
   <!-- Security: CSP meta fallback (note: frame-ancestors and HSTS cannot be set via meta tag) -->
@@ -115,10 +118,10 @@
   <!-- Vercel Web Analytics (first-party, no cookies, no third parties) -->
   <script src="/_vercel/insights/script.js" defer></script>
 
-  <link rel="stylesheet" href="index.css?v=2.1.0">
+  <link rel="stylesheet" href="index.css?v=2.2.1">
 
   <!-- Core script: loaded without defer so saved theme applies before first paint -->
-  <script src="index.js?v=2.1.0"></script>
+  <script src="index.js?v=2.2.1" defer></script>
 </head>
 
 <body>
@@ -290,7 +293,7 @@
                 <picture>
                   <!-- portrait.webp: 600px-wide re-encode of the original 2773×4160 photo (689 KB → ~40 KB) -->
                   <source srcset="images/portrait-600.webp" type="image/webp">
-                  <img data-hero-photo src="images/portrait-600.webp" alt="Portrait of Mohamed Qurtam — Network & Security Engineer"
+                  <img data-hero-photo fetchpriority="high" src="images/portrait-600.webp" alt="Portrait of Mohamed Qurtam — Network & Security Engineer"
                     class="frame-card__photo" width="280" height="350">
                 </picture>
               </div>
@@ -948,28 +951,6 @@
       <span class="section-code-label">ENGINEERING PORTFOLIO</span>
       <h2 class="section-heading">Projects</h2>
 
-      <!-- Software projects (GitHub) — added first per user request -->
-      <div class="repo-grid">
-        <article class="repo-card">
-          <div class="repo-card__head">
-            <h3 class="repo-card__title">Bookstore Management System</h3>
-            <span class="repo-card__lang">C</span>
-          </div>
-          <p class="repo-card__desc">A console bookstore manager built on a linked-list data structure: insert, delete and search books with file-based persistence per category and an interactive menu UI, built with Make.</p>
-          <div class="repo-card__tags"><span>C</span><span>Linked Lists</span><span>File I/O</span><span>Makefile</span></div>
-          <a class="repo-card__link" href="https://github.com/ProjectC5M/bookstore" target="_blank" rel="noopener noreferrer" aria-label="Open the bookstore repository on GitHub">View on GitHub ↗</a>
-        </article>
-        <article class="repo-card">
-          <div class="repo-card__head">
-            <h3 class="repo-card__title">Memory Match Game</h3>
-            <span class="repo-card__lang">Python</span>
-          </div>
-          <p class="repo-card__desc">A desktop matching-pairs game with a Tkinter GUI: selectable difficulty levels, shuffled image tiles, a live timer, score and tries tracking, and a full reset flow.</p>
-          <div class="repo-card__tags"><span>Python</span><span>Tkinter</span><span>Desktop GUI</span></div>
-          <a class="repo-card__link" href="https://github.com/Mohamed-Qurtam/findmatches-py" target="_blank" rel="noopener noreferrer" aria-label="Open the memory match game repository on GitHub">View on GitHub ↗</a>
-        </article>
-      </div>
-
       <!-- Featured Project: Network Security Architecture -->
       <article class="featured-project-card" id="featured-project">
         <div class="featured-project__grid">
@@ -1144,45 +1125,29 @@
         </div>
       </article>
 
-      <!-- Beyond the Firewall Section -->
-      <div class="beyond-section">
-        <h3 class="beyond-section__title">Beyond the Firewall</h3>
-
-        <div class="beyond__grid">
-          <article class="beyond-card">
-            <div class="beyond-card__header">
-              <div class="beyond-card__icon" aria-hidden="true">DEV</div>
-              <h4 class="beyond-card__title">Python &amp; Web Development</h4>
-            </div>
-            <p class="beyond-card__desc">
-              Signal analysis, game development and web applications using HTML, CSS, JavaScript and backend concepts.
-            </p>
-            <div class="beyond-card__tags">
-              <span class="beyond-card__tag">Python</span>
-              <span class="beyond-card__tag">HTML/CSS</span>
-              <span class="beyond-card__tag">JavaScript</span>
-              <span class="beyond-card__tag">Backend</span>
-            </div>
-          </article>
-
-          <article class="beyond-card">
-            <div class="beyond-card__header">
-              <div class="beyond-card__icon" aria-hidden="true">SYS</div>
-              <h4 class="beyond-card__title">Networks &amp; Embedded Systems</h4>
-            </div>
-            <p class="beyond-card__desc">
-              Technical projects involving networking, embedded systems and automation.
-            </p>
-            <div class="beyond-card__tags">
-              <span class="beyond-card__tag">Networking</span>
-              <span class="beyond-card__tag">Embedded</span>
-              <span class="beyond-card__tag">Automation</span>
-              <span class="beyond-card__tag">C/C++</span>
-            </div>
-          </article>
-        </div>
+      <!-- Software projects (GitHub) -->
+      <div class="repo-grid">
+        <article class="repo-card">
+          <div class="repo-card__head">
+            <h3 class="repo-card__title">Bookstore Management System</h3>
+            <span class="repo-card__lang">C</span>
+          </div>
+          <p class="repo-card__desc">A console bookstore manager built on a linked-list data structure: insert, delete and search books with file-based persistence per category and an interactive menu UI, built with Make.</p>
+          <div class="repo-card__tags"><span>C</span><span>Linked Lists</span><span>File I/O</span><span>Makefile</span></div>
+          <a class="repo-card__link" href="https://github.com/ProjectC5M/bookstore" target="_blank" rel="noopener noreferrer" aria-label="Open the bookstore repository on GitHub">View on GitHub ↗</a>
+        </article>
+        <article class="repo-card">
+          <div class="repo-card__head">
+            <h3 class="repo-card__title">Memory Match Game</h3>
+            <span class="repo-card__lang">Python</span>
+          </div>
+          <p class="repo-card__desc">A desktop matching-pairs game with a Tkinter GUI: selectable difficulty levels, shuffled image tiles, a live timer, score and tries tracking, and a full reset flow.</p>
+          <div class="repo-card__tags"><span>Python</span><span>Tkinter</span><span>Desktop GUI</span></div>
+          <a class="repo-card__link" href="https://github.com/Mohamed-Qurtam/findmatches-py" target="_blank" rel="noopener noreferrer" aria-label="Open the memory match game repository on GitHub">View on GitHub ↗</a>
+        </article>
       </div>
-    </section>
+
+</section></section>
 
     <!-- ========== CERTIFICATIONS & TRAINING SECTION (#certifications) ========== -->
     <section class="certifications container fade-in" id="certifications" aria-label="Certifications and Training">

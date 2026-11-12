@@ -4734,3 +4734,22 @@ body:not(.certs-expanded) #certifications .section-subheading {
 @media (prefers-reduced-motion: reduce) {
   .repo-card:hover { transform: none; }
 }
+
+
+/* ===================================================
+   PERF LAYER — skip rendering below-fold sections
+   =================================================== */
+#skills,
+#education,
+#projects,
+#certifications,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #skills, #education, #projects, #certifications, #contact {
+    content-visibility: visible;
+  }
+}
