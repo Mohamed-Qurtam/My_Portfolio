@@ -2386,7 +2386,8 @@
       : new Promise((res) => window.addEventListener('load', res, { once: true }));
 
     loadDone
-      .then(() => (document.fonts && document.fonts.ready) || null)
+      .then(() => Promise.race([(document.fonts && document.fonts.ready) || null,
+        new Promise(function (r) { setTimeout(r, 1500); })]))
       .then(() => new Promise((res) => setTimeout(res, CONFIG.revealDelayMs)))
       .then(() => {
         S.loaded = true;
