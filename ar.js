@@ -4,10 +4,9 @@
    is safe and picked up by the role/typewriter and all dynamic builders. */
 (function () {
   'use strict';
-  if (!window.qtIndex || !window.qtIndex.config) return;
-  var C = window.qtIndex.config;
+
   window.__arBootAt = Math.round(performance.now());
-  C.roleText = 'مهندس اتصالات وأمن سيبراني';
+  var C;
 
   /* The dynamic strings live inside index.js closures; override at the DOM
      level with a Mutation-free micro-patch: rebind textContent after builders
@@ -52,17 +51,23 @@
   function run() { translate(document.body); }
   function boot() {
     run();
-    /* index.js's typed reveal can fire before this deferred script (fonts.ready
-       race); replay it now that CONFIG.roleText is Arabic. */
+    /* index.js's typed reveal can fire before this script mutates CONFIG
+       (fonts.ready race / deferred order); replay with the Arabic text. */
     setTimeout(function () {
       try { if (window.qtIndex && window.qtIndex.replayRole) window.qtIndex.replayRole(); } catch (e) {}
     }, 80);
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once: true });
-  } else {
-    boot();
+  /* index.js may execute AFTER this file (defer order) — wait for it. */
+  function startWhenReady() {
+    if (window.qtIndex && window.qtIndex.config) {
+      C = window.qtIndex.config;
+      C.roleText = 'مهندس اتصالات وأمن سيبراني';
+      boot();
+    } else {
+      setTimeout(startWhenReady, 25);
+    }
   }
+  startWhenReady();
   // modal builders run on click — re-translate after any click settles
   document.addEventListener('click', function () { setTimeout(run, 60); }, { passive: true });
 })();
