@@ -933,10 +933,6 @@ html[data-theme="light"] .hanging-frame-container:hover .hanging-frame-card {
   width: 100%;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  isolation: isolate;
-  contain: paint;
 }
 
 .tech-ticker__track {
@@ -2963,9 +2959,6 @@ html[data-theme="light"] .chip {
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  isolation: isolate;
-  contain: paint;
 }
 
 .vendor-badges-track {
@@ -4995,4 +4988,17 @@ html[data-theme="light"] body::after { opacity: 0.12; }
   body::after {
     animation: none !important;
   }
+}
+
+
+/* ===================================================
+   MARQUEE DRIVER LAYER — JS-driven loop (iOS-proof)
+   iOS Safari freezes CSS animations inside contain:paint
+   + mask containers, so when the driver is active the CSS
+   animation is disabled and rAF moves the track instead.
+   =================================================== */
+.qt-js-marquee,
+.qt-js-marquee {
+  -webkit-animation: none !important;
+  animation: none !important;
 }

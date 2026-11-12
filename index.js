@@ -2562,3 +2562,72 @@
     init();
   }
 })();
+
+
+/* ==================================================================
+ * MARQUEE DRIVER: rAF loop for the two tickers.
+ * iOS Safari freezes CSS animations inside mask + contain:paint
+ * containers; this driver moves the tracks via transform updates,
+ * which works identically on every device. Pauses on hover and
+ * offscreen; disabled under prefers-reduced-motion.
+ * ================================================================== */
+(function () {
+  'use strict';
+  if (window.__qtMarqueeDriver) return;
+  window.__qtMarqueeDriver = true;
+
+  var reduceMotion = false;
+  try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  var SPECS = [
+    { sel: '.tech-ticker__track', container: '.tech-ticker', duration: 34 },
+    { sel: '.vendor-badges-track', container: '.vendor-badges-marquee', duration: 28 }
+  ];
+
+  function init() {
+    if (reduceMotion) return;
+    SPECS.forEach(function (spec) {
+      var track = document.querySelector(spec.sel);
+      if (!track || track.dataset.qtMarquee) return;
+      track.dataset.qtMarquee = 'js';
+      track.classList.add('qt-js-marquee');
+
+      var half = 1;
+      function measure() {
+        var g = track.children;
+        var h = (g.length > 1) ? (g[1].offsetLeft - g[0].offsetLeft) : (track.scrollWidth / 2);
+        if (h > 0) half = h;
+      }
+      measure();
+      window.addEventListener('resize', measure, { passive: true });
+
+      var hovered = false, visible = true, last = null, acc = 0;
+      var container = track.closest(spec.container) || track;
+      container.addEventListener('mouseenter', function () { hovered = true; }, { passive: true });
+      container.addEventListener('mouseleave', function () { hovered = false; }, { passive: true });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(track);
+      }
+
+      var speed = half / (spec.duration * 1000); // px per ms
+      function step(now) {
+        if (last === null) last = now;
+        var dt = Math.min(now - last, 100);
+        last = now;
+        if (!hovered && visible && half > 0) {
+          acc += dt * speed;
+          if (acc >= half) acc -= half;
+          track.style.transform = 'translate3d(' + (-(half - acc)).toFixed(2) + 'px, 0, 0)';
+        }
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    setTimeout(init, 0);
+  }
+})();

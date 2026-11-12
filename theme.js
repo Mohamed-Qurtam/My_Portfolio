@@ -12,6 +12,12 @@
     var v = localStorage.getItem('qt-theme');
     if (v === 'light' || v === 'dark') t = v;
   } catch (e) {}
+  try {
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) { try { window.scrollTo(0, 0); } catch (err) {} }
+    });
+    window.addEventListener('load', function () { try { window.scrollTo(0, 0); } catch (err) {} });
+  } catch (e) {}
   document.documentElement.setAttribute('data-theme', t);
   try {
     var m = document.querySelector('meta[name="theme-color"]');
