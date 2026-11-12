@@ -398,7 +398,7 @@
     const el = document.querySelector(CONFIG.roleSelector) || document.querySelector('[data-role-title]');
     if (!el) return;
     if (!S.role) {
-      S.role = { el, text: CONFIG.roleText || 'Network & Security Engineer' };
+      S.role = { el, text: null };   // resolved at reveal time (CONFIG.roleText) so ar.js can localize it
     }
     el.style.cursor = 'pointer';
     el.title = 'Click to replay typing';

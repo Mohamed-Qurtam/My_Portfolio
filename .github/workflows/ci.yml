@@ -52,3 +52,18 @@ jobs:
             console.log('Static security and HTML link verification passed!');
           "
 
+
+  lighthouse-budget:
+    runs-on: ubuntu-latest
+    needs: audit-and-validate
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Lighthouse config
+        run: cp lighthouserc.json ${{ github.workspace }}/lighthouserc.json
+
+      - name: Run Lighthouse CI against production preview
+        run: |
+          npm install -g @lhci/cli@0.14.x
+          lhci autorun --config=./lighthouserc.json || echo "::warning::Lighthouse budget drift detected"

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://qurtamportfolio.vercel.app/sitemap.xml

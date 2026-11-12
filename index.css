@@ -4473,3 +4473,173 @@ body:not(.certs-expanded) #certifications .section-subheading {
 .certs-showall {
   margin-top: 14px;
 }
+
+/* ===================================================
+   PREMIUM LAYER — bilingual, case study, hero stack
+   =================================================== */
+
+/* --- Language toggle in the navbar --- */
+.nav__lang-btn {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border: 1px solid var(--border-primary);
+  border-radius: 999px;
+  padding: 7px 14px;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.nav__lang-btn:hover,
+.nav__lang-btn:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* --- Hero stack chips (differentiators in the fold) --- */
+.hero__stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+}
+
+.hero__stack-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 999px;
+  padding: 6px 14px;
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.hero__stack-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* --- Contact schedule line --- */
+.contact__schedule {
+  margin-bottom: var(--space-xl);
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+}
+
+.contact__schedule a {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--border-accent);
+  padding-bottom: 2px;
+}
+
+.contact__schedule a:hover,
+.contact__schedule a:focus-visible {
+  border-bottom-style: solid;
+}
+
+.contact__schedule span {
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+}
+
+/* --- Case study strip (featured project) --- */
+.case-study {
+  margin-top: var(--space-lg);
+  border-top: 1px dashed var(--border-primary);
+  padding-top: var(--space-lg);
+}
+
+.case-study__title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.case-study__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-md);
+  margin: 0 0 var(--space-lg);
+}
+
+.case-study__cell {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.case-study__cell dt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.case-study__cell dd {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* --- RTL / Arabic page base (ar.html) --- */
+[dir="rtl"] {
+  --font-heading: 'IBM Plex Sans Arabic', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans Arabic', 'Space Grotesk', system-ui, sans-serif;
+}
+
+[dir="rtl"] body {
+  letter-spacing: 0;
+}
+
+[dir="rtl"] .hero__role-line,
+[dir="rtl"] .section-code-label,
+[dir="rtl"] .stat-card__number,
+[dir="rtl"] .hero__stack-chip,
+[dir="rtl"] .role-tag,
+[dir="rtl"] .cert-type-badge {
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+}
+
+[dir="rtl"] .timeline-item__date {
+  text-align: right;
+}
+
+[dir="rtl"] .contact__open-to {
+  padding-left: 0;
+  padding-right: 14px;
+  border-left: none;
+  border-right: 2px solid var(--accent);
+}
+
+[dir="rtl"] .contact-row__hint,
+[dir="rtl"] .contact__schedule span {
+  unicode-bidi: plaintext;
+}
+
+[dir="rtl"] .footer__inner {
+  flex-direction: row-reverse;
+}
+
+/* latin chip text inside Arabic pages renders LTR */
+[dir="rtl"] .hero__stack-chip,
+[dir="rtl"] .cert-card-clean__provider {
+  unicode-bidi: plaintext;
+}

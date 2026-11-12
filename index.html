@@ -32,32 +32,67 @@
 
   <!-- Structured data: helps search engines show a correct person snippet -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Mohamed Qurtam",
-    "jobTitle": "Network & Security Engineer",
-    "url": "https://qurtamportfolio.vercel.app/",
-    "image": "https://qurtamportfolio.vercel.app/images/og-card.jpg",
-    "email": "mailto:mohamedqurtam99@gmail.com",
-    "telephone": "+20 1024227004",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Co-brand Solution"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://qurtamportfolio.vercel.app/#profilepage",
+      "url": "https://qurtamportfolio.vercel.app/",
+      "name": "Mohamed Qurtam — Portfolio",
+      "inLanguage": [
+        "en",
+        "ar"
+      ],
+      "mainEntity": {
+        "@id": "https://qurtamportfolio.vercel.app/#person"
+      }
     },
-    "alumniOf": {
-      "@type": "EducationalOrganization",
-      "name": "Benha University · Faculty of Engineering at Shoubra"
+    {
+      "@type": "WebSite",
+      "@id": "https://qurtamportfolio.vercel.app/#website",
+      "url": "https://qurtamportfolio.vercel.app/",
+      "name": "Mohamed Qurtam — Portfolio",
+      "publisher": {
+        "@id": "https://qurtamportfolio.vercel.app/#person"
+      },
+      "inLanguage": "en"
     },
-    "sameAs": [
-      "https://github.com/Mohamed-Qurtam",
-      "https://www.linkedin.com/in/mohamed-qurtam-128296215/"
-    ],
-    "knowsAbout": [
-      "Network Security", "Firewall Administration", "Palo Alto NGFW", "Fortinet FortiGate",
-      "SIEM Monitoring", "Incident Response", "Network Segmentation", "Zero Trust"
-    ]
-  }
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mohamed Qurtam",
+      "jobTitle": "Network & Security Engineer",
+      "url": "https://qurtamportfolio.vercel.app/",
+      "image": "https://qurtamportfolio.vercel.app/images/og-card.jpg",
+      "email": "mailto:moqurtam@gmail.com",
+      "telephone": "+20 1024227004",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Co-brand Solution"
+      },
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Benha University · Faculty of Engineering at Shoubra"
+      },
+      "sameAs": [
+        "https://github.com/Mohamed-Qurtam",
+        "https://www.linkedin.com/in/mohamed-qurtam-128296215/"
+      ],
+      "knowsAbout": [
+        "Network Security",
+        "Firewall Administration",
+        "Palo Alto NGFW",
+        "Fortinet FortiGate",
+        "SIEM Monitoring",
+        "Incident Response",
+        "Network Segmentation",
+        "Zero Trust"
+      ],
+      "@id": "https://qurtamportfolio.vercel.app/#person"
+    }
+  ]
+}
   </script>
 
   <!-- Favicon: shield mark rendered as SVG so it looks identical on every OS -->
@@ -70,13 +105,20 @@
 
   <!-- Security: CSP meta fallback (note: frame-ancestors and HSTS cannot be set via meta tag) -->
   <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; frame-src 'self' https://drive.google.com https://verification.mindtickle.com; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; frame-src 'self' https://drive.google.com https://verification.mindtickle.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
-  <link rel="stylesheet" href="index.css">
+  <link rel="alternate" hreflang="en" href="https://qurtamportfolio.vercel.app/">
+  <link rel="alternate" hreflang="ar" href="https://qurtamportfolio.vercel.app/ar.html">
+  <link rel="alternate" hreflang="x-default" href="https://qurtamportfolio.vercel.app/">
+
+  <!-- Vercel Web Analytics (first-party, no cookies, no third parties) -->
+  <script src="/_vercel/insights/script.js" defer></script>
+
+  <link rel="stylesheet" href="index.css?v=2.1.0">
 
   <!-- Core script: loaded without defer so saved theme applies before first paint -->
-  <script src="index.js"></script>
+  <script src="index.js?v=2.1.0"></script>
 </head>
 
 <body>
@@ -108,6 +150,8 @@
 
       <div class="nav__actions">
         <!-- Theme Toggle Pill Button (Pic 3 matching) -->
+        <a href="ar.html" class="nav__lang-btn" lang="ar" hreflang="ar" aria-label="Switch to the Arabic version of this page">العربية</a>
+
         <button type="button" class="nav__theme-btn" id="navThemeToggle" aria-label="Toggle light and dark theme">
           <svg class="nav__theme-icon nav__theme-icon--sun" width="15" height="15" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -184,6 +228,14 @@
             </a>
             <a href="#projects" class="btn-secondary" id="hero-projects-btn">View Projects</a>
           </div>
+
+          <ul class="hero__stack" aria-label="Core technology stack">
+            <li class="hero__stack-chip">Palo Alto</li>
+            <li class="hero__stack-chip">FortiGate</li>
+            <li class="hero__stack-chip">Veeam</li>
+            <li class="hero__stack-chip">SIEM</li>
+            <li class="hero__stack-chip">SD-WAN</li>
+          </ul>
 
           <div class="hero__socials">
             <a href="mailto:moqurtam@gmail.com" class="hero__social-link" id="hero-email"
@@ -708,7 +760,7 @@
             <h3 class="timeline-item__role">Session Coordinator</h3>
             <span class="timeline-item__company">Almentor</span>
             <p class="timeline-item__description">
-              Managed 100+ technical sessions with high participant satisfaction and reduced session issues through
+              Managed 200+ technical sessions with high participant satisfaction and reduced session issues through
               refined coordination workflows.
             </p>
             <div class="timeline-item__tags">
@@ -1040,11 +1092,32 @@
               </li>
             </ul>
 
-            <a href="https://drive.google.com/file/d/16xB6Mx-rEupEh8hRWhIrd3jw6Q8Gj5_u/view?usp=drive_link"
+            <div class="case-study">
+              <h4 class="case-study__title">Case study — graduation security architecture</h4>
+              <dl class="case-study__grid">
+                <div class="case-study__cell">
+                  <dt>Problem</dt>
+                  <dd>Protect a multi-zone enterprise network from lateral movement and uncontrolled egress traffic.</dd>
+                </div>
+                <div class="case-study__cell">
+                  <dt>Architecture</dt>
+                  <dd>WAN perimeter → Palo Alto NGFW core → three segmented zones on virtual routers.</dd>
+                </div>
+                <div class="case-study__cell">
+                  <dt>Security controls</dt>
+                  <dd>Zone-based segmentation, NAT and application-aware policies, IDS/IPS, QoS and DoS protection.</dd>
+                </div>
+                <div class="case-study__cell">
+                  <dt>Outcome</dt>
+                  <dd>Graduation project delivered and defended — B.Sc. awarded <strong>Excellent with Honors</strong> (June 2024); full design documented in the project book.</dd>
+                </div>
+              </dl>
+              <a href="https://drive.google.com/file/d/16xB6Mx-rEupEh8hRWhIrd3jw6Q8Gj5_u/view?usp=drive_link"
               class="project-book-btn" target="_blank" rel="noopener noreferrer"
               aria-label="Read the project book (PDF)">
               Read the project book ↗
             </a>
+            </div>
           </div>
         </div>
       </article>
@@ -1114,7 +1187,7 @@
           <div class="cert-card-clean__header">
           <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
           </div>
-          <h4 class="cert-card-clean__title">Fortinet NSE 4</h4>
+          <h3 class="cert-card-clean__title">Fortinet NSE 4</h3>
           <span class="cert-card-clean__provider">Self-study</span>
           </div>
 
@@ -1130,7 +1203,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Fortinet NSE 3</h4>
+          <h3 class="cert-card-clean__title">Fortinet NSE 3</h3>
           <span class="cert-card-clean__provider">Fortinet</span>
           </div>
 
@@ -1146,7 +1219,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Fortinet NSE 2</h4>
+          <h3 class="cert-card-clean__title">Fortinet NSE 2</h3>
           <span class="cert-card-clean__provider">Fortinet</span>
           </div>
 
@@ -1162,7 +1235,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Fortinet NSE 1</h4>
+          <h3 class="cert-card-clean__title">Fortinet NSE 1</h3>
           <span class="cert-card-clean__provider">Fortinet</span>
           </div>
 
@@ -1178,7 +1251,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Sales Specialist: Kaspersky Next Optimum (S47.2)</h4>
+          <h3 class="cert-card-clean__title">Sales Specialist: Kaspersky Next Optimum (S47.2)</h3>
           <span class="cert-card-clean__provider">Kaspersky</span>
           </div>
 
@@ -1194,7 +1267,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">RCNA Routing &amp; Switching</h4>
+          <h3 class="cert-card-clean__title">RCNA Routing &amp; Switching</h3>
           <span class="cert-card-clean__provider">Ruijie</span>
           </div>
 
@@ -1210,7 +1283,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Black Belt ASA and Firewall Support Stage 3 (Jul 2025)</h4>
+          <h3 class="cert-card-clean__title">Black Belt ASA and Firewall Support Stage 3 (Jul 2025)</h3>
           <span class="cert-card-clean__provider">Cisco · Mindtickle verification</span>
           </div>
 
@@ -1226,7 +1299,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Cisco Black Belt Firewall Support Stage 2</h4>
+          <h3 class="cert-card-clean__title">Cisco Black Belt Firewall Support Stage 2</h3>
           <span class="cert-card-clean__provider">Cisco · Mindtickle verification</span>
           </div>
 
@@ -1242,7 +1315,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Black Belt Support Stage 1 (Jun 2026)</h4>
+          <h3 class="cert-card-clean__title">Black Belt Support Stage 1 (Jun 2026)</h3>
           <span class="cert-card-clean__provider">Mindtickle verification</span>
           </div>
 
@@ -1258,7 +1331,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">eLearnSecurity Certified Incident Responder (eCIR)</h4>
+          <h3 class="cert-card-clean__title">eLearnSecurity Certified Incident Responder (eCIR)</h3>
           <span class="cert-card-clean__provider">Netriders Academy</span>
           </div>
 
@@ -1274,7 +1347,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Cisco CyberOps</h4>
+          <h3 class="cert-card-clean__title">Cisco CyberOps</h3>
           <span class="cert-card-clean__provider">National Telecommunication Institute (NTI)</span>
           </div>
 
@@ -1290,7 +1363,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Veeam Technical Specialist: SaaS Protection 2026</h4>
+          <h3 class="cert-card-clean__title">Veeam Technical Specialist: SaaS Protection 2026</h3>
           <span class="cert-card-clean__provider">Veeam</span>
           </div>
 
@@ -1306,7 +1379,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Veeam Technical Specialist: Cybersecurity &amp; DR 2026</h4>
+          <h3 class="cert-card-clean__title">Veeam Technical Specialist: Cybersecurity &amp; DR 2026</h3>
           <span class="cert-card-clean__provider">Veeam</span>
           </div>
 
@@ -1322,7 +1395,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Veeam Technical Specialist: Public Cloud 2026</h4>
+          <h3 class="cert-card-clean__title">Veeam Technical Specialist: Public Cloud 2026</h3>
           <span class="cert-card-clean__provider">Veeam</span>
           </div>
 
@@ -1339,7 +1412,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Veeam Technical Specialist: Kubernetes Data Protection 2026</h4>
+          <h3 class="cert-card-clean__title">Veeam Technical Specialist: Kubernetes Data Protection 2026</h3>
           <span class="cert-card-clean__provider">Veeam</span>
           </div>
 
@@ -1355,7 +1428,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Blue Team Scholarship</h4>
+          <h3 class="cert-card-clean__title">Blue Team Scholarship</h3>
           <span class="cert-card-clean__provider">CyberTalents</span>
           </div>
 
@@ -1371,7 +1444,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Certified SOC Analyst Foundation</h4>
+          <h3 class="cert-card-clean__title">Certified SOC Analyst Foundation</h3>
           <span class="cert-card-clean__provider">SIEM XPERT</span>
           </div>
 
@@ -1387,7 +1460,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Introduction to Cybersecurity Bootcamp, Cohort 5</h4>
+          <h3 class="cert-card-clean__title">Introduction to Cybersecurity Bootcamp, Cohort 5</h3>
           <span class="cert-card-clean__provider">CyberTalents</span>
           </div>
 
@@ -1396,7 +1469,7 @@
           <div class="cert-card-clean__header">
           <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
           </div>
-          <h4 class="cert-card-clean__title">CCNP Security Core</h4>
+          <h3 class="cert-card-clean__title">CCNP Security Core</h3>
           <span class="cert-card-clean__provider">Netriders Academy</span>
           </div>
 
@@ -1404,7 +1477,7 @@
           <div class="cert-card-clean__header">
           <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
           </div>
-          <h4 class="cert-card-clean__title">MCSA Core</h4>
+          <h3 class="cert-card-clean__title">MCSA Core</h3>
           <span class="cert-card-clean__provider">Netriders Academy</span>
           </div>
 
@@ -1413,7 +1486,7 @@
           <div class="cert-card-clean__header">
           <span class="cert-type-badge cert-type-badge--training">TRAINING</span>
           </div>
-          <h4 class="cert-card-clean__title">CCNA Routing &amp; Switching</h4>
+          <h3 class="cert-card-clean__title">CCNA Routing &amp; Switching</h3>
           <span class="cert-card-clean__provider">National Telecommunication Institute (NTI)</span>
           </div>
 
@@ -1429,7 +1502,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">AWS Academy Cloud Foundations</h4>
+          <h3 class="cert-card-clean__title">AWS Academy Cloud Foundations</h3>
           <span class="cert-card-clean__provider">National Telecommunication Institute (NTI)</span>
           </div>
 
@@ -1445,7 +1518,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Red Hat System Administration I 9.0</h4>
+          <h3 class="cert-card-clean__title">Red Hat System Administration I 9.0</h3>
           <span class="cert-card-clean__provider">National Telecommunication Institute (NTI)</span>
           </div>
 
@@ -1462,7 +1535,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Telecommunications and Network Infrastructure Training</h4>
+          <h3 class="cert-card-clean__title">Telecommunications and Network Infrastructure Training</h3>
           <span class="cert-card-clean__provider">Systel Telecom</span>
           </div>
 
@@ -1478,7 +1551,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Python and Django Learning Guide</h4>
+          <h3 class="cert-card-clean__title">Python and Django Learning Guide</h3>
           <span class="cert-card-clean__provider">Udemy</span>
           </div>
 
@@ -1494,7 +1567,7 @@
           <line x1="10" y1="14" x2="21" y2="3" />
           </svg>
           </div>
-          <h4 class="cert-card-clean__title">Computer Science Course (Cyber Security)</h4>
+          <h3 class="cert-card-clean__title">Computer Science Course (Cyber Security)</h3>
           <span class="cert-card-clean__provider">iSchool</span>
           </div>
 
@@ -1502,7 +1575,7 @@
           <div class="cert-card-clean__header">
           <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
           </div>
-          <h4 class="cert-card-clean__title">Palo Alto Firewall</h4>
+          <h3 class="cert-card-clean__title">Palo Alto Firewall</h3>
           <span class="cert-card-clean__provider">Self-study</span>
           </div>
 
@@ -1510,7 +1583,7 @@
           <div class="cert-card-clean__header">
           <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
           </div>
-          <h4 class="cert-card-clean__title">CompTIA Security+</h4>
+          <h3 class="cert-card-clean__title">CompTIA Security+</h3>
           <span class="cert-card-clean__provider">Self-study</span>
           </div>
 
@@ -1519,7 +1592,7 @@
           <div class="cert-card-clean__header">
           <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
           </div>
-          <h4 class="cert-card-clean__title">Windows Endpoint Investigation</h4>
+          <h3 class="cert-card-clean__title">Windows Endpoint Investigation</h3>
           <span class="cert-card-clean__provider">Self-study</span>
           </div>
 
@@ -1528,7 +1601,7 @@
           <div class="cert-card-clean__header">
           <span class="cert-type-badge cert-type-badge--self">SELF-STUDY</span>
           </div>
-          <h4 class="cert-card-clean__title">SANS SEC450: Blue Team Fundamentals</h4>
+          <h3 class="cert-card-clean__title">SANS SEC450: Blue Team Fundamentals</h3>
           <span class="cert-card-clean__provider">Self-study</span>
           </div>
       </div>
@@ -1544,7 +1617,7 @@
 
       <!-- Credential & Vendor Badges Marquee (Edit.md T7 - Large format Drive link on click) -->
       <div class="vendor-badges-marquee-wrapper" aria-label="Accredited Credential & Vendor Badges">
-        <h4 class="vendor-badges__heading">ACCREDITED VENDOR BADGES</h4>
+        <h3 class="vendor-badges__heading">ACCREDITED VENDOR BADGES</h3>
         <div class="vendor-badges-marquee" tabindex="0" role="region"
           aria-label="Scrolling Credential & Vendor Badges Ticker">
           <div class="vendor-badges-track">
@@ -1643,6 +1716,11 @@
         <p class="contact__open-to">
           <strong>Open to:</strong> network &amp; security engineering roles · infrastructure projects.
           Typical response time: under 24 hours.
+        </p>
+
+        <p class="contact__schedule">
+          <a href="mailto:moqurtam@gmail.com?subject=Intro%20call%20request%20%E2%80%94%20Mohamed%20Qurtam">Book a 15-minute intro call ↗</a>
+          <span>— replies within 24 hours.</span>
         </p>
 
         <!-- Tactile Physical Knob Buttons (Edit.md T3 matching reference image) -->

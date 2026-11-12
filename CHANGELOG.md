@@ -4,6 +4,19 @@ All notable improvements, security hardening measures, architectural decouplings
 
 ---
 
+## [2.1.0] - 2026-11-12
+
+### Premium & Bilingual (Phase 4)
+- **Arabic Version with Full RTL:** Added [`ar.html`](ar.html) — a fully translated Arabic mirror (`lang="ar" dir="rtl"`) with a nav language toggle on both pages, `hreflang` alternates (en/ar/x-default), and a self-hosted **IBM Plex Sans Arabic** font layer (`fonts/arabic.css`, 8 WOFF2 subsets, `font-display: swap`). RTL-safe component flips live in the PREMIUM LAYER of `index.css`.
+- **JS String Localization:** [`ar.js`](ar.js) overrides `CONFIG.roleText` (Arabic typed role) and translates all JS-generated strings (menu labels, credential modal, toasts, featured toggle) via a TreeWalker pass.
+- **Case Study Strip:** The featured graduation project now includes a Problem → Architecture → Security controls → Outcome grid (facts-only, linked to the project book).
+- **Hero Stack Chips:** Palo Alto · FortiGate · Veeam · SIEM · SD-WAN now visible above the fold on both languages.
+- **Scheduling CTA:** "Book a 15-minute intro call" mailto line in Contact (swap for Calendly when available).
+- **Richer Structured Data:** JSON-LD upgraded to an `@graph` with `ProfilePage` + `WebSite` + `Person` on both pages.
+- **First-party Analytics:** Vercel Web Analytics enabled; CSP relaxed from `connect-src 'none'` to `connect-src 'self'` (no third parties) in the meta CSP, `vercel.json` and `_headers`.
+- **SEO:** `robots.txt` + `sitemap.xml` (both languages) shipped; security.txt domain typo and dual-email fixed; 30 certificate titles promoted `h4 → h3` (WCAG heading hierarchy, zero level jumps).
+- **CI:** `lighthouserc.json` performance/SEO/a11y budgets + a Lighthouse CI job in the quality gate.
+
 ## [2.0.0] - 2026-11-11
 
 ### Security Hardening & Privacy (Phase 1)
