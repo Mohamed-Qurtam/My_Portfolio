@@ -5158,3 +5158,23 @@ html[data-theme="light"] body::after { opacity: 0.12; }
   border-color: rgba(232, 210, 122, 0.55) !important;
   background: rgba(232, 210, 122, 0.1) !important;
 }
+
+
+/* ===================================================
+   KNOB ROW — five knobs on one line (wide screens)
+   =================================================== */
+@media (min-width: 1024px) {
+  .knob-row {
+    flex-wrap: nowrap;
+    gap: clamp(0.75rem, 1.8vw, 1.75rem);
+  }
+  .knob,
+  button.knob,
+  #phoneRevealBtn {
+    --size: clamp(64px, 6vw, 86px);
+  }
+  .knob__label {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+}

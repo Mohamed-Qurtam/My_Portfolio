@@ -2534,7 +2534,7 @@
 
 /* ==================================================================
  * FEATURED-SIX LAYER: collapse the credential wall to six flagship
- * certificates; "Show all 30 credentials" reveals the rest and the
+ * certificates; "Show all 31 credentials" reveals the rest and the
  * category filter tabs. CSP-safe DOM primitives only.
  * ================================================================== */
 (function () {
