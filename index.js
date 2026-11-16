@@ -2551,8 +2551,8 @@
     btn.addEventListener('click', function () {
       var expanded = document.body.classList.toggle('certs-expanded');
       btn.setAttribute('aria-expanded', String(expanded));
-      if (label) label.textContent = expanded ? 'Show featured six only' : 'Show all 30 credentials';
-      if (count) count.textContent = expanded ? '−24' : '+24';
+      if (label) label.textContent = expanded ? 'Show featured six only' : 'Show all 31 credentials';
+      if (count) count.textContent = expanded ? '−25' : '+25';
     });
   }
 

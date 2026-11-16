@@ -5151,3 +5151,10 @@ html[data-theme="light"] body::after { opacity: 0.12; }
   .fasttrack:hover { transform: none; }
   .fasttrack::after { animation: none; display: none; }
 }
+
+/* --- شارة المسار السريع (ذهبية للتمييز عن الشهادات الموثقة) --- */
+.cert-type-badge--fast {
+  color: #e8d27a !important;
+  border-color: rgba(232, 210, 122, 0.55) !important;
+  background: rgba(232, 210, 122, 0.1) !important;
+}

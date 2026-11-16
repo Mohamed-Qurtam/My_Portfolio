@@ -640,7 +640,7 @@
         <div class="stats-grid">
           <div class="stat-card" tabindex="0" role="region" aria-label="23 verified certificates, plus 7 self-study and training items">
             <span class="stat-card__number" data-count="23">23</span>
-            <span class="stat-card__label">شهادة موثّقة <small>(+7 دراسة ذاتية)</small></span>
+            <span class="stat-card__label">شهادة موثّقة <small>(+8 دورات ودراسة ذاتية)</small></span>
           </div>
           <div class="stat-card" tabindex="0" role="region" aria-label="20 plus وحدة تدريبية في الأمن السيبراني">
             <span class="stat-card__number" data-count="20" data-suffix="+">20+</span>
@@ -1144,15 +1144,17 @@
       </div>
       <p class="cert-legend"><strong>شهادة موثّقة:</strong> اجتزت اختبار الاعتماد الرسمي وتحمل رابط تحقق —
       <strong>برنامج/تدريب:</strong> دورة مكتملة بدون اختبار اعتماد —
-      <strong>دراسة ذاتية:</strong> تعلّم موجّه أنفذه بنفسي.</p>
+      <strong>دراسة ذاتية:</strong> تعلّم موجّه أنفذه بنفسي — <strong>المسار السريع:</strong> إتمام مسار ضمن سلسلة اعتماد.</p>
 
       <!-- Category Filter Tabs -->
       <div class="certs-filter-tabs" role="tablist" aria-label="تصفية الاعتمادات حسب الفئة">
-        <button type="button" class="certs-filter-btn active" data-filter="all" role="tab" aria-selected="true">جميع الاعتمادات (٣٠)</button>
+        <button type="button" class="certs-filter-btn active" data-filter="all" role="tab" aria-selected="true">جميع الاعتمادات (٣١)</button>
         <button type="button" class="certs-filter-btn" data-filter="certs" role="tab" aria-selected="false">الشهادات والبرامج (١٦)</button>
         <button type="button" class="certs-filter-btn" data-filter="training" role="tab"
           aria-selected="false">تدريب متخصص (٩)</button>
         <button type="button" class="certs-filter-btn" data-filter="self" role="tab" aria-selected="false">مسارات دراسة ذاتية (٥)</button>
+
+        <button type="button" class="certs-filter-btn" data-filter="fasttrack" role="tab" aria-selected="false">المسار السريع (١)</button>
       </div>
 
       <!-- All 30 Credentials with Direct Links -->
@@ -1580,12 +1582,21 @@
           </div>
       </div>
 
+        <div class="cert-card-clean" data-category="fasttrack" tabindex="0"
+          aria-label="المسار السريع: Deploying Security Strategies for the Modern Network 04">
+          <div class="cert-card-clean__header">
+          <span class="cert-type-badge cert-type-badge--fast">المسار السريع</span>
+          </div>
+          <h3 class="cert-card-clean__title">Deploying Security Strategies for the Modern Network 04</h3>
+          <span class="cert-card-clean__provider">أمن الشبكات · سلسلة استراتيجيات أمن الشبكات الحديثة</span>
+        </div>
+
       <!-- Featured-first: six flagship credentials above, full wall on demand -->
       <div class="certs-showall">
         <button type="button" id="certsShowAllBtn" class="certs-showall-btn" aria-expanded="false"
           aria-controls="certsList">
-          <span class="certs-showall-btn__label">عرض جميع الاعتمادات (٣٠)</span>
-          <span class="certs-showall-btn__count" aria-hidden="true">+٢٤</span>
+          <span class="certs-showall-btn__label">عرض جميع الاعتمادات (٣١)</span>
+          <span class="certs-showall-btn__count" aria-hidden="true">+٢٥</span>
         </button>
       </div>
 
