@@ -2600,7 +2600,7 @@
         if (h > 0) half = h;
       }
       measure();
-      window.addEventListener('resize', measure, { passive: true });
+      window.addEventListener('resize', function () { measure(); }, { passive: true });
 
       var hovered = false, visible = true, last = null, elapsed = 0;
       var container = track.closest(spec.container) || track;
@@ -2611,20 +2611,20 @@
       }
 
       window.__mqDebug[spec.sel] = { ticks: 0, elapsed: 0, half: 0, visible: null, hovered: null };
-      var speed = half / (spec.duration * 1000); // px per ms
       // الموضع محسوب من الزمن المتراكم — يصحح نفسه عند أي throttle
       function tick(now) {
         if (last === null) last = now;
-        var dt = Math.min(now - last, 200);
+        var dt = Math.max(0, Math.min(now - last, 200));
         last = now;
         if (!hovered && visible && half > 0) elapsed += dt;
-        var p = (elapsed * speed) % half;
+        /* الموضع من نسبة الزمن داخل الدورة — ثابت السرعة مهما تغير عرض المحتوى */
+        var p = (elapsed % (spec.duration * 1000)) / (spec.duration * 1000) * half;
         track.style.transform = 'translate3d(' + (-(half - p)).toFixed(2) + 'px, 0, 0)';
         if (window.__mqDebug) { var d = window.__mqDebug[spec.sel]; d.ticks++; d.elapsed = Math.round(elapsed); d.half = Math.round(half); d.visible = visible; d.hovered = hovered; }
       }
       function step(now) { tick(now); requestAnimationFrame(step); }
       requestAnimationFrame(step);
-      setInterval(function () { tick(Date.now()); }, 250); // احتياط للخلفية/التبويبات المخفية
+      setInterval(function () { tick(performance.now()); }, 250); // احتياط للخلفية/التبويبات المخفية (نفس الساعة)
     });
   }
 
