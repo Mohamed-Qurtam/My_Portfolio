@@ -2392,6 +2392,7 @@
       .then(() => {
         S.loaded = true;
         document.documentElement.classList.add('qt-go');   // starts the hero entrance
+        try { if (window.qtLoaderFinish) window.qtLoaderFinish(); } catch (e) {}
         safe(prepareRole);
         safe(revealRole);
         run();

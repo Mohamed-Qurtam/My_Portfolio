@@ -5178,3 +5178,159 @@ html[data-theme="light"] body::after { opacity: 0.12; }
     letter-spacing: 0.12em;
   }
 }
+
+
+/* ===================================================
+   PRELOADER — particles / glowing spiral / grid floor
+   (built by theme.js pre-paint, removed by index.js)
+   =================================================== */
+#qt-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  overflow: hidden;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+#qt-loader.qt-l-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.qt-l-stars { position: absolute; inset: 0; }
+
+.qt-l-star {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: qt-l-twinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes qt-l-twinkle {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(0.7); }
+}
+
+.qt-l-grid {
+  position: absolute;
+  left: -55%;
+  right: -55%;
+  bottom: -12%;
+  height: 46%;
+  background-image:
+    linear-gradient(rgba(77, 187, 138, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 187, 138, 0.13) 1px, transparent 1px);
+  background-size: 44px 44px;
+  transform: perspective(320px) rotateX(61deg);
+  transform-origin: 50% 0;
+  animation: qt-l-gridmove 1.6s linear infinite;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 32%);
+  mask-image: linear-gradient(180deg, transparent, #000 32%);
+}
+
+@keyframes qt-l-gridmove {
+  from { background-position: 0 0; }
+  to { background-position: 0 44px; }
+}
+
+.qt-l-spiral { position: relative; width: 320px; height: 210px; }
+
+.qt-l-spiral::before {
+  content: '';
+  position: absolute;
+  inset: 12% 20%;
+  background: radial-gradient(circle, rgba(255, 110, 80, 0.15), transparent 70%);
+  filter: blur(6px);
+}
+
+.qt-l-ell {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid rgba(77, 187, 138, 0.4);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(77, 187, 138, 0.14), inset 0 0 14px rgba(77, 187, 138, 0.1);
+  animation: qt-l-ellpulse 2.8s ease-in-out infinite;
+}
+
+.qt-l-ell:nth-child(1) { top: 0;     width: 250px; }
+.qt-l-ell:nth-child(2) { top: 38px;  width: 296px; }
+.qt-l-ell:nth-child(3) { top: 78px;  width: 318px; }
+.qt-l-ell:nth-child(4) { top: 118px; width: 296px; }
+.qt-l-ell:nth-child(5) { top: 156px; width: 250px; }
+
+@keyframes qt-l-ellpulse {
+  0%, 100% { opacity: 0.35; transform: translateX(-50%) scaleY(1); }
+  50% { opacity: 0.85; transform: translateX(-50%) scaleY(1.12); }
+}
+
+.qt-l-brand {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  position: relative;
+  z-index: 1;
+}
+
+.qt-l-brand b { color: var(--accent); font-weight: 700; }
+
+.qt-l-bar {
+  width: min(280px, 70vw);
+  height: 2px;
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.qt-l-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff7847, #4dbb8a 55%, #3884ff);
+  box-shadow: 0 0 10px rgba(77, 187, 138, 0.6);
+}
+
+.qt-l-pct {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: var(--text-tertiary);
+  position: relative;
+  z-index: 1;
+}
+
+html[data-theme="light"] #qt-loader { background: #f7f9fc; }
+html[data-theme="light"] .qt-l-star { opacity: 0.55; }
+html[data-theme="light"] .qt-l-grid {
+  background-image:
+    linear-gradient(rgba(12, 125, 85, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(12, 125, 85, 0.12) 1px, transparent 1px);
+}
+html[data-theme="light"] .qt-l-bar { background: rgba(28, 43, 61, 0.14); }
+html[data-theme="light"] .qt-l-spiral::before { opacity: 0.5; }
+
+@media (max-width: 640px) {
+  .qt-l-spiral { transform: scale(0.78); }
+  .qt-l-brand { font-size: 0.85rem; }
+}
+
+/* --- إصلاح تداخل شارة FEATURED مع نص المزود --- */
+.cert-card-clean[data-featured] {
+  padding-bottom: 2.35rem;
+}
+
+.cert-card-clean[data-featured] .cert-card-clean__provider {
+  display: inline-block;
+  max-width: calc(100% - 6px);
+}
