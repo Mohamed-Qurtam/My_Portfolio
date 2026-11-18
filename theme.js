@@ -76,6 +76,7 @@
   var svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('viewBox', '0 0 64 64');
   svg.setAttribute('class', 'qt-l-shield');
+  svg.setAttribute('fill', 'none');
   svg.setAttribute('aria-hidden', 'true');
   var bodyPath = document.createElementNS(NS, 'path');
   bodyPath.setAttribute('d', 'M32 10 14 17v14c0 12 8 19 18 23 10-4 18-11 18-23V17L32 10z');

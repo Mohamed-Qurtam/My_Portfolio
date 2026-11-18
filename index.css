@@ -5346,3 +5346,10 @@ html[data-theme="light"] .qt-l-spiral::before { opacity: 0.5; }
   display: inline-block;
   max-width: calc(100% - 6px);
 }
+
+.qt-l-shield path {
+  stroke: var(--accent);
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
