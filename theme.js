@@ -69,25 +69,24 @@
   grid.className = 'qt-l-grid';
   L.appendChild(grid);
 
-  /* --- الحلقات المتوهجة المتكدسة (المركز) --- */
-  var spiral = document.createElement('div');
-  spiral.className = 'qt-l-spiral';
-  for (var j = 0; j < 5; j++) {
-    var ell = document.createElement('span');
-    ell.className = 'qt-l-ell';
-    ell.style.animationDelay = (j * 0.22) + 's';
-    spiral.appendChild(ell);
-  }
-  L.appendChild(spiral);
-
-  /* --- الشعار --- */
-  var brand = document.createElement('div');
-  brand.className = 'qt-l-brand';
-  var bm = document.createElement('b');
-  bm.textContent = 'M';
-  brand.appendChild(bm);
-  brand.appendChild(document.createTextNode('Qurtam'));
-  L.appendChild(brand);
+  /* --- درع الأمن السيبراني المتوهج (يُرسم ذاتيًا) --- */
+  var NS = 'http://www.w3.org/2000/svg';
+  var wrap = document.createElement('div');
+  wrap.className = 'qt-l-shield-wrap';
+  var svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 64 64');
+  svg.setAttribute('class', 'qt-l-shield');
+  svg.setAttribute('aria-hidden', 'true');
+  var bodyPath = document.createElementNS(NS, 'path');
+  bodyPath.setAttribute('d', 'M32 10 14 17v14c0 12 8 19 18 23 10-4 18-11 18-23V17L32 10z');
+  bodyPath.setAttribute('class', 'shield-body');
+  var checkPath = document.createElementNS(NS, 'path');
+  checkPath.setAttribute('d', 'M24 31.5l6 6 11-11');
+  checkPath.setAttribute('class', 'shield-check');
+  svg.appendChild(bodyPath);
+  svg.appendChild(checkPath);
+  wrap.appendChild(svg);
+  L.appendChild(wrap);
 
   /* --- شريط التقدم + النسبة --- */
   var bar = document.createElement('div');

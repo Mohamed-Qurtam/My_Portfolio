@@ -5240,48 +5240,61 @@ html[data-theme="light"] body::after { opacity: 0.12; }
   to { background-position: 0 44px; }
 }
 
-.qt-l-spiral { position: relative; width: 320px; height: 210px; }
+.qt-l-shield-wrap {
+  position: relative;
+  width: 210px;
+  height: 240px;
+  display: grid;
+  place-items: center;
+}
 
-.qt-l-spiral::before {
+.qt-l-shield-wrap::before {
   content: '';
   position: absolute;
-  inset: 12% 20%;
-  background: radial-gradient(circle, rgba(255, 110, 80, 0.15), transparent 70%);
-  filter: blur(6px);
-}
-
-.qt-l-ell {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 1px solid rgba(77, 187, 138, 0.4);
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(77, 187, 138, 0.14), inset 0 0 14px rgba(77, 187, 138, 0.1);
-  animation: qt-l-ellpulse 2.8s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255, 110, 80, 0.13), transparent 70%);
+  filter: blur(8px);
 }
 
-.qt-l-ell:nth-child(1) { top: 6px;    width: 246px; height: 58px; }
-.qt-l-ell:nth-child(2) { top: 46px;   width: 288px; height: 66px; }
-.qt-l-ell:nth-child(3) { top: 88px;   width: 312px; height: 70px; }
-.qt-l-ell:nth-child(4) { top: 132px;  width: 288px; height: 66px; }
-.qt-l-ell:nth-child(5) { top: 174px;  width: 246px; height: 58px; }
-
-@keyframes qt-l-ellpulse {
-  0%, 100% { opacity: 0.35; transform: translateX(-50%) scaleY(1); }
-  50% { opacity: 0.85; transform: translateX(-50%) scaleY(1.12); }
+.qt-l-shield-wrap::after {
+  content: '';
+  position: absolute;
+  width: 226px;
+  height: 226px;
+  border-radius: 50%;
+  border: 1px solid rgba(77, 187, 138, 0.22);
+  animation: qt-l-ringpulse 2.6s ease-in-out infinite;
 }
 
-.qt-l-brand {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  position: relative;
-  z-index: 1;
+@keyframes qt-l-ringpulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.06); }
 }
 
-.qt-l-brand b { color: var(--accent); font-weight: 700; }
+.qt-l-shield {
+  width: 188px;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 0 18px rgba(77, 187, 138, 0.38));
+}
+
+.qt-l-shield .shield-body {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: qt-l-draw 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.15s;
+}
+
+.qt-l-shield .shield-check {
+  stroke-dasharray: 90;
+  stroke-dashoffset: 90;
+  animation: qt-l-draw 0.7s ease forwards 1.15s;
+}
+
+@keyframes qt-l-draw {
+  to { stroke-dashoffset: 0; }
+}
 
 .qt-l-bar {
   width: min(280px, 70vw);
@@ -5321,8 +5334,7 @@ html[data-theme="light"] .qt-l-bar { background: rgba(28, 43, 61, 0.14); }
 html[data-theme="light"] .qt-l-spiral::before { opacity: 0.5; }
 
 @media (max-width: 640px) {
-  .qt-l-spiral { transform: scale(0.78); }
-  .qt-l-brand { font-size: 0.85rem; }
+  .qt-l-shield-wrap { transform: scale(0.8); }
 }
 
 /* --- إصلاح تداخل شارة FEATURED مع نص المزود --- */

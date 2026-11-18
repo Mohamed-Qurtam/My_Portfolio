@@ -67,8 +67,8 @@
     roleText: 'Network & Security Engineer',
     roleSelector: '[data-role-title]',
     rolePattern: /^network\s*&\s*security\s+engineer$/i,
-    typeSpeedMs: 55,
-    revealDelayMs: 120,
+    typeSpeedMs: 30,
+    revealDelayMs: 60,
     addCursor: true,
 
     // Tools list
@@ -424,9 +424,7 @@
     if (!S.roleStarted) {
       S.roleStarted = true;
       el.textContent = '';
-      setTimeout(() => {
-        typeRole();
-      }, 120);
+      typeRole();
     }
   }
 
