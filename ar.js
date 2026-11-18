@@ -18,7 +18,7 @@
     '\u2191 Top': '\u2191 للأعلى',
     'Show all 31 credentials': 'عرض جميع الاعتمادات (٣١)',
     'Show featured six only': 'عرض الست المميزة فقط',
-    '+25': '+\u0662\u0665',
+    '+26': '+\u0662\u0665',
     '\u221225': '\u2212\u0662\u0665',
     'Copy Verification Link': 'نسخ رابط التوثيق',
     'Verify Official Credential \u2197': 'توثيق الاعتماد الرسمي \u2197',

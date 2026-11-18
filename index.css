@@ -5260,11 +5260,11 @@ html[data-theme="light"] body::after { opacity: 0.12; }
   animation: qt-l-ellpulse 2.8s ease-in-out infinite;
 }
 
-.qt-l-ell:nth-child(1) { top: 0;     width: 250px; }
-.qt-l-ell:nth-child(2) { top: 38px;  width: 296px; }
-.qt-l-ell:nth-child(3) { top: 78px;  width: 318px; }
-.qt-l-ell:nth-child(4) { top: 118px; width: 296px; }
-.qt-l-ell:nth-child(5) { top: 156px; width: 250px; }
+.qt-l-ell:nth-child(1) { top: 6px;    width: 246px; height: 58px; }
+.qt-l-ell:nth-child(2) { top: 46px;   width: 288px; height: 66px; }
+.qt-l-ell:nth-child(3) { top: 88px;   width: 312px; height: 70px; }
+.qt-l-ell:nth-child(4) { top: 132px;  width: 288px; height: 66px; }
+.qt-l-ell:nth-child(5) { top: 174px;  width: 246px; height: 58px; }
 
 @keyframes qt-l-ellpulse {
   0%, 100% { opacity: 0.35; transform: translateX(-50%) scaleY(1); }
