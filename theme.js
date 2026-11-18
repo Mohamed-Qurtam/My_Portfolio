@@ -129,7 +129,11 @@
       }, 780);
     }, 380);
   }
-  window.qtLoaderFinish = finish;
+  window.qtLoaderFinish = function () {
+    /* حدّ أدنى موحد: أي مسار إغلاق يلتزم بـ 1.8 ثانية عرضًا */
+    var wait = Math.max(0, MIN_SHOW - (performance.now() - t0));
+    setTimeout(finish, wait);
+  };
   window.addEventListener('load', function () {
     var wait = Math.max(0, MIN_SHOW - (performance.now() - t0));
     setTimeout(finish, wait);
